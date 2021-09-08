@@ -17,8 +17,11 @@ public class DiMainSpringVer {
 		// context.getBean("bean이름", 자료형.class); 로 사용
 //		Singer singer = context.getBean("singer", Singer.class);
 //		singer.sing();
-		Broadcast broadcast = context.getBean("broadcast", Broadcast.class);
-		broadcast.broadcast();
+//		Broadcast broadcast = context.getBean("broadcast", Broadcast.class);
+//		broadcast.broadcast();
+		
+		Satellite satellite = context.getBean("satellite", Satellite.class);
+		satellite.satelliteBroadcast();
 		
 		// 호출이 끝난 후 context를 닫아준다.
 		context.close();
