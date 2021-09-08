@@ -16,13 +16,13 @@ public class MvcController {
 	public String goA() {
 		System.out.println("goA 주소 접속 감지");
 		// 결과 페이지는 views 폴더 아래의 A.jsp
-		return "A";
+		return "01_A";
 	}
 	
 	@RequestMapping(value = "/goB")
 	public String goB() {
 		System.out.println("goB 주소 접속 감지");
-		return "B";
+		return "02_B";
 	}
 	
 	
@@ -37,7 +37,7 @@ public class MvcController {
 		// 전달받은 cNum을 C.jsp에 출력하는 로직
 		model.addAttribute("cNum", cNum);
 		
-		return "C";
+		return "03_C";
 	}
 	
 	// 컨트롤러 인자전달_ requestParam을 이용해 변수명과 받는 이름이 일치하지 않게 하는 경우
@@ -46,6 +46,52 @@ public class MvcController {
 	// 이렇게 되면 적힌 변수명 대신 대체이름으로 치환해 받아온다.
 	public String goD(@RequestParam("d") int dNum, Model model) {
 		System.out.println("d 변수명으로 받은걸 dNum에 저장 : " + dNum);
-		return "D";
+		model.addAttribute("d",dNum);
+		return "04_D";
+	}
+	
+	// Quiz01
+	// cToF 메서드
+	// 섭씨 온도를 입력받아 화씨 온도로 바꾸어 출력하는 로직
+	// (화씨 - 32) / 1.8 = 섭씨
+	// 폼에서 post방식으로 제출했을 때에만 결과페이지로 넘어오도록 설정
+	@RequestMapping(value = "/ctof", method = RequestMethod.POST)
+	public String cToF(@RequestParam("cel") int cel, Model model) {
+		double faren = (cel * 1.8) + 32;
+		model.addAttribute("cel", cel);
+		model.addAttribute("faren", faren);
+
+		return "05_ctof";
+	}
+	// 폼으로 연결하는 메서드
+	// 폼과 결과페이지가 같은 주소를 공유하게 하기 위해서 폼쪽을 GET방식 접근 허용
+//	@RequestMapping(value="/ctofform")
+	@RequestMapping(value="/ctof", method = RequestMethod.GET)
+	public String cToTForm() {
+		// ctofform을 이용해 섭씨온도를 입력하고 제출 버튼을 누르면
+		// 결과값이 나오는 로직을 작성
+		// input 태그의 name속성은 cel로 주고
+		// action은 value로 적힌 주소값으로 설정
+		return "05_ctofform";
+	}
+	
+	
+	// Quiz 02
+	// BMI측정 페이지_폼/결과 페이지로 구성
+	// BMI = 체중 / (키(m) ^2)
+	@RequestMapping(value="/bmi", method=RequestMethod.GET)
+	public String bmiForm() {
+		// 폼 페이지 이동
+		return "06_bmiform";
+	}
+	@RequestMapping(value="/bmi", method=RequestMethod.POST)
+	public String bmi(@RequestParam("height") int h_,
+					  @RequestParam("weight") int w, 
+					  Model model) {
+		// 결과 페이지
+		double h = (double) h_ / 100;
+		int result = (int) (w / (h * h));
+		model.addAttribute("result", result);
+		return "06_bmi";
 	}
 }
