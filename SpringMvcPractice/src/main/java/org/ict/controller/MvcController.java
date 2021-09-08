@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.context.annotation.RequestScope;
 
 // 빈 컨테이너 넣어주기(등록된 컨트롤만 실제로 작동)
 @Controller
@@ -57,7 +56,7 @@ public class MvcController {
 	// 섭씨 온도를 입력받아 화씨 온도로 바꾸어 출력하는 로직
 	// (화씨 - 32) / 1.8 = 섭씨
 	// 폼에서 post방식으로 제출했을 때에만 결과페이지로 넘어오도록 설정
-	@RequestMapping(value = "/ctof", method = RequestMethod.POST)
+	//@RequestMapping(value = "/ctof", method = RequestMethod.POST)
 	public String cToF(@RequestParam("cel") int cel, Model model) {
 		double faren = (cel * 1.8) + 32;
 		model.addAttribute("cel", cel);
@@ -110,9 +109,60 @@ public class MvcController {
 		// path.jsp에는 ${path} 페이지 조회 중 입니다 라는 문장이 뜨도록 설정
 		model.addAttribute("page", page);
 		
-		
 		return "07_path";
-		
 	}
+	
+	// ctof로직을 PathVariable을 적용하여 작성
+	// ctofpv.jsp에 결과 출력
+	// 섭씨 온도(cel)을 url의 경로로 받아옴
+	@RequestMapping(value="/ctof/{cel}")
+	public String cToFPv(@PathVariable int cel, Model model) {
+		double faren = (cel * 1.8) + 32;
+		// .jsp(뷰)에 전달
+		model.addAttribute("cel", cel);
+		model.addAttribute("faren", faren);
+		return "08_ctofpv";
+	}
+	
+	
+	
+	// void 타입 컨트롤러
+	// return 구문을 사용할 수 없는 만큼
+	// view파일의 이름을 'url 패턴.jsp'로 자동 지정한다.
+	// 간단한 작성은 void타입으로하지만, 메서드명 제약이 생겨서 잘 사용 안함
+	@RequestMapping(value="/voidreturn")
+	public void voidTest(int num, Model model) {
+		System.out.println("void 컨트롤러는 리턴구문이 필요 없다.");
+		// 1. 파라미터를 아무거나 받아오도록 임의로 설정
+		// 2. 현 메서드에 맞는 view 파일을 생성
+		// 3. 1에서 얻어온 파라미터를 2에 출력
+		model.addAttribute("num", num);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }
