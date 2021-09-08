@@ -2,9 +2,11 @@ package org.ict.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.annotation.RequestScope;
 
 // 빈 컨테이너 넣어주기(등록된 컨트롤만 실제로 작동)
 @Controller
@@ -94,4 +96,23 @@ public class MvcController {
 		model.addAttribute("result", result);
 		return "06_bmi";
 	}
+	
+	
+	
+	// @PathVariable 사용
+	// PathVariable을 이용하면 url 패턴만으로도 특정 파라미터를 받아올 수 있다.
+	// rest방식으로 url을 처리할 때 주로 사용하는 방식
+	// /pathtest/숫자 중 숫자 위치에 온 것은 page라는 변수값으로 간주
+	@RequestMapping(value="/pathtest/{page}")
+	// int page 왼쪽에 @PathVariable을 붙여서 처리해야 연동됨
+	public String pathTest(@PathVariable int page, Model model) {
+		// 받아온 page 변수를 path.jsp로 전송
+		// path.jsp에는 ${path} 페이지 조회 중 입니다 라는 문장이 뜨도록 설정
+		model.addAttribute("page", page);
+		
+		
+		return "07_path";
+		
+	}
+	
 }
