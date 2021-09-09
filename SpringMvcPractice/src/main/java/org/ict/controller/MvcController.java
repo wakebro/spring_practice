@@ -1,7 +1,9 @@
 package org.ict.controller;
 
+import org.ict.domain.TestVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -130,7 +132,7 @@ public class MvcController {
 	// return 구문을 사용할 수 없는 만큼
 	// view파일의 이름을 'url 패턴.jsp'로 자동 지정한다.
 	// 간단한 작성은 void타입으로하지만, 메서드명 제약이 생겨서 잘 사용 안함
-	@RequestMapping(value="/voidreturn")
+	@RequestMapping(value="/09_voidreturn")
 	public void voidTest(int num, Model model) {
 		System.out.println("void 컨트롤러는 리턴구문이 필요 없다.");
 		// 1. 파라미터를 아무거나 받아오도록 임의로 설정
@@ -140,6 +142,23 @@ public class MvcController {
 	}
 	
 	
+	
+	// 원래 파라미터의 자료형이 int, String이었던 경우는
+	// 단일 자료형이었기 때문에 get, post방식으로 전달되는 데이터를 자동으로
+	// 받아 처리가 가능.
+	// 하지만 TestVO처럼 내부에 int age, String name이 있어
+	// TestVO를 아래와 같이 선언하는 것만으로 ing age, String name을
+	// 선언하는 것과 같은 효과를 볼 수 있다.
+	@RequestMapping(value="/getVO")
+	public String getVO(TestVO vo, Model model) {
+		System.out.println("받아온 객체 : " + vo);
+		
+		// 1. TestVO에 멤버변수를 하나 더 추가해서 객체 3개를 처리하도록 설정
+		// 2. voview.jsp를 생성하여, 거기에 vo내부 멤버변수값을 각각 화면에 출력
+		model.addAttribute("vo", vo);
+		
+		return "10_voView";
+	}
 	
 	
 	

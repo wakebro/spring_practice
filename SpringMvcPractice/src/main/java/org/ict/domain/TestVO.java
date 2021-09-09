@@ -9,4 +9,5 @@ import lombok.Data;
 public class TestVO {
 	private String name;
 	private int age;
+	private int lv;
 }
