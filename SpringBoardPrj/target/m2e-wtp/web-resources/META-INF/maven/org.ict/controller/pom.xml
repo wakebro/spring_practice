@@ -126,7 +126,7 @@
 		<dependency>
 		    <groupId>org.projectlombok</groupId>
 		    <artifactId>lombok</artifactId>
-		    <version>1.18.18</version>
+		    <version>1.18.20</version>
 		    <scope>provided</scope>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-test -->
@@ -135,12 +135,6 @@
 		    <artifactId>spring-test</artifactId>
 		    <version>5.0.7.RELEASE</version>
 		    <scope>test</scope>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
-		<dependency>
-		    <groupId>mysql</groupId>
-		    <artifactId>mysql-connector-java</artifactId>
-		    <version>8.0.21</version>
 		</dependency>
 		<!-- Java 8 maven artifact (maintenance mode): -->
 		<dependency>

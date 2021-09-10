@@ -4,8 +4,6 @@ import static org.junit.Assert.fail;
 
 import java.sql.Connection;
 
-import javax.sql.DataSource;
-
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.Test;
@@ -24,23 +22,15 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class OracleConnectionPoolTest {
 	
+	// Connection => OJDBC 담당
+	// DataSource => HikariCP 담당
+	// SqlSessionFactory => Mybatis 담당
 	// 자동 주입(ContextConfigureation에 설정된 공장 주소에서 맞는 자료형을 넣어줌)
-	@Autowired
-	private DataSource datasource;
 	@Autowired
 	private SqlSessionFactory sqlSessionFactory;
 	
 	// 메서드 내부에서 DB접속에 필요한 최소한의 변수만 생성해놓고
 	// 연결 여부만 확인하기 때문에 서버를 켜고 끌 필요가 없다.
-//	@Test
-	public void testConnection() {
-		try (Connection con = datasource.getConnection()){
-			log.info(con);
-			log.info("hikariCP 성공");
-		} catch (Exception e) {
-			fail(e.getMessage());
-		}
-	}
 	@Test
 	public void testMyBatis() {
 		try (SqlSession session = sqlSessionFactory.openSession();
