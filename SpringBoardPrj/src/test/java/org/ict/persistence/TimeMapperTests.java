@@ -17,9 +17,21 @@ public class TimeMapperTests {
 	@Autowired
 	private TimeMapper timeMapper;
 	
-	@Test
+	//@Test
 	public void testGetTime() {
 		log.info("현재 시간 조회중...");
 		log.info(timeMapper.getTime());
+	}
+	//@Test
+	public void testGetTime2() {
+		log.info("getTime2가 얻어온 시간");
+		log.info(timeMapper.getTime2());
+	}
+	
+	// challenge
+	@Test
+	public void testGetTime3() {
+		log.info("getTime3가 얻어온 시간");
+		log.info(timeMapper.getTime3());
 	}
 }
