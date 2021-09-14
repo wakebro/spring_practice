@@ -28,4 +28,10 @@
 		INSERT INTO board_tbl(bno, title, content, writer) VALUES(board_num.nextval, #{title}, #{content}, #{writer})
 	</insert>
 	
+	<!-- resultType은 리스트랑 개별자료형을 구분하지 않기 때문에
+		BoardVO로 처리 -->
+	<select id="select" resultType="org.ict.domain.BoardVO">
+		SELECT * FROM board_tbl WHERE bno=#{bno}
+	</select>
+	
 </mapper>

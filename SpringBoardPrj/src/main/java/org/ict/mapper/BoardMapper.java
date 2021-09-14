@@ -16,4 +16,11 @@ public interface BoardMapper {
 	// VO내부에 적혀있는 정보를 이용해 INSERT를 한다.
 	// BoardVO를 매개로 INSERT정보를 전달 받음
 	public void insert(BoardVO vo);
+	
+	
+	// 글 번호(Long bno)를 파라미터로 받아
+	// 해당 글 번호에 해당하는 글을 리턴해 보여주는 메서드 작성
+	// 메서드 이름 select
+	// xml 파일에 쿼리문 작성까지
+	public BoardVO select(Long bno);
 }

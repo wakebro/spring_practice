@@ -31,7 +31,7 @@ public class BoardMapperTests {
 	}
 	
 	// INSERT를 실행할 테스트코드 작성
-	@Test
+//	@Test
 	public void testInsert() {
 		// 글 입력을 위해서 BoardVO 타입을 매개로 사용
 		// 따라서 BoardVO를 만들어놓고, setter로 글제목, 본문, 글쓴이를
@@ -39,10 +39,15 @@ public class BoardMapperTests {
 		// 위 설명을 토대로 아래 vo에 6번글에 대한 제목, 본문, 글쓴이를 넣고
 		// 호출하여 DB에 들어갔는지 확인
 		BoardVO vo = new BoardVO();
-		vo.setTitle("스프링Insert");
-		vo.setContent("스프링테스트 본문내용");
+		vo.setTitle("스프링Insert2");
+		vo.setContent("스프링테스트 본문내용2");
 		vo.setWriter("스프링유저");
 		boardMapper.insert(vo);
+	}
+	
+	@Test
+	public void testSelect() {
+		boardMapper.select(5L);
 	}
 	
 }
