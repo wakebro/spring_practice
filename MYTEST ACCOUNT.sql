@@ -24,5 +24,7 @@ INSERT INTO board_tbl(bno, title, content, writer) VALUES(board_num.NEXTVAL, '�
 INSERT INTO board_tbl(bno, title, content, writer) VALUES(board_num.NEXTVAL, '테스트글5', '테스트5본문', '유저3');
 
 SELECT * FROM board_tbl;
+SELECT * FROM board_tbl WHERE bno<3 ORDER BY bno DESC;
+DELETE TABLE board_tbl WHERE bno=21;
 
 COMMIT;

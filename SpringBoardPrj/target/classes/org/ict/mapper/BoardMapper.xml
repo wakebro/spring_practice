@@ -21,8 +21,11 @@
 	
 	<!-- INSERT 메서드 연결후 쿼리문을 작성
 		단, 가변적으로 들어갈 부분은 ?로 작성-->
-	<select id="insert" resultType="org.ict.domain.BoardVO">
-		<![CDATA[ INSERT INTO board_tbl(title, content, writer) VALUES(?, ?, ?) ]]>
-	</select>
+	<!-- INSERT는 BoardVO를 파라미터로 받으며
+		이 경우, VO 내부 변수를 #{변수명}으로 쿼리문에 전달할 수 있다.
+		* ${변수명}이 아니니 주의!! -->
+	<insert id="insert">
+		INSERT INTO board_tbl(bno, title, content, writer) VALUES(board_num.nextval, #{title}, #{content}, #{writer})
+	</insert>
 	
 </mapper>
