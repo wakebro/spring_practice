@@ -22,35 +22,43 @@ public class BoardServiceImpl implements BoardService{
 	private BoardMapper mapper;
 	
 	
+	// 등록작업시 BoardVO를 매개로 실행하기 때문에
+	// 아래와 같이 BoardVO를 파라미터에 설정
+	// BoardServiceTests에 VO를 생성하여 테스트 실행
 	@Override
 	public void register(BoardVO vo) {
+		log.info("등록 작업 실행");
 		mapper.insert(vo);
-		// TODO Auto-generated method stub
 		
 	}
 
+	
+	// 전체 글을 다 가져오는게 아닌, 특정 글 하나만 가져오는 로직 작성
 	@Override
 	public BoardVO get(Long bno) {
-		// TODO Auto-generated method stub
-		return null;
+		BoardVO result = mapper.select(bno);
+		log.info(bno + "번 글 조회");
+		return result;
 	}
 
 	@Override
 	public void modify(BoardVO vo) {
-		// TODO Auto-generated method stub
-		
+		mapper.update(vo);
 	}
 
 	@Override
 	public void remove(Long bno) {
-		// TODO Auto-generated method stub
-		
+		mapper.delete(bno);
 	}
 
+	
+	// 글 전체 목록을 가져오는 로직 작성
+	// 해당 로직은 mapper 내부의 getList의 쿼리문을 먼저
+	// 전체 글을 가져오는 로직으로 수정 후, service에 등록하여 구현
 	@Override
 	public List<BoardVO> getList() {
-		// TODO Auto-generated method stub
-		return null;
+		List<BoardVO> boardList =  mapper.getList();
+		return boardList;
 	}
 	
 	

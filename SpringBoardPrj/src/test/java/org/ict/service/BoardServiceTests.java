@@ -2,6 +2,7 @@ package org.ict.service;
 
 import static org.junit.Assert.assertNotNull;
 
+import org.ict.domain.BoardVO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class BoardServiceTests {
 	
 	
 	// 서비스가 제대로 주입되었는지 여부 확인
-	@Test
+//	@Test
 	public void testExist() {
 		log.info(service);
 		// assertNotNull은 해당 객체가 주입이 되지 않아
@@ -32,5 +33,41 @@ public class BoardServiceTests {
 		assertNotNull(service);
 	}
 	
+//	@Test
+	public void testRegister() {
+		// register로직이 BoardVO를 필요로하므로
+		// 먼저 vo부터 생성하여 자료 입력 후 전달
+		BoardVO vo = new BoardVO();
+		vo.setTitle("Service Test");
+		vo.setContent("I'm doing Service Test");
+		vo.setWriter("User");
+		service.register(vo);
+	}
+	
+	
+//	@Test
+	public void testGetList() {
+		service.getList();
+	}
+	
+//	@Test
+	public void testGet() {
+		service.get(8L);
+	}
+	
+//	@Test
+	public void testDelete() {
+		service.remove(4L);
+	}
+	
+	@Test
+	public void testUpdate() {
+		BoardVO vo = new BoardVO();
+		vo.setBno(5L);
+		vo.setTitle("서비스 수정");
+		vo.setContent("서비스 수정내용입니다.");
+		vo.setWriter("유저2_수정");
+		service.modify(vo);
+	}
 	
 }
