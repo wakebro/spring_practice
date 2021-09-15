@@ -2,7 +2,6 @@ package org.ict.mapper;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Select;
 import org.ict.domain.*;
 
 public interface BoardMapper {
@@ -23,4 +22,20 @@ public interface BoardMapper {
 	// 메서드 이름 select
 	// xml 파일에 쿼리문 작성까지
 	public BoardVO select(Long bno);
+	
+	
+	
+	// 글 번호(Long bno)를 파라미터로 받아
+	// 해당 글 번호에 해당하는 글을 삭제해주는 메서드
+	// xml 파일에 쿼리문 작성
+	// 테스트코드까지 만들어 실제 삭제되는지 SQLdeveloper로 확인
+	public void delete(Long bno);
+	
+	
+	// 글 수정 로직 작성
+	// BoardVO를 받아서 수정
+	// 바꿀 내역은, title, content, writer는 vo에서 받고
+	// updatedate는 sysdate로 수정
+	// where구문은 bno로 구문
+	public void update(BoardVO vo);
 }

@@ -34,4 +34,47 @@
 		SELECT * FROM board_tbl WHERE bno=#{bno}
 	</select>
 	
+	
+	<delete id="delete">
+		DELETE FROM board_tbl WHERE bno=#{bno}
+	</delete>
+	
+	
+	<update id="update">
+		UPDATE board_tbl SET title=#{title}, content=#{content}, writer=#{writer}, updatedate=SYSDATE WHERE bno=#{bno}
+	</update>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </mapper>
