@@ -43,11 +43,13 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public void modify(BoardVO vo) {
+		log.info("수정 작업 진행 - " + vo);
 		mapper.update(vo);
 	}
 
 	@Override
 	public void remove(Long bno) {
+		log.info(bno + "번 글 삭제 작업 진행");
 		mapper.delete(bno);
 	}
 
@@ -57,6 +59,7 @@ public class BoardServiceImpl implements BoardService{
 	// 전체 글을 가져오는 로직으로 수정 후, service에 등록하여 구현
 	@Override
 	public List<BoardVO> getList() {
+		log.info("BoardVO 리스트 조회");
 		List<BoardVO> boardList =  mapper.getList();
 		return boardList;
 	}

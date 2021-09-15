@@ -56,13 +56,16 @@ public class BoardServiceTests {
 	}
 	
 //	@Test
-	public void testDelete() {
+	public void testRemove() {
 		service.remove(4L);
 	}
 	
 	@Test
-	public void testUpdate() {
+	public void testModify() {
+		// 수정사항 정보를 BoardVO에 담아
+		// 전달하기 때문에 BoardVO를 만들어놓고 저장한 뒤 실행
 		BoardVO vo = new BoardVO();
+		
 		vo.setBno(5L);
 		vo.setTitle("서비스 수정");
 		vo.setContent("서비스 수정내용입니다.");
