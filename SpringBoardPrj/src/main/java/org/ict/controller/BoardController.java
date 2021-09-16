@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -38,4 +40,58 @@ public class BoardController {
 		// 1. views 하위에 경로에 맞는 폴더 및 .jsp 파일 생성
 		// 2. 부트스트랩을 적용해 게시글 목록을 화면에 표시
 	}
+	
+	
+	// 아래 주소로 데이터를 보내줄 수 있는 form을 작성
+	// register.jsp 파일명으로 작성하여
+	// @GetMapping으로 register.jsp에 접근할 수 있는
+	// 컨트롤러 메서드 작성
+	@PostMapping("/register")	// POST방식으로만 접속 허용
+	public String register(BoardVO vo, RedirectAttributes rttr) {
+		// 글을 썼으면 상세페이지나 글 목록으로 이동시켜야 한다.
+		// 1. 글 쓰는 로직 실행
+		service.register(vo);
+		// 2. list 주소로 강제 이동
+		// 이동시킬 때 몇 번 글을 썻는지 안내해주는 로직을 추가한다.
+		// addFlashAttribute()를 쓴다면
+		// 일반 이동이 아닌 redirect이동시 데이터가 소실된다.
+		// 이를 막기 위해 rttr.addFlashAttribute로 대체.
+		rttr.addFlashAttribute("result",vo.getBno());
+		
+		// views폴더 하위 board폴더의 list.jsp 출력
+		// redirect로 이동시킬때는 "redirect:파일명"
+		return "redirect:/board/list";
+	}
+	
+	// GET방식으로만 접속되는 /board/register
+	@GetMapping("/register")
+	public void register() {
+	}
+	
+	
+	// 상세 페이지 조회는 Long bno에 적힌 글번호를 이용하여 출력
+	// /get을 주소로 GetMapping을 사용하는 메서드 get을 작성
+	// /get?파라미터명=글번호 형식으로 가져온다.(Get방식이므로)
+	// service에서 get()을 호출해 가져온 글 하나의 정보를
+	// get.jsp로 전송
+	@GetMapping("/get")
+	public String get(Long bno, Model model) {
+		// 모든 로직 실행 전 bno가 null로 들어오는 경우
+		if(bno == null)
+			return "redirect:/board/list";
+		// 글 번호만 전달받은 상황으로
+		// 번호를이용해 전체 글 정보를 받아오는 것을 진행
+		// bno번 글의 정보를 vo에 저장
+		BoardVO vo = service.get(bno);
+		
+		// 조회 후 vo가 null일 경우
+		if(vo == null)
+			return "redirect:/board/list";
+		
+		// .jsp파일로 vo를 보냄
+		model.addAttribute("vo", vo);
+		
+		return "/board/get";
+	}
+	
 }

@@ -25,6 +25,6 @@ INSERT INTO board_tbl(bno, title, content, writer) VALUES(board_num.NEXTVAL, 'í…
 
 SELECT * FROM board_tbl ORDER BY bno;
 SELECT * FROM board_tbl WHERE bno<3 ORDER BY bno DESC;
-DELETE FROM board_tbl WHERE bno=21;
+DELETE FROM board_tbl WHERE bno=2;
 
 COMMIT;

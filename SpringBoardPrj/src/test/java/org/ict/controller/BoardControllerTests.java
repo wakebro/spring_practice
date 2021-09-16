@@ -30,18 +30,19 @@ public class BoardControllerTests {
 	private MockMvc mockMvc;
 	
 	// @Test 이전에 실행할 내용을 기술하는 어노테이션
+	// 주의! org.junit.Before 사용!
 	@Before
 	public void setup() {
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(ctx).build();
 	}
 	
-	@Test
+//	@Test
 	public void testList() throws Exception {
 		log.info(
 				// .get(접속주소) / .post(접속주소)를 제외한 나머지는
 				// 다 고정된 양식을 가진 코드이므로 복잡해보이지만
 				// 실제로는 복사&붙여넣기를 사용해도 무방하다.
-				// .get(접속주소)를 입력하면 get방식으로 해당 주소에 접속
+				// .getㅅ(접속주소)를 입력하면 get방식으로 해당 주소에 접속
 				// /board/list에 접속하면 글 목록을 가져오는 페이지이기 때문에
 				// 글 전체 목록을 가져오는지 여부를 테스트
 				mockMvc.perform(MockMvcRequestBuilders.get("/board/list"))
@@ -50,5 +51,46 @@ public class BoardControllerTests {
 				.getModelMap()
 		);
 	}
+	
+	
+	// /board/register 주소로 파라미터값을 post방식으로 넘겼을 때
+	// 글이 써지는지 안 써지는지 확인
+//	@Test
+	public void testRegister() throws Exception {
+		
+		// 아래 코드는 post방식으로 파라미터 3개를 주소에 전달해주는 코드이다.
+		// 결과 메세지는 문자열 resultPage에 저장
+		String resultPage = mockMvc.perform(
+				MockMvcRequestBuilders.post("/board/register")
+				.param("title", "테스트코드제목")
+				.param("content", "테스트코드본문")
+				.param("writer", "테스트코드글쓴이"))
+				.andReturn()
+				.getModelAndView()
+				.getViewName();
+		
+		// 변수에 저장된 값을 다시 로깅하여 출력
+		log.info(resultPage);
+	}
+	
+	
+	// .param("bno", "글번호")로 파라미터를 줬을 때
+	// 해당 글이 잘 얻어와지는지 체크
+	// .param()으로 전달하는 자료는 자료형을 막론하고 무조건
+	// " "로 감싸서 문자화 시켜야하는데 이유는
+	// url에는 자료형 구분없이 오직 String뿐이기 때문이다.
+	@Test
+	public void testGet() throws Exception {
+		String getPage = mockMvc.perform(
+				MockMvcRequestBuilders.get("/board/get")
+				.param("bno", "14"))
+				.andReturn()
+				.getModelAndView()
+				.getViewName();
+		
+		log.info(getPage);
+	}
+	
+	
 	
 }
