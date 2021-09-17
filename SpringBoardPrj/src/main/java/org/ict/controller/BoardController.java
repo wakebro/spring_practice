@@ -94,4 +94,48 @@ public class BoardController {
 		return "/board/get";
 	}
 	
+	
+	// GET 방식으로 삭제를 허용하면 매크로 등을 이용해서
+	// 마음대로 글삭제를 하는 경우가 생길수 있으므로
+	// 무조건 삭제 버튼을 클릭해서 삭제할 수 있도록
+	// POST 방식 접근만 허용
+	// bno를 받아서 삭제하고, 삭제 후에는 "success"라는 문자열을
+	// .jsp로 보내준다.
+	// 삭제가 완료되면 redirect기능을 이용해 list페이지로 넘어가는 로직 작성
+	@PostMapping("/remove")
+	public String remove(Long bno, RedirectAttributes rttr) {
+		
+		service.remove(bno);
+		rttr.addFlashAttribute("success", "success");
+		rttr.addFlashAttribute("bno", bno);
+		
+		return "redirect:/board/list";
+	}
+	
+	
+	// 수정로직은 POST방식으로 진행
+	// /modify를 주소로 하여, 사용자가 수정할 수 있는 요소를
+	// BoardVO로 받아서 수정하여 수정한 글의 디테일 페이지로 넘어온다.
+	@PostMapping("/modify")
+	public String modify(BoardVO vo, RedirectAttributes rttr) {
+		service.modify(vo);
+		// 상세 페이지는 bno가 파라미터로 주어져야 하기 때문에
+		// 아래와 같이 리턴구문을 작성해야 한다.
+		return "redirect:/board/get?bno="+vo.getBno();
+	}
+	
+	// 글을 수정할 때는 modify.jsp를 이용해 수정을 진행
+	// PostMapping을 이용해서 /boardmodify로 접속시 수정폼으로 접근
+	// 수정 폼은 register.jsp와 비슷한 양식으로 작성되지만
+	// 해당 글이 몇 번인지에 대한 정보도 화면에 출력하고
+	// 글쓴이는 readonly를 걸어서 수정이 불가능해야 한다.
+	// 수정 폼으로 접근하여 수정 폼에 내가 수정하고자 하는 글의 정보를 받은 후,
+	// model.addAttribute로 정보를 .jsp로 보내서 폼을 채워둔다.
+	@PostMapping("/boardmodify")
+	public String modify(Long bno, Model model) {
+		BoardVO vo = service.get(bno);
+		model.addAttribute("vo", vo);
+		
+		return "/board/modify";
+	}
 }
