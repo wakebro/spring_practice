@@ -28,14 +28,18 @@ public class BoardController {
 	private BoardService service;
 	
 	@GetMapping("/list")		// GET방식으로만 주소 연결. @RequestMapping으로 인해 /board/list가 됨
-	public void list(Model model) {
+	public void list(Model model, String keyword) {
+		if(keyword == null)
+			// keyword를 수정해준다.
+			keyword = "";
 
 		log.info("list로직 접속");
 		// 전체 글 정보 얻어오기
-		List<BoardVO> boardList = service.getList();
+		List<BoardVO> boardList = service.getList(keyword);
 //		log.info(boardList);
 		// view파일에 list라는 이름으로 넘겨주기
 		model.addAttribute("list", boardList);
+		model.addAttribute("keyword", keyword);
 		
 		// 1. views 하위에 경로에 맞는 폴더 및 .jsp 파일 생성
 		// 2. 부트스트랩을 적용해 게시글 목록을 화면에 표시

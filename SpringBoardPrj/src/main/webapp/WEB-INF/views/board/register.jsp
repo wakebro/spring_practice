@@ -16,5 +16,6 @@
 		<input type="reset" value="초기화">
 		<input type="submit" value="작성">
 	</form>
+	<a href="/board/list"><button>목록</button></a>
 </body>
 </html>

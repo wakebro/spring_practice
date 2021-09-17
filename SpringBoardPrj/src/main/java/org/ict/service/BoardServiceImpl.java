@@ -58,9 +58,9 @@ public class BoardServiceImpl implements BoardService{
 	// 해당 로직은 mapper 내부의 getList의 쿼리문을 먼저
 	// 전체 글을 가져오는 로직으로 수정 후, service에 등록하여 구현
 	@Override
-	public List<BoardVO> getList() {
+	public List<BoardVO> getList(String keyword) {
 		log.info("BoardVO 리스트 조회");
-		List<BoardVO> boardList =  mapper.getList();
+		List<BoardVO> boardList =  mapper.getList(keyword);
 		return boardList;
 	}
 	

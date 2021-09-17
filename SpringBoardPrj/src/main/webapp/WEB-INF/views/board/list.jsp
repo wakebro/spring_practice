@@ -40,7 +40,14 @@
 				</tr>
 			</c:forEach>
 		</tbody>
+		<tfoot>
+		</tfoot>
 	</table>
+	<form action="/board/list" method="get">
+		<input type="text" name="keyword" placeholder="${keyword }">
+		<input type="submit" value="검색">
+	</form>
+			<a href="/board/register"><button>글쓰기</button></a>
 
 </body>
 </html>

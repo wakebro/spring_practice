@@ -27,4 +27,6 @@ SELECT * FROM board_tbl ORDER BY bno;
 SELECT * FROM board_tbl WHERE bno<3 ORDER BY bno DESC;
 DELETE FROM board_tbl WHERE bno=2;
 
+SELECT * FROM board_tbl WHERE title='스프링';
+
 COMMIT;

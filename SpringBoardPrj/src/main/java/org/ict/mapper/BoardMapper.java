@@ -8,7 +8,7 @@ public interface BoardMapper {
 	// board_tbl에서 글번호 3번 이하만 조회하는 쿼리문을
 	// 어노테이션을 이용해 작성
 //	@Select("SELECT * FROM board_tbl WHERE bno<4 ORDER BY bno DESC")
-	public List<BoardVO> getList();
+	public List<BoardVO> getList(String keyword);
 	
 	
 	// INSERT구문 실행용으로 메서드 선언
@@ -38,4 +38,45 @@ public interface BoardMapper {
 	// updatedate는 sysdate로 수정
 	// where구문은 bno로 구문
 	public void update(BoardVO vo);
+	
+	
+	// 글 검색 로직
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
