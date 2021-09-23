@@ -11,37 +11,34 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 
 <script defer="defer">
-	// 컨트롤러에서 success라는 이름으로 날린 자료가 들어오는지 확인
-	// 그냥 list페이지 접근시 success를 날려주지 않아서
-	// 아무것도 들어오지 않고
-	// remove로직의 결과로 넘어왔을 때는 데이터가 전달
-	let result = "${result}";
-	let bno = "${bno}";
-	if( result === "remove") {
-		alert(bno + "번 글이 삭제되었습니다.");
-	} else if (result === "register"){
-		alert(bno + "번 글이 생성되었습니다.");
+	window.onload = function(){
+		// 컨트롤러에서 success라는 이름으로 날린 자료가 들어오는지 확인
+		// 그냥 list페이지 접근시 success를 날려주지 않아서
+		// 아무것도 들어오지 않고
+		// remove로직의 결과로 넘어왔을 때는 데이터가 전달
+		let result = "${result}";
+		let bno = "${bno}";
+
+		// 모달 사용을 위한 변수 선언
+		// var myModal = new bootstrap.Modal(document.getElementById('myModal'));
+		var myModal = new bootstrap.Modal(document.getElementById('myModal'),
+				focus);
+		// 이게 코드가 위에 있어서 코드 실행 이전에 myModal을 찾으려면 에러가 발생
+		// 이걸 방지하기 위해 window.onload를 사용
+		console.log(myModal);
+
+		if (result === "remove") {
+			alert(bno + "번 글이 삭제되었습니다.");
+		} else if (result === "register") {
+			// alert(bno + "번 글이 생성되었습니다.");
+
+			// 공식 하단 문서의 .show()를 응용
+			myModal.show();
+		}
 	}
-	
 </script>
 </head>
 <body>
-<div class="modal" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">글 생성</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>글이 생성되었습니다.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">확인</button>
-      </div>
-    </div>
-  </div>
-</div>
 	<h1 class="text text-primary">스프링 list</h1>
 	<table class="table table-striped table-hover">
 		<thead>
@@ -58,7 +55,7 @@
 				<tr>
 					<td>${n.bno }</td>
 					<td><a href="/board/get?bno=${n.bno }">${n.title }</a></td>
-					<td> ${n.writer }</td>
+					<td>${n.writer }</td>
 					<td>${n.regdate }</td>
 					<td>${n.updatedate }</td>
 				</tr>
@@ -68,10 +65,33 @@
 		</tfoot>
 	</table>
 	<form action="/board/list" method="get">
-		<input type="text" name="keyword" placeholder="검색어" value="${keyword }">
-		<input type="submit" value="검색">
+		<input type="text" name="keyword" placeholder="검색어"
+			value="${keyword }"> <input type="submit" value="검색">
 	</form>
-			<a href="/board/register"><button>글쓰기</button></a>
-
+	<a href="/board/register"><button>글쓰기</button></a>
+	
+	<!-- 모달 코드는 작성이 안 되어있는게 아니라
+		작성은 해두고, css의 display 옵션을 none으로 해두어
+		특정 요건에 만족했을 때만 display를 허용하도록 설계
+		아래에 넣어두고, 일반 화면에서는 보이지 않는다.
+	 -->
+	<div class="modal" id="myModal" tabindex="-1">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">글 생성</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<p>글이 생성되었습니다.</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary"
+						data-bs-dismiss="modal">확인</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
