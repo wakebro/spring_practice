@@ -15,10 +15,18 @@ public class MainMapperTest {
 	@Autowired
 	private MainMapper mainMapper;
 	
-	@Test
+//	@Test
+	// 유저 정보 가져오기
 	public void testGetUserInfo() {
 		log.info("Oracle 조회중...");
 		String u_id = "wake";
 		log.info(mainMapper.getUserInfo(u_id));
+	}
+	
+	@Test
+	// 관심사 카테고리 가져오기
+	public void testGetInterestCategory() {
+		log.info("Oracle 조회중");
+		log.info(mainMapper.getInterest());
 	}
 }

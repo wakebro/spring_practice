@@ -22,5 +22,6 @@
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
-	<mybatis-spring:scan base-package="com.hgs.mapper"/>	
+	<mybatis-spring:scan base-package="com.hgs.mapper"/>
+	<context:component-scan base-package="com.hgs.service"/>	
 </beans>
