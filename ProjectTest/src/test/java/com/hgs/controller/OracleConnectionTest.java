@@ -4,6 +4,8 @@ import java.sql.Connection;
 
 import javax.sql.DataSource;
 
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +20,25 @@ import lombok.extern.log4j.Log4j;
 public class OracleConnectionTest {
 	@Autowired
 	private DataSource dataSource;
+	@Autowired
+	private  SqlSessionFactory sqlSessionFactory;
 	
-	@Test
+//	@Test
 	public void testConnection() {
 		try(Connection con = dataSource.getConnection()) {
+			log.info("DB 연결합니다");
 			log.info(con);
-			log.info("연결합니다");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	@Test
+	public void testMyBatis() {
+		try (SqlSession session = sqlSessionFactory.openSession();
+			Connection con = session.getConnection();){
+			log.info("Mybatis로 DB 연결합니다");
+			log.info(session);
+			log.info(con);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
