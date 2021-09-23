@@ -12,7 +12,7 @@
 		<input type="hidden" name="bno" value="${vo.bno }"><br>
 		제목 : <input type="text" name="title" value=" ${vo.title}"><br>
 		본문 : <br>
-		<textarea name="content"  rows="10" cols="50">${vo.content}</textarea> <br>
+		<textarea name="content"  rows="10" cols="50">${vo.content}</textarea><br>
 		글쓴이 : ${vo.writer } 
 		<input type="hidden" name="writer" value="${vo.writer}"><br>
 		날짜 : ${vo.regdate}<br>

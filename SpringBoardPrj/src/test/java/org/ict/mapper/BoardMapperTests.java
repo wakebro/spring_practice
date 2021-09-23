@@ -27,7 +27,8 @@ public class BoardMapperTests {
 	public void testGetList() {
 		// mapper 내부의 getList 메서드를 호출
 		log.info("Oracle 조회중...");
-		log.info(boardMapper.getList());
+		String keyword = "";
+		log.info(boardMapper.getList(keyword));
 	}
 	
 	// INSERT를 실행할 테스트코드 작성

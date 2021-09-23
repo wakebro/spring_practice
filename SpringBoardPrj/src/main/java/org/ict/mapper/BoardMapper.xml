@@ -35,6 +35,23 @@
 		INSERT INTO board_tbl(bno, title, content, writer) VALUES(board_num.nextval, #{title}, #{content}, #{writer})
 	</insert>
 	
+	<!-- 위 insert 메서드는 쿼리문을 한 ㄴ번만 실행해도 데이터가 입력되지만,
+		단점이라면 bno에 들어갈 값을 미리 확인할 수 없다.
+		bno에 들어갈 값을 확인할 수 있도록 insert 실행 이전에
+		bno값을 외부에서 조회할 수 있도록 변수화 시키는 작업이 필요
+		그 작업을 할 때 사용하는 태그가 바로 selectKey 태그이다. -->
+	<insert id="insertSelectKey">
+		<!-- 실행 이전에 bno 값을 먼저 조회하여 bno변수명으로 저장 
+			keyProperty에 변수명, order에 BEFORE를 넣어서
+			insert쿼리문 실행 이전에 조회한 bno값을 bno라는 명칭에 저장-->
+		<selectKey keyProperty="bno" order="BEFORE" resultType="long">
+			SELECT board_num.nextval FROM DUAL
+		</selectKey>
+		INSERT INTO board_tbl(bno, title, content, writer) VALUES(#{bno}, #{title}, #{content}, #{writer})
+	</insert>
+	
+	
+	
 	<!-- resultType은 리스트랑 개별자료형을 구분하지 않기 때문에
 		BoardVO로 처리 -->
 	<select id="select" resultType="org.ict.domain.BoardVO">

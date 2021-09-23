@@ -6,18 +6,42 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<!-- 부트스트랩 CSS, js 파일 import -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
 <script defer="defer">
 	// 컨트롤러에서 success라는 이름으로 날린 자료가 들어오는지 확인
 	// 그냥 list페이지 접근시 success를 날려주지 않아서
 	// 아무것도 들어오지 않고
 	// remove로직의 결과로 넘어왔을 때는 데이터가 전달
-	if(${bno} !== null) {
-		alert(${bno} + "번 글이 삭제되었습니다.");
+	let result = "${result}";
+	let bno = "${bno}";
+	if( result === "remove") {
+		alert(bno + "번 글이 삭제되었습니다.");
+	} else if (result === "register"){
+		alert(bno + "번 글이 생성되었습니다.");
 	}
+	
 </script>
 </head>
 <body>
+<div class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">글 생성</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>글이 생성되었습니다.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">확인</button>
+      </div>
+    </div>
+  </div>
+</div>
 	<h1 class="text text-primary">스프링 list</h1>
 	<table class="table table-striped table-hover">
 		<thead>
@@ -44,7 +68,7 @@
 		</tfoot>
 	</table>
 	<form action="/board/list" method="get">
-		<input type="text" name="keyword" placeholder="${keyword }">
+		<input type="text" name="keyword" placeholder="검색어" value="${keyword }">
 		<input type="submit" value="검색">
 	</form>
 			<a href="/board/register"><button>글쓰기</button></a>

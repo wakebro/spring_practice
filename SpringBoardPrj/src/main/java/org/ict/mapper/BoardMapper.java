@@ -16,6 +16,8 @@ public interface BoardMapper {
 	// BoardVO를 매개로 INSERT정보를 전달 받음
 	public void insert(BoardVO vo);
 	
+	// insertSelectKey를 매퍼, 서비스, 컨트롤러에 적용
+	public void insertSelectKey(BoardVO vo);
 	
 	// 글 번호(Long bno)를 파라미터로 받아
 	// 해당 글 번호에 해당하는 글을 리턴해 보여주는 메서드 작성

@@ -47,7 +47,8 @@ public class BoardServiceTests {
 	
 //	@Test
 	public void testGetList() {
-		service.getList();
+		String keword = "";
+		service.getList(keword);
 	}
 	
 //	@Test

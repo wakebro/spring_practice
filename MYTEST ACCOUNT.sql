@@ -27,6 +27,7 @@ SELECT * FROM board_tbl ORDER BY bno;
 SELECT * FROM board_tbl WHERE bno<3 ORDER BY bno DESC;
 DELETE FROM board_tbl WHERE bno=2;
 
-SELECT * FROM board_tbl WHERE title='스프링';
+SELECT board_num.nextval FROM DUAL;
+SELECT * FROM board_tbl WHERE title LIKE '%%' ORDER BY bno DESC;
 
 COMMIT;

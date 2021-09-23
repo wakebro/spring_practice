@@ -28,7 +28,8 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public void register(BoardVO vo) {
 		log.info("등록 작업 실행");
-		mapper.insert(vo);
+		// mapper.isnert(vo); 에서 bno를 얻기위해 변경
+		mapper.insertSelectKey(vo);
 		
 	}
 
@@ -40,6 +41,7 @@ public class BoardServiceImpl implements BoardService{
 		log.info(bno + "번 글 조회");
 		return result;
 	}
+	
 
 	@Override
 	public void modify(BoardVO vo) {
