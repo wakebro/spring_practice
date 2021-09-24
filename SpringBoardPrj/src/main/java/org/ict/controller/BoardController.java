@@ -3,6 +3,7 @@ package org.ict.controller;
 import java.util.List;
 
 import org.ict.domain.BoardVO;
+import org.ict.domain.Criteria;
 import org.ict.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,7 +27,8 @@ public class BoardController {
 	// 컨트롤러는 서비스를 호출 > 서비스는 mapper를 호출
 	@Autowired
 	private BoardService service;
-	
+
+	/*
 	@GetMapping("/list")		// GET방식으로만 주소 연결. @RequestMapping으로 인해 /board/list가 됨
 	public void list(Model model, String keyword) {
 		if(keyword == null)
@@ -44,6 +46,20 @@ public class BoardController {
 		// 1. views 하위에 경로에 맞는 폴더 및 .jsp 파일 생성
 		// 2. 부트스트랩을 적용해 게시글 목록을 화면에 표시
 	}
+	*/
+	
+	// 페이징 처리가 되는 리스트 메서드를 연결
+	// 페이징 처리용 메서드는 기존 접속주소는 같으나
+	// 기존에 받던 자료에 더해서, Criterria를 추가로 더 입력받는다.
+	@GetMapping("/list")
+	public void list(Criteria cri, Model model) {
+		// pageNum, amount로 전달된 자료를 활용하여 게시물 목록 가져오기
+		List<BoardVO> boardList = service.getListPaging(cri);
+		model.addAttribute("list", boardList);
+		
+	}
+	
+	
 	
 	
 	// 아래 주소로 데이터를 보내줄 수 있는 form을 작성

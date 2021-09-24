@@ -71,9 +71,9 @@
 	
 	<select id="getListPaging" resultType="org.ict.domain.BoardVO">
 		<![CDATA[
-			SELECT ROWNUM, tbl.* FROM
+			SELECT bno, title, content, writer, regdate, updatedate FROM
 			(SELECT /*+ INDEX_DESC(board_tbl pk_board)*/ 
-			ROWNUM rn, board_tbl.* FROM board_tbl WHERE ROWNUM <= #{pageNum} * #{amount}) tbl
+			ROWNUM rn, board_tbl.* FROM board_tbl WHERE ROWNUM <= #{pageNum} * #{amount})
 			WHERE rn > (#{pageNum} -1 ) * #{amount}
 		]]>
 	</select>

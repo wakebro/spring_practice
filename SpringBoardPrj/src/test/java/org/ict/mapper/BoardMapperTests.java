@@ -1,6 +1,7 @@
 package org.ict.mapper;
 
 import org.ict.domain.BoardVO;
+import org.ict.domain.Criteria;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +59,7 @@ public class BoardMapperTests {
 	}
 	
 	
-	@Test
+//	@Test
 	public void testupdate() {
 		BoardVO vo = new BoardVO();
 		vo.setBno(1L);
@@ -67,6 +68,14 @@ public class BoardMapperTests {
 		vo.setWriter("유저1_수정");
 		boardMapper.update(vo);
 		
+	}
+	
+	@Test
+	public void testGetPaging() {
+		// 5페이지에 글 10개 출력
+		Criteria cri = new Criteria(5, 10);
+		log.info("Oracle 접속중...");
+		log.info(boardMapper.getListPaging(cri));
 	}
 	
 	

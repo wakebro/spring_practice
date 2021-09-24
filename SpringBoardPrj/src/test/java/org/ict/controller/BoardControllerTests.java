@@ -124,11 +124,23 @@ public class BoardControllerTests {
 		log.info(modify);
 	}
 	
-	@Test
+//	@Test
 	public void testBoardModify() throws Exception{
 		String boardModify = mockMvc.perform(
 				MockMvcRequestBuilders.post("/board/boardmodify")
 				.param("bno", "5"))
+				.andReturn()
+				.getModelAndView()
+				.getViewName();
+		log.info(boardModify);
+	}
+	
+	@Test
+	public void testListPaging() throws Exception{
+		String boardModify = mockMvc.perform(
+				MockMvcRequestBuilders.get("/board/list")
+				.param("pageNum", "5")
+				.param("amount", "10"))
 				.andReturn()
 				.getModelAndView()
 				.getViewName();
