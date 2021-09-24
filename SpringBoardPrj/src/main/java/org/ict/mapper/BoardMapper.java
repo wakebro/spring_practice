@@ -8,6 +8,7 @@ public interface BoardMapper {
 	// board_tbl에서 글번호 3번 이하만 조회하는 쿼리문을
 	// 어노테이션을 이용해 작성
 //	@Select("SELECT * FROM board_tbl WHERE bno<4 ORDER BY bno DESC")
+	// 글 검색
 	public List<BoardVO> getList(String keyword);
 	
 	
@@ -42,7 +43,11 @@ public interface BoardMapper {
 	public void update(BoardVO vo);
 	
 	
-	// 글 검색 로직
+	// 페이징 처리를 하면서 조회할 것이므로
+	// Criteria 정보를 파라미터로 제공해야
+	// 몇 페이지의 글을 조회할지 정보를 같이 쿼리문에 전송할 수 있다.
+	public List<BoardVO> getListPaging(Criteria cri);
+	
 	
 	
 	
