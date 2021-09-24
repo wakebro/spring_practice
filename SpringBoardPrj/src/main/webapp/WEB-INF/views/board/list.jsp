@@ -33,6 +33,7 @@
 			// alert(bno + "번 글이 생성되었습니다.");
 
 			// 공식 하단 문서의 .show()를 응용
+			bno.get
 			myModal.show();
 		}
 	}
@@ -79,12 +80,12 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">글 생성</h5>
+					<h5 class="modal-title">글 작성 완료</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal"
 						aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
-					<p>글이 생성되었습니다.</p>
+					<p>${bno }번 글이 작성되었습니다.</p>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary"
