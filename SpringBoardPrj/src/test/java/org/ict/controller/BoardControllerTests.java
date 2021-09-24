@@ -137,14 +137,14 @@ public class BoardControllerTests {
 	
 	@Test
 	public void testListPaging() throws Exception{
-		String boardModify = mockMvc.perform(
+		String resultPage = mockMvc.perform(
 				MockMvcRequestBuilders.get("/board/list")
-				.param("pageNum", "5")
-				.param("amount", "10"))
+				.param("pageNum", "258")
+				.param("amount", "15"))
 				.andReturn()
 				.getModelAndView()
 				.getViewName();
-		log.info(boardModify);
+		log.info(resultPage);
 	}
 	
 	
