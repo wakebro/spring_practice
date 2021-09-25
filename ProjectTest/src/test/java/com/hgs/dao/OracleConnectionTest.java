@@ -1,4 +1,4 @@
-package com.hgs.controller;
+package com.hgs.dao;
 
 import java.sql.Connection;
 

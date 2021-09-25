@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hgs.domain.InterestVO;
+import com.hgs.domain.MeetVO;
 import com.hgs.domain.UserVO;
 import com.hgs.mapper.MainMapper;
 
@@ -33,6 +34,13 @@ public class MainServiceImpl implements MainService {
 		log.info("관심사 카테고리 조회");
 		List<InterestVO> interestList = mapper.getInterest();
 		return interestList;
+	}
+
+	@Override
+	public List<MeetVO> getListMeet() {
+		log.info("생성관 모임 리스트 조회");
+		List<MeetVO> listMeet = mapper.getListMeet();
+		return listMeet;
 	}
 
 }

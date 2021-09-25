@@ -16,8 +16,21 @@
 	<c:forEach var="interest" items="${interest }">
 		<a href="#"><button>${interest.i_cate_name }</button></a>
 	</c:forEach>
-	<p>필터링 목록<br>
-	<p>모임리스트<br>
+	
+	<table border="1">
+		<c:forEach var="m" items="${meet }">
+			<tr>
+				<td rowspan="3">${m.m_profile }이미지</td>
+				<td>${m.m_area }</td>
+			</tr>
+			<tr>
+				<td>${m.m_name }</td>
+			</tr>
+			<tr>
+				<td>${m.m_people_cnt }</td>
+			</tr>
+		</c:forEach>
+	</table>
 	<a href="#"><button>개설</button></a><br>
 </body>
 </html>

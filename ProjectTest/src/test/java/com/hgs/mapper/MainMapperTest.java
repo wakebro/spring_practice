@@ -23,10 +23,15 @@ public class MainMapperTest {
 		log.info(mainMapper.getUserInfo(u_id));
 	}
 	
-	@Test
+//	@Test
 	// 관심사 카테고리 가져오기
 	public void testGetInterestCategory() {
 		log.info("Oracle 조회중");
 		log.info(mainMapper.getInterest());
+	}
+	
+	@Test
+	public void testGetListMet() {
+		log.info(mainMapper.getListMeet());
 	}
 }

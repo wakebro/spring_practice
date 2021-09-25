@@ -12,4 +12,9 @@
 		SELECT * FROM interest_category
 	</select>
 	
+	<!-- 생성된 모임 리스트 가져오기 -->
+	<select id="getListMeet" resultType="com.hgs.domain.MeetVO">
+		SELECT * FROM meet
+	</select>
+	
 </mapper>
