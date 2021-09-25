@@ -17,3 +17,7 @@ CREATE TABLE meet (
 INSERT INTO 
 meet(m_num, m_name, m_content, m_people_cnt, m_area, m_profile, i_cate_num, u_id)
 VALUES(MEET_SEQ.nextval, '한강 러닝', '안녕하세요. 한강에서 러닝할 사람들의 모임입니다.', 20, '마포구', null, 1, 'wake');
+
+SELECT * FROM meet;
+
+COMMIT;

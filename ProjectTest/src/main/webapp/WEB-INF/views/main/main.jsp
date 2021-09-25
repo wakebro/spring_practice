@@ -31,6 +31,6 @@
 			</tr>
 		</c:forEach>
 	</table>
-	<a href="#"><button>개설</button></a><br>
+	<a href="/main/register"><button>개설</button></a><br>
 </body>
 </html>

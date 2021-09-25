@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.hgs.domain.MeetVO;
+
 import lombok.extern.log4j.Log4j;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -30,8 +32,23 @@ public class MainMapperTest {
 		log.info(mainMapper.getInterest());
 	}
 	
-	@Test
-	public void testGetListMet() {
+//	@Test
+	public void testGetListMeet() {
 		log.info(mainMapper.getListMeet());
+	}
+	
+	@Test
+	public void testInsertMeet() {
+		MeetVO vo = new MeetVO();
+		log.info("모임 생성중");
+		vo.setM_name("러닝 메이트");
+		vo.setM_content("러닝 메이트 구합니다. 같이 뛰어요~");
+		vo.setM_people_cnt(10);
+		vo.setM_area("종로구");
+		vo.setM_profile("");
+		vo.setI_cate_num(1);
+		vo.setU_id("wake");
+		
+		mainMapper.insertMeet(vo);
 	}
 }

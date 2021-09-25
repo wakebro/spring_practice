@@ -15,4 +15,7 @@ public interface MainService {
 	
 	// 생성된 모임 리스트 가져오기
 	public List<MeetVO> getListMeet();
+	
+	// 모임 생성
+	public void registerMeet(MeetVO vo);
 }

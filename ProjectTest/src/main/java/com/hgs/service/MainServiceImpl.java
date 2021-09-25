@@ -43,4 +43,9 @@ public class MainServiceImpl implements MainService {
 		return listMeet;
 	}
 
+	@Override
+	public void registerMeet(MeetVO vo) {
+		log.info("모임 생성");
+		mapper.insertMeet(vo);
+	}
 }
