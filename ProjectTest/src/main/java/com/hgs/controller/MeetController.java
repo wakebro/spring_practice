@@ -30,7 +30,7 @@ public class MeetController {
 	public String detail(Model model, Long num) {
 		// 모임 정보
 		MeetVO detail = service.getDetailMeet(num);
-		log.info(detail);
+//		log.info(detail);
 		model.addAttribute("detail", detail);
 		
 		// 모임 회원
@@ -54,8 +54,18 @@ public class MeetController {
 	}
 	
 	@PostMapping("/update")
+	// 모임 수정
 	public void updateMeet(Long num, Model model) {
 		MeetVO vo = service.getDetailMeet(num);
 		model.addAttribute("vo", vo);
+	}
+	
+	@PostMapping("/join")
+	public String joinMeet(MeetMemberVO vo) {
+		log.info(vo);
+		vo.setMember_list_position("");
+		log.info(vo);
+		service.joinMeet(vo);
+		return "redirect:/meet/info?num="+vo.getM_num();
 	}
 }

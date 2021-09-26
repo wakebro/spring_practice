@@ -30,9 +30,6 @@ public interface MainMapper {
 	// 모임 수정
 	public void updateMeet(MeetVO vo);
 	
-	// 모임 생성시 방장 모임에 가입
-	public void masterJoinMeet(MeetMemberVO member);
-	
 	// 모임 회원 리스트
 	public List<MeetMemberVO> getMeetMemberList(Long m_num);
 	

@@ -40,6 +40,8 @@ SELECT user_info.u_profile,user_info.u_name,user_info.u_intro, meet_member_list.
 FROM meet_member_list INNER JOIN user_info 
 ON meet_member_list.u_id=user_info.u_id WHERE m_num=1;
 
+-- ¸ðÀÓ¹æ Å»Åð
+DELETE meet_member_list WHERE member_list_num=4;
 
 
 COMMIT;

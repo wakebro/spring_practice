@@ -48,7 +48,7 @@ public class MainController {
 		member.setM_num(vo.getM_num());
 		member.setU_id(vo.getU_id());
 		member.setMember_list_position("모임장");
-		service.adminJoinMeet(member);		
+		service.joinMeet(member);		
 		return "redirect:/main/main";
 	}
 		

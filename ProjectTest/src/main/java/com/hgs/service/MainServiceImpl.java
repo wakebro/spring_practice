@@ -67,14 +67,19 @@ public class MainServiceImpl implements MainService {
 		mapper.updateMeet(vo);
 	}
 	
-	@Override
-	public void adminJoinMeet(MeetMemberVO vo) {
-		mapper.masterJoinMeet(vo);
-	}
+	/*
+	 * @Override public void adminJoinMeet(MeetMemberVO vo) {
+	 * mapper.masterJoinMeet(vo); }
+	 */
 	
 	@Override
 	public List<MeetMemberVO> getMeetMemberList(Long num) {
 		List<MeetMemberVO> memberList = mapper.getMeetMemberList(num);
 		return memberList;
+	}
+	
+	@Override
+	public void joinMeet(MeetMemberVO vo) {
+		mapper.joinMeet(vo);
 	}
 }

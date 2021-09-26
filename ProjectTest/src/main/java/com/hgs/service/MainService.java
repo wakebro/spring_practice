@@ -30,8 +30,11 @@ public interface MainService {
 	public void updateMeet(MeetVO vo);
 	
 	// 모입 생성 시 방장 모임 가입
-	public void adminJoinMeet(MeetMemberVO vo);
+	//public void adminJoinMeet(MeetMemberVO vo);
 	
 	// 모임 멤버 리스트 조회
 	public List<MeetMemberVO> getMeetMemberList(Long num);
+	
+	// 모임 가입
+	public void joinMeet(MeetMemberVO vo);
 }

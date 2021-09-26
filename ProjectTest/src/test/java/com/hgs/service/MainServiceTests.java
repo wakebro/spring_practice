@@ -74,13 +74,23 @@ public class MainServiceTests {
 		member.setM_num(2L);
 		member.setMember_list_position("모임장");
 		member.setU_id("wake");
-		service.adminJoinMeet(member);
+//		service.adminJoinMeet(member);
 	}
 	
-	@Test
+//	@Test
 	// 모임 멤버 리스트 조회
 	public void testGetMeetMemberList() {
 		log.info("모임 멤버 리스트 조회 중...");
 		service.getMeetMemberList(1L);
+	}
+	
+	@Test
+	// 모임 가입
+	public void testJoinMeet() {
+		MeetMemberVO vo = new MeetMemberVO();
+		vo.setM_num(2L);
+		vo.setU_id("wjddus");
+		vo.setMember_list_position("");
+		service.joinMeet(vo);
 	}
 }

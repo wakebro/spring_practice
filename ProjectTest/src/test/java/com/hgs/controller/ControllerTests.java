@@ -95,7 +95,7 @@ public class ControllerTests {
 				);
 	}
 	
-	@Test
+//	@Test
 	// 모임 수정
 	public void testUpdateMeet() throws Exception{
 		log.info(
@@ -108,6 +108,20 @@ public class ControllerTests {
 				.param("m_profile", "")
 				.param("i_cate_num", "6")
 				.param("u_id", "wake"))
+				.andReturn()
+				.getModelAndView()
+				.getViewName()
+				);
+	}
+	
+	@Test
+	// 모임 가입
+	public void testJoinMeet() throws Exception{
+		log.info(
+				mockMvc.perform(MockMvcRequestBuilders.post("/meet/join")
+				.param("m_num", "2")
+				.param("u_id", "ahah")
+				.param("member_list_position",""))
 				.andReturn()
 				.getModelAndView()
 				.getViewName()

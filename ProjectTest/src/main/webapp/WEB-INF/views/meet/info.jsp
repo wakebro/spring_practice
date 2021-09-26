@@ -9,6 +9,7 @@
 </head>
 <body>
 	<h1>모임방</h1>
+	${userInfo }
 	<a href="/meet/info?num=${detail.m_num }"><button>정보</button></a>
 	<a href="#"><button>게시판</button></a>
 	<a href="#"><button>갤러리</button></a>
@@ -23,7 +24,7 @@
 		<tr><td colspan="2">${detail.m_content }</td></tr>
 	</table>
 	<form action="/meet/join" method="post">
-		<input type="hidden" name="u_id" value="${userinfo.u_id }">
+		<input type="hidden" name="u_id" value="${userInfo.u_id }">
 		<input type="hidden" name="m_num" value="${detail.m_num}">
 		<input type="submit" value="가입">
 	</form>
@@ -40,7 +41,7 @@
 				<td rowspan="2">${member.member_list_position }</td>
 			</tr>
 			<tr>
-				<td>안녕하세요</td>
+				<td>${member.u_intro }</td>
 			</tr>
 			
 			

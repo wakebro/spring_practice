@@ -45,10 +45,9 @@
 		WHERE m_num=#{m_num}
 	</update>
 	
-	<!-- 모임 생성시 방장 모임 가입  -->
-	<insert id="masterJoinMeet">
-		INSERT INTO 
-		meet_member_list(member_list_num, m_num, u_id, member_list_position)
+	<!-- 모임 가입  -->
+	<insert id="joinMeet">
+		INSERT INTO meet_member_list(member_list_num, m_num, u_id, member_list_position)
 		VALUES(meet_member_list_seq.nextval, #{m_num}, #{u_id}, #{member_list_position})
 	</insert>
 	
@@ -60,10 +59,5 @@
 		<!-- SELECT * FROM meet_member_list WHERE m_num=#{m_num} -->
 	</select>
 	
-	<!-- 모임 가입 -->
-	<insert id="joinMeet">
-		INSERT INTO meet_member_list(member_list_num, m_num, u_id, member_list_position) 
-		VALUES(meet_member_list_seq.nextval, #{m_num}, #{u_id}, #{member_list_position})
-	</insert>
 	
 </mapper>

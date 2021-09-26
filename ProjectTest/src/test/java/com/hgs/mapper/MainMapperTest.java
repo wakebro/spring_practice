@@ -89,7 +89,7 @@ public class MainMapperTest {
 		member.setM_num(1L);
 		member.setU_id("wake");
 		member.setMember_list_position("모임장");
-		mainMapper.masterJoinMeet(member);
+//		mainMapper.masterJoinMeet(member);
 	}
 	
 //	@Test
