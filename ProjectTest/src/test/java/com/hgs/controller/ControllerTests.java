@@ -41,7 +41,7 @@ public class ControllerTests {
 				);
 	}
 	
-	@Test
+//	@Test
 	// 메인화면 관심사 카테고리, 모임 리스트
 	public void testMainPage() throws Exception {
 		log.info(
@@ -52,7 +52,7 @@ public class ControllerTests {
 				);
 	}
 	
-	@Test
+//	@Test
 	// 모임 생성
 	public void testRegisterMeet() throws Exception {
 		log.info(
@@ -68,12 +68,31 @@ public class ControllerTests {
 				.getModelAndView()
 				.getViewName()
 				);
-//		vo.setM_name("홍대 방송댄스");
-//		vo.setM_content("취미로 방송댄스 하실분 모집! 초보 환영~");
-//		vo.setM_people_cnt(20);
-//		vo.setM_area("마포구");
-//		vo.setM_profile("");
-//		vo.setI_cate_num(8);
-//		vo.setU_id("wake");
+
+	}
+	
+//	@Test
+	// 모임 생성
+	public void testDetailMeet() throws Exception {
+		log.info(
+				mockMvc.perform(MockMvcRequestBuilders.get("/meet/info")
+				.param("num","2"))
+				.andReturn()
+				.getModelAndView()
+				.getViewName()
+				);
+
+	}
+	
+	@Test
+	// 모임 삭제
+	public void testRemoveMeet() throws Exception {
+		log.info(
+				mockMvc.perform(MockMvcRequestBuilders.post("/meet/remove")
+				.param("num","9"))
+				.andReturn()
+				.getModelAndView()
+				.getViewName()
+				);
 	}
 }

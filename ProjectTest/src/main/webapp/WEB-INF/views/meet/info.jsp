@@ -16,7 +16,7 @@
 	<table border="1">
 		<tr><td colspan="2">${detail.m_profile }</td></tr>
 		<tr>
-			<td>${detail.i_cate_num }</td>
+			<td>${detail.i_cate_name }</td>
 			<td>${detail.m_name }</td>
 		</tr>
 		<tr><td colspan="2">${detail.m_content }</td></tr>
@@ -29,5 +29,10 @@
 	
 	<br>
 	<a href="/main/main"><button>메인화면</button></a>
+	<a href="/meet/modify"><button>수정</button></a>
+	<form action="/meet/remove" method="post">
+		<input type="hidden" name="num" value="${detail.m_num }">
+		<input type="submit" value="삭제">
+	</form>
 </body>
 </html>

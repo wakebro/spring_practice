@@ -55,4 +55,9 @@ public class MainServiceImpl implements MainService {
 		MeetVO meet = mapper.getDetailMeet(m_num);
 		return meet;
 	}
+	
+	@Override
+	public void removeMeet(Long m_num) {
+		mapper.removeMeet(m_num);
+	}
 }

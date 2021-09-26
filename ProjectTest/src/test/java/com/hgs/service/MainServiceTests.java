@@ -38,9 +38,15 @@ public class MainServiceTests {
 		service.registerMeet(vo);
 	}
 	
-	@Test
+//	@Test
 	// 모임 디테일 조회
 	public void testGetDetailMeet() {
 		log.info(service.getDetailMeet(0L));
+	}
+	
+	@Test
+	// 모임 삭제
+	public void testRemoveMeet() {
+		service.removeMeet(8L);
 	}
 }

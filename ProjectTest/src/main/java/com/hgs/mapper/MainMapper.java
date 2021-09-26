@@ -22,4 +22,7 @@ public interface MainMapper {
 	
 	// 모임 생성
 	public void insertMeet(MeetVO vo);
+	
+	// 모임 삭제
+	public void removeMeet(Long m_num);
 }

@@ -18,6 +18,17 @@ INSERT INTO
 meet(m_num, m_name, m_content, m_people_cnt, m_area, m_profile, i_cate_num, u_id)
 VALUES(MEET_SEQ.nextval, '한강 러닝', '안녕하세요. 한강에서 러닝할 사람들의 모임입니다.', 20, '마포구', null, 1, 'wake');
 
+INSERT INTO 
+meet(m_num, m_name, m_content, m_people_cnt, m_area, m_profile, i_cate_num, u_id)
+VALUES(MEET_SEQ.nextval, '삭제', '안녕하세요. 한강에서 러닝할 사람들의 모임입니다.', 20, '마포구', null, 1, 'wake');
+
 SELECT * FROM meet;
+
+SELECT meet.*, interest_category.i_cate_name FROM meet INNER JOIN interest_category 
+    ON meet.i_cate_num=interest_category.i_cate_num WHERE m_num=3;
+
+
+    
+
 
 COMMIT;

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.hgs.domain.MeetVO;
@@ -27,5 +28,11 @@ public class MeetController {
 		log.info(detail);
 		model.addAttribute("detail", detail);
 		return "/meet/info";
+	}
+	
+	@PostMapping("/remove")
+	public String remove(Long num) {
+		service.removeMeet(num);
+		return "redirect:/main/main";
 	}
 }

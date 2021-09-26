@@ -52,9 +52,15 @@ public class MainMapperTest {
 		mainMapper.insertMeet(vo);
 	}
 	
-	@Test
+//	@Test
 	// 모임 디테일 가져오기
 	public void testGetDetailMeet() {
 		log.info(mainMapper.getDetailMeet(6L));
+	}
+	
+	@Test
+	// 모임 삭제
+	public void testRemoveMeet() {
+		mainMapper.removeMeet(7L);
 	}
 }
