@@ -3,6 +3,7 @@ package com.hgs.mapper;
 import java.util.List;
 
 import com.hgs.domain.InterestVO;
+import com.hgs.domain.MeetMemberVO;
 import com.hgs.domain.MeetVO;
 import com.hgs.domain.UserVO;
 
@@ -20,7 +21,7 @@ public interface MainMapper {
 	// 모임 1개 디테일 출력
 	public MeetVO getDetailMeet(Long m_num);
 	
-	// 모임 생성
+	// 모임 생성 및 모임 가입
 	public void insertMeet(MeetVO vo);
 	
 	// 모임 삭제
@@ -28,4 +29,10 @@ public interface MainMapper {
 	
 	// 모임 수정
 	public void updateMeet(MeetVO vo);
+	
+	// 모임 생성시 방장 모임에 가입
+	public void masterJoinMeet(MeetMemberVO member);
+	
+	// 모임 회원 리스트
+	public List<MeetMemberVO> getMeetMemberList(Long m_num);
 }

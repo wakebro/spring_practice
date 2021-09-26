@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.hgs.domain.MeetMemberVO;
 import com.hgs.domain.MeetVO;
 
 import lombok.extern.log4j.Log4j;
@@ -41,7 +42,7 @@ public class MainMapperTest {
 	public void testInsertMeet() {
 		MeetVO vo = new MeetVO();
 		log.info("모임 생성중");
-		vo.setM_name("러닝 메이트");
+		vo.setM_name("러닝 메이트_test");
 		vo.setM_content("러닝 메이트 구합니다. 같이 뛰어요~");
 		vo.setM_people_cnt(10);
 		vo.setM_area("종로구");
@@ -50,6 +51,7 @@ public class MainMapperTest {
 		vo.setU_id("wake");
 		
 		mainMapper.insertMeet(vo);
+		log.info(vo);
 	}
 	
 //	@Test
@@ -64,7 +66,7 @@ public class MainMapperTest {
 		mainMapper.removeMeet(7L);
 	}
 	
-	@Test
+//	@Test
 	// 모임 수정
 	public void testUpdateMeet() {
 		MeetVO vo = new MeetVO();
@@ -78,5 +80,21 @@ public class MainMapperTest {
 		vo.setI_cate_num(1);
 		vo.setU_id("wake");
 		mainMapper.updateMeet(vo);
+	}
+	
+//	@Test
+	// 모임 생성 시 방장 모임 가입
+	public void testAdminJoinMeet() {
+		MeetMemberVO member = new MeetMemberVO();
+		member.setM_num(1L);
+		member.setU_id("wake");
+		member.setMember_list_position("모임장");
+		mainMapper.masterJoinMeet(member);
+	}
+	
+	@Test
+	// 모임 멤버 리스트 조회
+	public void testGetMeetMemberList() {
+		mainMapper.getMeetMemberList(1L);
 	}
 }

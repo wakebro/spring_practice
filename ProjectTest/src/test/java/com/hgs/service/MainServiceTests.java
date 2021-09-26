@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.hgs.domain.MeetMemberVO;
 import com.hgs.domain.MeetVO;
 
 import lombok.extern.log4j.Log4j;
@@ -50,7 +51,7 @@ public class MainServiceTests {
 		service.removeMeet(8L);
 	}
 	
-	@Test
+//	@Test
 	public void testUpdateMeet() {
 		MeetVO vo = new MeetVO();
 		log.info("모임 수정중");
@@ -63,5 +64,23 @@ public class MainServiceTests {
 		vo.setI_cate_num(1);
 		vo.setU_id("wake");
 		service.updateMeet(vo);
+	}
+	
+//	@Test
+	// 모임 생성시 방장 모임 가입
+	public void testAdminJoinMeet() {
+		MeetMemberVO member = new MeetMemberVO();
+		log.info("방장 모임 가입");
+		member.setM_num(2L);
+		member.setMember_list_position("모임장");
+		member.setU_id("wake");
+		service.adminJoinMeet(member);
+	}
+	
+	@Test
+	// 모임 멤버 리스트 조회
+	public void testGetMeetMemberList() {
+		log.info("모임 멤버 리스트 조회 중...");
+		service.getMeetMemberList(1L);
 	}
 }

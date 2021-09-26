@@ -26,9 +26,12 @@
 	
 	<!-- 모임 생성 -->	
 	<insert id="insertMeet">
+		<selectKey keyProperty="m_num" order="BEFORE" resultType="long">
+			SELECT meet_seq.nextval FROM DUAL
+		</selectKey>
 		INSERT INTO 
 		meet(m_num, m_name, m_content, m_people_cnt, m_area, m_profile, i_cate_num, u_id)
-		VALUES(MEET_SEQ.nextval, #{m_name}, #{m_content}, #{m_people_cnt}, #{m_area}, #{m_profile}, #{i_cate_num}, #{u_id})
+		VALUES(#{m_num}, #{m_name}, #{m_content}, #{m_people_cnt}, #{m_area}, #{m_profile}, #{i_cate_num}, #{u_id})
 	</insert>
 	
 	<!-- 모임 삭제 -->
@@ -41,6 +44,20 @@
 		UPDATE meet SET m_name=#{m_name}, m_content=#{m_content}, m_people_cnt=#{m_people_cnt}, m_area=#{m_area}, i_cate_num=#{i_cate_num}, m_profile=#{m_profile}
 		WHERE m_num=#{m_num}
 	</update>
+	
+	<!-- 모임 생성시 방장 모임 가입  -->
+	<insert id="masterJoinMeet">
+		INSERT INTO 
+		meet_member_list(member_list_num, m_num, u_id, member_list_position)
+		VALUES(meet_member_list_seq.nextval, #{m_num}, #{u_id}, #{member_list_position})
+	</insert>
+	
+	<select id="getMeetMemberList" resultType="com.hgs.domain.MeetMemberVO">
+		SELECT user_info.u_profile,user_info.u_name,user_info.u_intro, meet_member_list.* 
+		FROM meet_member_list INNER JOIN user_info 
+		ON meet_member_list.u_id=user_info.u_id WHERE m_num=#{m_num}
+		<!-- SELECT * FROM meet_member_list WHERE m_num=#{m_num} -->
+	</select>
 	
 	
 </mapper>

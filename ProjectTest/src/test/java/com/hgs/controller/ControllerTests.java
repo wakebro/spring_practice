@@ -68,11 +68,10 @@ public class ControllerTests {
 				.getModelAndView()
 				.getViewName()
 				);
-
 	}
 	
 //	@Test
-	// 모임 생성
+	// 모임 조회
 	public void testDetailMeet() throws Exception {
 		log.info(
 				mockMvc.perform(MockMvcRequestBuilders.get("/meet/info")

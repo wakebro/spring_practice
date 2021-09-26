@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,7 +25,22 @@
 	
 	<h2>모임 정모</h2>
 	
-	${detail }
+	<h2>모임 멤버</h2>
+	<%-- ${memberList } --%>
+	<table border="1">
+		<c:forEach var="member" items="${memberList }">
+			<tr>
+				<td rowspan="2">${member.u_profile }</td>
+				<td>${member.u_name }</td>
+				<td rowspan="2">${member.member_list_position }</td>
+			</tr>
+			<tr>
+				<td>안녕하세요</td>
+			</tr>
+			
+			
+		</c:forEach>
+	</table>
 	
 	<br>
 	<a href="/main/main"><button>메인화면</button></a>

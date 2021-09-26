@@ -1,5 +1,7 @@
 package com.hgs.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.hgs.domain.MeetMemberVO;
 import com.hgs.domain.MeetVO;
 import com.hgs.service.MainService;
 
@@ -25,9 +28,14 @@ public class MeetController {
 	@GetMapping("/info")
 	// 모임 상세 정보
 	public String detail(Model model, Long num) {
+		// 모임 정보
 		MeetVO detail = service.getDetailMeet(num);
 		log.info(detail);
 		model.addAttribute("detail", detail);
+		
+		// 모임 회원
+		List<MeetMemberVO> memberList = service.getMeetMemberList(num);
+		model.addAttribute("memberList", memberList);
 		return "/meet/info";
 	}
 	

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hgs.domain.InterestVO;
+import com.hgs.domain.MeetMemberVO;
 import com.hgs.domain.MeetVO;
 import com.hgs.domain.UserVO;
 import com.hgs.mapper.MainMapper;
@@ -64,5 +65,16 @@ public class MainServiceImpl implements MainService {
 	@Override
 	public void updateMeet(MeetVO vo) {
 		mapper.updateMeet(vo);
+	}
+	
+	@Override
+	public void adminJoinMeet(MeetMemberVO vo) {
+		mapper.masterJoinMeet(vo);
+	}
+	
+	@Override
+	public List<MeetMemberVO> getMeetMemberList(Long num) {
+		List<MeetMemberVO> memberList = mapper.getMeetMemberList(num);
+		return memberList;
 	}
 }

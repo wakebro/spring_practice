@@ -3,6 +3,7 @@ package com.hgs.service;
 import java.util.List;
 
 import com.hgs.domain.InterestVO;
+import com.hgs.domain.MeetMemberVO;
 import com.hgs.domain.MeetVO;
 import com.hgs.domain.UserVO;
 
@@ -27,4 +28,10 @@ public interface MainService {
 	
 	// 모임 수정
 	public void updateMeet(MeetVO vo);
+	
+	// 모입 생성 시 방장 모임 가입
+	public void adminJoinMeet(MeetMemberVO vo);
+	
+	// 모임 멤버 리스트 조회
+	public List<MeetMemberVO> getMeetMemberList(Long num);
 }

@@ -32,7 +32,14 @@ DELETE FROM meet WHERE m_num=4;
 UPDATE meet SET m_name='홍대신촌 댄스', m_content='홍대와 신촌에 있는 방송댄스', m_people_cnt=40, m_area='서대문구',i_cate_num=7, m_profile=null
 WHERE m_num=2;
 
-    
+
+-- 모임방 가입
+SELECT * FROM meet_member_list WHERE m_num=1;
+
+SELECT user_info.u_profile,user_info.u_name,user_info.u_intro, meet_member_list.* 
+FROM meet_member_list INNER JOIN user_info 
+ON meet_member_list.u_id=user_info.u_id WHERE m_num=1;
+
 
 
 COMMIT;
