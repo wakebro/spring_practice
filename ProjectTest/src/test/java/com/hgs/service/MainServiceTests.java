@@ -44,9 +44,24 @@ public class MainServiceTests {
 		log.info(service.getDetailMeet(0L));
 	}
 	
-	@Test
+//	@Test
 	// 모임 삭제
 	public void testRemoveMeet() {
 		service.removeMeet(8L);
+	}
+	
+	@Test
+	public void testUpdateMeet() {
+		MeetVO vo = new MeetVO();
+		log.info("모임 수정중");
+		vo.setM_num(0L);
+		vo.setM_name("한강 러닝/따릉이");
+		vo.setM_content("러닝과 자전거 메이트 구합니다");
+		vo.setM_people_cnt(18);
+		vo.setM_area("용산구");
+		vo.setM_profile("");
+		vo.setI_cate_num(1);
+		vo.setU_id("wake");
+		service.updateMeet(vo);
 	}
 }

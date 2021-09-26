@@ -25,4 +25,7 @@ public interface MainMapper {
 	
 	// 모임 삭제
 	public void removeMeet(Long m_num);
+	
+	// 모임 수정
+	public void updateMeet(MeetVO vo);
 }

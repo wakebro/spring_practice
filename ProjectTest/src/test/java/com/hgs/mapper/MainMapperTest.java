@@ -58,9 +58,25 @@ public class MainMapperTest {
 		log.info(mainMapper.getDetailMeet(6L));
 	}
 	
-	@Test
+//	@Test
 	// 모임 삭제
 	public void testRemoveMeet() {
 		mainMapper.removeMeet(7L);
+	}
+	
+	@Test
+	// 모임 수정
+	public void testUpdateMeet() {
+		MeetVO vo = new MeetVO();
+		log.info("모임 수정중");
+		vo.setM_num(0L);
+		vo.setM_name("한강 러닝_수정");
+		vo.setM_content("러닝 메이트 수정합니다");
+		vo.setM_people_cnt(15);
+		vo.setM_area("구로구");
+		vo.setM_profile("");
+		vo.setI_cate_num(1);
+		vo.setU_id("wake");
+		mainMapper.updateMeet(vo);
 	}
 }

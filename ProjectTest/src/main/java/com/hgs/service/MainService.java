@@ -24,4 +24,7 @@ public interface MainService {
 	
 	// 모임 생성
 	public void removeMeet(Long m_num);
+	
+	// 모임 수정
+	public void updateMeet(MeetVO vo);
 }

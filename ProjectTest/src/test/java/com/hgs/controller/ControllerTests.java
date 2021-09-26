@@ -84,12 +84,31 @@ public class ControllerTests {
 
 	}
 	
-	@Test
+//	@Test
 	// 모임 삭제
 	public void testRemoveMeet() throws Exception {
 		log.info(
 				mockMvc.perform(MockMvcRequestBuilders.post("/meet/remove")
 				.param("num","9"))
+				.andReturn()
+				.getModelAndView()
+				.getViewName()
+				);
+	}
+	
+	@Test
+	// 모임 수정
+	public void testUpdateMeet() throws Exception{
+		log.info(
+				mockMvc.perform(MockMvcRequestBuilders.post("/meet/update")
+				.param("m_num", "6")
+				.param("m_name", "가죽공예")
+				.param("m_content", "악세사리 만드는 가죽공예 모임입니다.")
+				.param("m_people_cnt", "25")
+				.param("m_area", "강서구")
+				.param("m_profile", "")
+				.param("i_cate_num", "6")
+				.param("u_id", "wake"))
 				.andReturn()
 				.getModelAndView()
 				.getViewName()

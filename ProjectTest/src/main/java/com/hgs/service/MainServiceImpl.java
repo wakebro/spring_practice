@@ -60,4 +60,9 @@ public class MainServiceImpl implements MainService {
 	public void removeMeet(Long m_num) {
 		mapper.removeMeet(m_num);
 	}
+	
+	@Override
+	public void updateMeet(MeetVO vo) {
+		mapper.updateMeet(vo);
+	}
 }

@@ -36,5 +36,11 @@
 		DELETE FROM meet WHERE m_num=#{m_num}
 	</delete>
 	
+	<!-- 모임 수정 -->
+	<update id="updateMeet">
+		UPDATE meet SET m_name=#{m_name}, m_content=#{m_content}, m_people_cnt=#{m_people_cnt}, m_area=#{m_area}, i_cate_num=#{i_cate_num}, m_profile=#{m_profile}
+		WHERE m_num=#{m_num}
+	</update>
+	
 	
 </mapper>

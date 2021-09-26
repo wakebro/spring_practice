@@ -23,6 +23,7 @@ public class MeetController {
 	private MainService service;
 	
 	@GetMapping("/info")
+	// 모임 상세 정보
 	public String detail(Model model, Long num) {
 		MeetVO detail = service.getDetailMeet(num);
 		log.info(detail);
@@ -31,8 +32,22 @@ public class MeetController {
 	}
 	
 	@PostMapping("/remove")
+	// 모임 삭제
 	public String remove(Long num) {
 		service.removeMeet(num);
 		return "redirect:/main/main";
+	}
+	
+	@PostMapping("/update/process")
+	// 모임 수정
+	public String updateMeet(MeetVO vo) {
+		service.updateMeet(vo);
+		return "redirect:/meet/info?num=" + vo.getM_num();
+	}
+	
+	@PostMapping("/update")
+	public void updateMeet(Long num, Model model) {
+		MeetVO vo = service.getDetailMeet(num);
+		model.addAttribute("vo", vo);
 	}
 }

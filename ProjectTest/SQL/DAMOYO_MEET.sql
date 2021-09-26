@@ -27,6 +27,10 @@ SELECT * FROM meet;
 SELECT meet.*, interest_category.i_cate_name FROM meet INNER JOIN interest_category 
     ON meet.i_cate_num=interest_category.i_cate_num WHERE m_num=3;
 
+DELETE FROM meet WHERE m_num=4;
+
+UPDATE meet SET m_name='È«´ë½ÅÃÌ ´í½º', m_content='È«´ë¿Í ½ÅÃÌ¿¡ ÀÖ´Â ¹æ¼Û´í½º', m_people_cnt=40, m_area='¼­´ë¹®±¸',i_cate_num=7, m_profile=null
+WHERE m_num=2;
 
     
 

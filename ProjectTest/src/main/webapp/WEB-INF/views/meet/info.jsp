@@ -26,10 +26,12 @@
 	
 	${detail }
 	
-	
 	<br>
 	<a href="/main/main"><button>메인화면</button></a>
-	<a href="/meet/modify"><button>수정</button></a>
+	<form action="/meet/update" method="post">
+		<input type="hidden" name="num" value="${detail.m_num }">
+		<input type="submit" value="수정">
+	</form>
 	<form action="/meet/remove" method="post">
 		<input type="hidden" name="num" value="${detail.m_num }">
 		<input type="submit" value="삭제">
