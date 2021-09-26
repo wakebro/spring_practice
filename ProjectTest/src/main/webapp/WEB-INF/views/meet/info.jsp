@@ -22,6 +22,11 @@
 		</tr>
 		<tr><td colspan="2">${detail.m_content }</td></tr>
 	</table>
+	<form action="/meet/join" method="post">
+		<input type="hidden" name="u_id" value="${userinfo.u_id }">
+		<input type="hidden" name="m_num" value="${detail.m_num}">
+		<input type="submit" value="가입">
+	</form>
 	
 	<h2>모임 정모</h2>
 	

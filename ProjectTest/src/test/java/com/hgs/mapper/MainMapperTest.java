@@ -92,9 +92,19 @@ public class MainMapperTest {
 		mainMapper.masterJoinMeet(member);
 	}
 	
-	@Test
+//	@Test
 	// 모임 멤버 리스트 조회
 	public void testGetMeetMemberList() {
 		mainMapper.getMeetMemberList(1L);
+	}
+	
+	@Test
+	// 모임 가입
+	public void testJoinMeet() {
+		MeetMemberVO vo = new MeetMemberVO();
+		vo.setM_num(2L);
+		vo.setMember_list_position("");
+		vo.setU_id("wls");
+		mainMapper.joinMeet(vo);
 	}
 }

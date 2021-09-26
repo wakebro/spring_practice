@@ -35,4 +35,7 @@ public interface MainMapper {
 	
 	// 모임 회원 리스트
 	public List<MeetMemberVO> getMeetMemberList(Long m_num);
+	
+	// 모임 가입
+	public void joinMeet(MeetMemberVO vo);
 }
