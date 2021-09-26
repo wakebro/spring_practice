@@ -18,4 +18,7 @@ public interface MainService {
 	
 	// 모임 생성
 	public void registerMeet(MeetVO vo);
+	
+	// 모임 디테일 가져오기
+	public MeetVO getDetailMeet(Long m_num);
 }

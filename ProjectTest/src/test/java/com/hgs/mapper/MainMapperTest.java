@@ -37,7 +37,7 @@ public class MainMapperTest {
 		log.info(mainMapper.getListMeet());
 	}
 	
-	@Test
+//	@Test
 	public void testInsertMeet() {
 		MeetVO vo = new MeetVO();
 		log.info("모임 생성중");
@@ -50,5 +50,11 @@ public class MainMapperTest {
 		vo.setU_id("wake");
 		
 		mainMapper.insertMeet(vo);
+	}
+	
+	@Test
+	// 모임 디테일 가져오기
+	public void testGetDetailMeet() {
+		log.info(mainMapper.getDetailMeet(6L));
 	}
 }

@@ -48,4 +48,11 @@ public class MainServiceImpl implements MainService {
 		log.info("모임 생성");
 		mapper.insertMeet(vo);
 	}
+	
+	@Override
+	public MeetVO getDetailMeet(Long m_num) {
+		log.info("모임 디테일");
+		MeetVO meet = mapper.getDetailMeet(m_num);
+		return meet;
+	}
 }

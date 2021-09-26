@@ -43,6 +43,6 @@ public class MainController {
 		service.registerMeet(vo);
 		return "redirect:/main/main";
 	}
-	
+		
 
 }

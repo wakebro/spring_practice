@@ -17,6 +17,9 @@ public interface MainMapper {
 	// 모임 출력
 	public List<MeetVO> getListMeet();
 	
+	// 모임 1개 디테일 출력
+	public MeetVO getDetailMeet(Long m_num);
+	
 	// 모임 생성
 	public void insertMeet(MeetVO vo);
 }

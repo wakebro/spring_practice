@@ -23,7 +23,6 @@ public class ControllerTests {
 	
 	@Autowired
 	private WebApplicationContext ctx;
-	
 	private MockMvc mockMvc;
 	
 	@Before
@@ -42,7 +41,7 @@ public class ControllerTests {
 				);
 	}
 	
-//	@Test
+	@Test
 	// 메인화면 관심사 카테고리, 모임 리스트
 	public void testMainPage() throws Exception {
 		log.info(

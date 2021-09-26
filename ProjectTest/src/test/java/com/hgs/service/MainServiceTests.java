@@ -24,7 +24,7 @@ public class MainServiceTests {
 	}
 	
 	// 모임 생성
-	@Test
+//	@Test
 	public void testRegisterMeet() {
 		MeetVO vo = new MeetVO();
 		log.info("모임 생성중...");
@@ -36,5 +36,11 @@ public class MainServiceTests {
 		vo.setI_cate_num(8);
 		vo.setU_id("wake");
 		service.registerMeet(vo);
+	}
+	
+	@Test
+	// 모임 디테일 조회
+	public void testGetDetailMeet() {
+		log.info(service.getDetailMeet(0L));
 	}
 }
