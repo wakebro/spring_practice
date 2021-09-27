@@ -75,14 +75,9 @@
 			
 		<!-- 페이징 버튼  -->
 		<c:forEach var="num" begin="${btnMaker.startPage }" end="${btnMaker.endPage }">
-			<c:choose>
-				<c:when test="${num eq btnMaker.cri.pageNum }">
-					<li class="page-item active"><a class="page-link" href="/board/list?pageNum=${num }&amount=10">${num }</a></li>
-				</c:when>
-				<c:otherwise>
-					<li class="page-item"><a class="page-link" href="/board/list?pageNum=${num }&amount=10">${num }</a></li>
-				</c:otherwise>
-			</c:choose>
+			<li class="page-item ${btnMaker.cri.pageNum eq num ? 'active' : '' }">
+				<a class="page-link" href="/board/list?pageNum=${num }&amount=10">${num }</a>
+			</li>
 		</c:forEach>	    
 	    
 	    <!-- next버튼 -->

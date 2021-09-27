@@ -79,5 +79,11 @@ public class BoardServiceImpl implements BoardService{
 		return boardList;
 	}
 	
+	@Override
+	public int getTotalBoardCnt() {
+		int totalCnt = mapper.getTotalBoardCnt();
+		return totalCnt ;
+	}
+	
 	
 }

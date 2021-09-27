@@ -135,7 +135,7 @@ public class BoardControllerTests {
 		log.info(boardModify);
 	}
 	
-	@Test
+//	@Test
 	public void testListPaging() throws Exception{
 		String resultPage = mockMvc.perform(
 				MockMvcRequestBuilders.get("/board/list")
@@ -146,6 +146,7 @@ public class BoardControllerTests {
 				.getViewName();
 		log.info(resultPage);
 	}
+	
 	
 	
 	

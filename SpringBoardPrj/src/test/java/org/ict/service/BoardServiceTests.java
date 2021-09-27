@@ -75,10 +75,16 @@ public class BoardServiceTests {
 		service.modify(vo);
 	}
 	
-	@Test
+//	@Test
 	public void testListPaging() {
 		Criteria cri = new Criteria(216, 10);
 		service.getListPaging(cri);
+	}
+	
+	@Test
+	public void testGetTotalBoardCnt() {
+		int totalCnt = service.getTotalBoardCnt();
+		log.info(totalCnt);
 	}
 	
 }

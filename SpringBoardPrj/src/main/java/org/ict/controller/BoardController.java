@@ -61,7 +61,9 @@ public class BoardController {
 		// 단순히 페이지버튼이 깔리는지 여부를 테스트할 때는
 		// 우선 글 갯수를 정확히 모르므로 임시로 234개를 임의로 넣고
 		// 페이징 버튼 개수는 최대 10개로 고정
-		PageDTO btnMaker = new PageDTO(cri, 234, 10);
+		int total = service.getTotalBoardCnt();
+		
+		PageDTO btnMaker = new PageDTO(cri, total, 15);
 		
 		model.addAttribute("list", boardList);
 		model.addAttribute("btnMaker", btnMaker);

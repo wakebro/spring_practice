@@ -78,6 +78,10 @@
 		]]>
 	</select>
 	
+	<select id="getTotalBoardCnt" resultType="int">
+		SELECT COUNT(*) FROM board_tbl
+	</select>
+	
 	
 	
 	
