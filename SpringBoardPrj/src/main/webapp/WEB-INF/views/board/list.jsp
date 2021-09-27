@@ -65,6 +65,32 @@
 		<tfoot>
 		</tfoot>
 	</table>
+	${btnMaker }
+	<nav aria-label="Page navigation example">
+	  <ul class="pagination justify-content-center">
+	  	<!-- prev버튼 -->
+	  	<c:if test="${btnMaker.prev }">
+	    	<li class="page-item"><a class="page-link" href="/board/list?pageNum=${btnMaker.startPage - 1}&amount=10">Previous</a></li>
+	   	</c:if>
+			
+		<!-- 페이징 버튼  -->
+		<c:forEach var="num" begin="${btnMaker.startPage }" end="${btnMaker.endPage }">
+			<c:choose>
+				<c:when test="${num eq btnMaker.cri.pageNum }">
+					<li class="page-item active"><a class="page-link" href="/board/list?pageNum=${num }&amount=10">${num }</a></li>
+				</c:when>
+				<c:otherwise>
+					<li class="page-item"><a class="page-link" href="/board/list?pageNum=${num }&amount=10">${num }</a></li>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>	    
+	    
+	    <!-- next버튼 -->
+	    <c:if test="${btnMaker.next }">
+	    	<li class="page-item"><a class="page-link" href="/board/list?pageNum=${btnMaker.startPage + 10}&amount=10">Next</a></li>
+	    </c:if>
+	  </ul>
+	</nav>
 	<form action="/board/list" method="get">
 		<input type="text" name="keyword" placeholder="검색어"
 			value="${keyword }"> <input type="submit" value="검색">
