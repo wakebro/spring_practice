@@ -4,6 +4,33 @@
 <!-- 스키마 작성 후, 어떤 인터페이스의 메서드를 쿼리문과
 	연결할지 아래의 인터페이스 파일롭터 mapper태그로 연결한다 -->
 <mapper namespace="org.ict.mapper.BoardMapper">
+	<!--  -->
+	<sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 't'.toString()">
+				title LIKE '%'||#{keyword}||'%' AND
+			</if>
+			<if test="searchType == 'c'.toString()">
+				content LIKE '%'||#{keyword}||'%' AND
+			</if>
+			<if test="searchType == 'w'.toString()">
+				writer LIKE '%'||#{keyword}||'%' AND
+			</if>
+			<if test="searchType == 'tc'.toString()">
+				(title LIKE '%'||#{keyword}||'%' OR
+				content LIKE '%'||#{keyword}||'%') AND
+			</if>
+			<if test="searchType == 'cw'.toString()">
+				(writer LIKE '%'||#{keyword}||'%' OR
+				content LIKE '%'||#{keyword}||'%') AND
+			</if>
+			<if test="searchType == 'tcw'.toString()">
+				(title LIKE '%'||#{keyword}||'%' OR
+				content LIKE '%'||#{keyword}||'%' OR
+				writer LIKE '%'||#{keyword}||'%') AND
+			</if>
+		</if>
+	</sql>
 
 	<!-- 위의 BoardMapper 인터페이스의 getList메서드를 호출 시
 		실제 실행할 쿼리문을 아래와 연결
@@ -81,34 +108,12 @@
 		]]>
 		<!-- 검색 키워드가 들어갈 때, 안들어갈 때 등의 조건별 쿼리가 들어감 -->
 		<!-- 
-			1. searchType이 null인지 아닌지 확인
+			1. 전달받은 searchType이 null인지 아닌지 확인
 			2. searchType이 null이 아닌 경우 어떤 키워드가 들어오는지 확인
 			3. 조건문을 공통쿼리와 LIMIT부분 사이에 연결
 		-->
-		<if test="searchType != null">
-			<if test="searchType == 't'.toString()">
-				title LIKE '%'||#{keyword}||'%' AND
-			</if>
-			<if test="searchType == 'c'.toString()">
-				content LIKE '%'||#{keyword}||'%' AND
-			</if>
-			<if test="searchType == 'w'.toString()">
-				writer LIKE '%'||#{keyword}||'%' AND
-			</if>
-			<if test="searchType == 'tc'.toString()">
-				(title LIKE '%'||#{keyword}||'%' OR
-				content LIKE '%'||#{keyword}||'%') AND
-			</if>
-			<if test="searchType == 'cw'.toString()">
-				(writer LIKE '%'||#{keyword}||'%' OR
-				content LIKE '%'||#{keyword}||'%') AND
-			</if>
-			<if test="searchType == 'tcw'.toString()">
-				(title LIKE '%'||#{keyword}||'%' OR
-				content LIKE '%'||#{keyword}||'%' OR
-				writer LIKE '%'||#{keyword}||'%') AND
-			</if>
-		</if>
+		<include refid="search"/>
+		
 		
 		<!-- ㅡMySQL의 LIMIT와 같은 역할 -->
 		<![CDATA[ 
@@ -118,7 +123,16 @@
 	</select>
 	
 	<select id="getTotalBoardCnt" resultType="int">
-		SELECT COUNT(*) FROM board_tbl
+		SELECT COUNT(*) FROM board_tbl WHERE
+		<!-- 여기에 SQL태그에 저장된 조건문 넣기
+		기존 코드는 검색 조건에 무관하게 전체 DB글만 가져왔지만,
+		검색 조건에 따른 총 글 개수를 조건에 맞추어 출력하도록 수정
+		검색 조건은 searchType 변수를 전달받아야 하므로
+		컨트롤러, 서비스, 매퍼쪽에도 searchType을 받을 수 있게
+		SearchCriteria를 전달한다.
+		 -->
+			<include refid="search"/>
+		bno > 0
 	</select>
 	
 	

@@ -49,7 +49,7 @@ public interface BoardMapper {
 	public List<BoardVO> getListPaging(SearchCriteria cri);
 	
 	// Board 총 개수
-	public int getTotalBoardCnt();
+	public int getTotalBoardCnt(SearchCriteria cri);
 	
 	
 	

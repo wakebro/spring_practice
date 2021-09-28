@@ -73,14 +73,14 @@ public class BoardMapperTests {
 //	@Test
 	public void testGetPaging() {
 		// 5페이지에 글 10개 출력
-		Criteria cri = new Criteria(5, 10);
+//		Criteria cri = new Criteria(5, 10);
 		log.info("Oracle 접속중...");
-		log.info(boardMapper.getListPaging(cri));
+//		log.info(boardMapper.getListPaging(cri));
 	}
 	
 	@Test
 	public void testGetTotalBoardCnt() {
-		log.info(boardMapper.getTotalBoardCnt());
+//		log.info(boardMapper.getTotalBoardCnt());
 	}
 	
 	

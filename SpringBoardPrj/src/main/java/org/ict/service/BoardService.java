@@ -31,5 +31,5 @@ public interface BoardService {
 	public List<BoardVO> getListPaging(SearchCriteria cri);
 	
 	// 글 전체 개수
-	public int getTotalBoardCnt();
+	public int getTotalBoardCnt(SearchCriteria cri);
 }
