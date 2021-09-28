@@ -70,10 +70,49 @@
 	
 	
 	<select id="getListPaging" resultType="org.ict.domain.BoardVO">
+		<!--
+			공통 쿼리
+			조건에 구애받지 않는 공통쿼리와 조건별로 추가해야하는 조건별 쿼리를 따로 지정
+		-->
 		<![CDATA[
 			SELECT bno, title, content, writer, regdate, updatedate FROM
 			(SELECT /*+ INDEX_DESC(board_tbl pk_board)*/ 
-			ROWNUM rn, board_tbl.* FROM board_tbl WHERE ROWNUM <= #{pageNum} * #{amount})
+			ROWNUM rn, board_tbl.* FROM board_tbl WHERE
+		]]>
+		<!-- 검색 키워드가 들어갈 때, 안들어갈 때 등의 조건별 쿼리가 들어감 -->
+		<!-- 
+			1. searchType이 null인지 아닌지 확인
+			2. searchType이 null이 아닌 경우 어떤 키워드가 들어오는지 확인
+			3. 조건문을 공통쿼리와 LIMIT부분 사이에 연결
+		-->
+		<if test="searchType != null">
+			<if test="searchType == 't'.toString()">
+				title LIKE '%'||#{keyword}||'%' AND
+			</if>
+			<if test="searchType == 'c'.toString()">
+				content LIKE '%'||#{keyword}||'%' AND
+			</if>
+			<if test="searchType == 'w'.toString()">
+				writer LIKE '%'||#{keyword}||'%' AND
+			</if>
+			<if test="searchType == 'tc'.toString()">
+				(title LIKE '%'||#{keyword}||'%' OR
+				content LIKE '%'||#{keyword}||'%') AND
+			</if>
+			<if test="searchType == 'cw'.toString()">
+				(writer LIKE '%'||#{keyword}||'%' OR
+				content LIKE '%'||#{keyword}||'%') AND
+			</if>
+			<if test="searchType == 'tcw'.toString()">
+				(title LIKE '%'||#{keyword}||'%' OR
+				content LIKE '%'||#{keyword}||'%' OR
+				writer LIKE '%'||#{keyword}||'%') AND
+			</if>
+		</if>
+		
+		<!-- ㅡMySQL의 LIMIT와 같은 역할 -->
+		<![CDATA[ 
+			ROWNUM <= #{pageNum} * #{amount})
 			WHERE rn > (#{pageNum} -1 ) * #{amount}
 		]]>
 	</select>

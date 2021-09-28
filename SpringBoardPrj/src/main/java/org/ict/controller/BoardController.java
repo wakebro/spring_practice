@@ -63,8 +63,9 @@ public class BoardController {
 		// 페이징 버튼 개수는 최대 10개로 고정
 		int total = service.getTotalBoardCnt();
 		
-		PageDTO btnMaker = new PageDTO(cri, total, 15);
+		PageDTO btnMaker = new PageDTO(cri, total, 10);
 		
+		model.addAttribute("cri", cri);
 		model.addAttribute("list", boardList);
 		model.addAttribute("btnMaker", btnMaker);
 		

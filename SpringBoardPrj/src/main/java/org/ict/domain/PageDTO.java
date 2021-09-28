@@ -19,10 +19,10 @@ public class PageDTO {
 	private int endPage;
 	private int total;
 	private boolean prev, next;
-	private Criteria cri;
+	private SearchCriteria cri;
 
 	// 위 변수 정보를 자동으로 계산하기 위한 생성자
-	public PageDTO(Criteria cri, int total, int btnNum) {
+	public PageDTO(SearchCriteria cri, int total, int btnNum) {
 		this.cri = cri;
 		this.total = total;
 		this.btnNum = btnNum;
