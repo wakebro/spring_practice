@@ -3,7 +3,7 @@ package org.ict.service;
 import java.util.List;
 
 import org.ict.domain.BoardVO;
-import org.ict.domain.Criteria;
+import org.ict.domain.SearchCriteria;
 import org.ict.mapper.BoardMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -70,7 +70,7 @@ public class BoardServiceImpl implements BoardService{
 	
 	// 글 페이징 목록
 	@Override
-	public List<BoardVO> getListPaging(Criteria cri) {
+	public List<BoardVO> getListPaging(SearchCriteria cri) {
 		log.info("글 페이징 목록 조회");
 		// cri 정보(pageNum, amount)를 받아와
 		// mapper쪽의 getListPaging 호출 후

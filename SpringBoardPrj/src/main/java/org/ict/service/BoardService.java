@@ -3,7 +3,7 @@ package org.ict.service;
 import java.util.List;
 
 import org.ict.domain.BoardVO;
-import org.ict.domain.Criteria;
+import org.ict.domain.SearchCriteria;
 
 // 서비스 계층은, 하나의 동작을 담당
 // mapper계층에서 하나의 메서드가 하나의 쿼리문을 담당했는데
@@ -28,7 +28,7 @@ public interface BoardService {
 	public List<BoardVO> getList(String keyword);
 	
 	// 페이징 글 목록
-	public List<BoardVO> getListPaging(Criteria cri);
+	public List<BoardVO> getListPaging(SearchCriteria cri);
 	
 	// 글 전체 개수
 	public int getTotalBoardCnt();

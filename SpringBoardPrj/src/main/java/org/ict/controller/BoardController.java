@@ -3,8 +3,8 @@ package org.ict.controller;
 import java.util.List;
 
 import org.ict.domain.BoardVO;
-import org.ict.domain.Criteria;
 import org.ict.domain.PageDTO;
+import org.ict.domain.SearchCriteria;
 import org.ict.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -53,7 +53,7 @@ public class BoardController {
 	// 페이징 처리용 메서드는 기존 접속주소는 같으나
 	// 기존에 받던 자료에 더해서, Criterria를 추가로 더 입력받는다.
 	@GetMapping("/list")
-	public void list(Criteria cri, Model model) {
+	public void list(SearchCriteria cri, Model model) {
 		// pageNum, amount로 전달된 자료를 활용하여 게시물 목록 가져오기
 		List<BoardVO> boardList = service.getListPaging(cri);
 		

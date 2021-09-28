@@ -86,11 +86,37 @@
 	    </c:if>
 	  </ul>
 	</nav>
+	
+	<!-- 검색창 -->
 	<form action="/board/list" method="get">
+		<select name="searchType">
+			<option value="n" <c:out value="${cri.searchType == null ? 'selected' : '' }"/>>
+			-
+			</option>			
+			<option value="t" <c:out value="${cri.searchType eq 't' ? 'selected' : '' }"/>>
+			제목
+			</option>			
+			<option value="c" <c:out value="${cri.searchType eq 'c' ? 'selected' : '' }"/>>
+			본문
+			</option>			
+			<option value="w" <c:out value="${cri.searchType eq 'w' ? 'selected' : '' }"/>>
+			글쓴이
+			</option>			
+			<option value="tc" <c:out value="${cri.searchType eq 'tc' ? 'selected' : '' }"/>>
+			제목+본문
+			</option>			
+			<option value="cw" <c:out value="${cri.searchType eq 'cw' ? 'selected' : '' }"/>>
+			본문+글쓴이
+			</option>			
+			<option value="tcw" <c:out value="${cri.searchType eq 'tcw' ? 'selected' : '' }"/>>
+			제목+본문+글쓴이
+			</option>			
+		</select>
 		<input type="text" name="keyword" placeholder="검색어"
 			value="${keyword }"> <input type="submit" value="검색">
 	</form>
 	<a href="/board/register"><button>글쓰기</button></a>
+	
 	
 	<!-- 모달 코드는 작성이 안 되어있는게 아니라
 		작성은 해두고, css의 display 옵션을 none으로 해두어
