@@ -55,7 +55,7 @@
 			<c:forEach var="n" items="${list }">
 				<tr>
 					<td>${n.bno }</td>
-					<td><a href="/board/get?bno=${n.bno }">${n.title }</a></td>
+					<td><a href="/board/get?bno=${n.bno }&pageNum=${btnMaker.cri.pageNum}&searchType=${btnMaker.cri.searchType }&keyword=${btnMaker.cri.keyword}">${n.title }</a></td>
 					<td>${n.writer }</td>
 					<td>${n.regdate }</td>
 					<td>${n.updatedate }</td>
@@ -65,7 +65,8 @@
 		<tfoot>
 		</tfoot>
 	</table>
-	${btnMaker }
+	${btnMaker }<br>
+	${btnMaker.cri.pageNum }
 	<nav aria-label="Page navigation example">
 	  <ul class="pagination justify-content-center">
 	  	<!-- prev버튼 -->

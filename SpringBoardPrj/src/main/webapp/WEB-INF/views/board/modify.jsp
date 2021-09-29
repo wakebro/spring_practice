@@ -19,6 +19,9 @@
 		<input type="reset" value="초기화">
 		<input type="submit" value="확인">
 	</form>
-	<a href="/board/list"><button>목록</button></a>
+	<a href="/board/list"><button>목록</button></a><br>
+	페이지번호 : ${param.pageNum}<br>
+	검색조건: ${param.searchType }<br>
+	키워드 : ${param.keyword}<br>
 </body>
 </html>
