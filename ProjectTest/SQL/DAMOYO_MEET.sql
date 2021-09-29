@@ -34,7 +34,7 @@ WHERE m_num=2;
 
 
 -- 모임방 가입
-SELECT * FROM meet_member_list WHERE m_num=1;
+SELECT * FROM meet_member_list WHERE m_num=2;
 
 SELECT user_info.u_profile,user_info.u_name,user_info.u_intro, meet_member_list.* 
 FROM meet_member_list INNER JOIN user_info 
