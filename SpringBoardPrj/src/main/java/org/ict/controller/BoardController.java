@@ -110,7 +110,7 @@ public class BoardController {
 	// service에서 get()을 호출해 가져온 글 하나의 정보를
 	// get.jsp로 전송
 	@GetMapping("/get")
-	public String get(Long bno, Model model) {
+	public String get(Long bno, Model model, SearchCriteria cri) {
 		// 모든 로직 실행 전 bno가 null로 들어오는 경우
 		if(bno == null)
 			return "redirect:/board/list";
@@ -152,11 +152,26 @@ public class BoardController {
 	// /modify를 주소로 하여, 사용자가 수정할 수 있는 요소를
 	// BoardVO로 받아서 수정하여 수정한 글의 디테일 페이지로 넘어온다.
 	@PostMapping("/modify")
-	public String modify(BoardVO vo, RedirectAttributes rttr) {
-		service.modify(vo);
+	// pageNum, searchType, keyword를 컨트롤러가 받아올 수 있도록
+	// 해당 이름의 멤버변수를 가진 SearchCriteria를 파라미터로 선언
+	public String modify(BoardVO vo, RedirectAttributes rttr, SearchCriteria cri) {
 		// 상세 페이지는 bno가 파라미터로 주어져야 하기 때문에
 		// 아래와 같이 리턴구문을 작성해야 한다.
-		return "redirect:/board/get?bno="+vo.getBno();
+		log.info("수정 로직 : " + vo);
+		log.info("페이지번호 : " + cri.getPageNum());
+		log.info("검색조건 : " + cri.getSearchType());
+		log.info("키워드 : " + cri.getKeyword());
+		service.modify(vo);
+		
+		// rttr.addAttribute("파라미터명", 전달자료)는 
+		// 호출되면 redirect 주소 뒤에 파라미터를 붙여준다.
+		// rttr.addFlashAttribute()는 넘어간 페이지에서 파라미터를
+		// 쓸 수 있도록 전달하는 것으로 둘의 역할을 다르니 주의
+		rttr.addAttribute("bno", vo.getBno());
+		rttr.addAttribute("pageNum", cri.getPageNum());
+		rttr.addAttribute("searchType", cri.getSearchType());
+		rttr.addAttribute("keyword", cri.getKeyword());
+		return "redirect:/board/";
 	}
 	
 	// 글을 수정할 때는 modify.jsp를 이용해 수정을 진행
