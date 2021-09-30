@@ -11,6 +11,6 @@ public class ReplyVO {
 	private Long bno;
 	private String reply;
 	private String replyer;
-	private Date regdate;
+	private Date replyDate;
 	private Date updatedate;
 }
