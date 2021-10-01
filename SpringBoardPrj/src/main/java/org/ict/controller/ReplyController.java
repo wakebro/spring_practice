@@ -1,11 +1,16 @@
 package org.ict.controller;
 
+import java.util.List;
+
 import org.ict.domain.ReplyVO;
 import org.ict.service.ReplyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,4 +48,60 @@ public class ReplyController {
 		// 위 try나 catch에서 얻어온 entity 변수를 리턴
 		return entity;
 	}
+	
+	// 단일 숫자데이터 bno만 넣기도 하고
+	// PathVariable 어노테이션으로 이미 입력데이터가
+	// 명시되어 consumes는 따로 설정하지 않아도 됨
+	// produces는 댓글 목록이 XML로도, JSON으로도 표현될 수 있도록
+	// 아래와 같이 2개를 모두 설정
+	@GetMapping(value = "/all/{bno}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public ResponseEntity<List<ReplyVO>> list(@PathVariable("bno") Long bno){
+		ResponseEntity<List<ReplyVO>> entity = null;
+		try {
+			entity = new ResponseEntity<>(service.listReply(bno), HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
+	
+	@DeleteMapping(value = "/{bno}")
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
