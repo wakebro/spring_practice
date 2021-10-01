@@ -66,7 +66,20 @@ public class ReplyController {
 		return entity;
 	}
 	
-	@DeleteMapping(value = "/{bno}")
+	// 일반 방식이 아닌 REST방식에는 삭제로직을 POST가 아닌
+	// DELETE 방식으로 요청하기 때문에 @DeleteMapping을 사용한다.
+	@DeleteMapping(value = "/{rno}", produces = {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> remove(@PathVariable("rno") Long rno){
+		ResponseEntity<String> entity = null;
+		try {
+			service.removeReply(rno);
+			entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+	}
 	
 	
 	

@@ -17,4 +17,8 @@
 	<update id="update">
 		UPDATE reply_tbl SET reply=#{reply}, updatedate=SYSDATE WHERE rno=#{rno}
 	</update>
+	
+	<delete id="delete">
+		DELETE reply_tbl WHERE rno=#{rno}
+	</delete>
 </mapper>
