@@ -6,21 +6,33 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script type="text/javascript" src="../resources/js/reply.js"></script>
 <script type="text/javascript">
-
-	console.log("============");
-	console.log("JS TEST");
-	
-	var bnoValue = '<c:out value="${vo.bno}"/>';
-	
-	replyService.add(
-		{reply:"JS Test", replyter:"tester", bno:bnoValue},
-		function(result) {
-			alert("RESULT: " + result);
-		}
-	);
+	var bno = ${vo.bno}
+	function getAllList() {
+			$.getJSON("/replies/all/" + bno, function(data){
+				var str = "";
+				console.log(data.length);
+				
+				$(data).each(function() {
+					var timestamp = this.updatedate;
+					var date = new Date(timestamp);
+					
+					var formattedTime = "게시일 : " + date.getFullYear()
+										+ "/" + (date.getMonth()+1)
+										+ "/" + date.getDate()
+					
+					str += "<div class='replyLi' date-rno='" + this.rno + "'><strong>@" 
+					+ this.replyer + "</strong> - " + formattedTime + "<br>"
+					+ "<div class='replytext'>" + this.replytext + "</div>"
+					+ "<button type='button' class='btn btn-info'>수정/삭제</button>"
+					+ "</div>";
+				}		
+			);
+			$("#replies").html(str);
+		});
+	}
 </script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 </head>
 <body>
 	
