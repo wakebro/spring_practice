@@ -5,8 +5,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="/resources/js/reply.js"></script>
+<script type="text/javascript">
+	$(document).read(read(function(){
+		console.log(replyService);
+	}));
+</script>
 </head>
 <body>
+	
 	<h1>상세 페이지</h1>
 	번호 : ${vo.bno}<br>
 	제목 : ${vo.title}<br>

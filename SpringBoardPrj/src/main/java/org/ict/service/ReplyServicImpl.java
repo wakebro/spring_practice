@@ -2,6 +2,7 @@ package org.ict.service;
 
 import java.util.List;
 
+import org.ict.domain.Criteria;
 import org.ict.domain.ReplyVO;
 import org.ict.mapper.ReplyMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,11 @@ public class ReplyServicImpl implements ReplyService {
 	@Override
 	public void removeReply(Long rno) {
 		mapper.delete(rno);
+	}
+	
+	@Override
+	public List<ReplyVO> getList(Criteria cri, Long bno) {
+		return mapper.getListWithPaging(cri, bno);
 	}
 	
 }

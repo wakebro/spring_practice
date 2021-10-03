@@ -2,6 +2,7 @@ package org.ict.service;
 
 import java.util.List;
 
+import org.ict.domain.Criteria;
 import org.ict.domain.ReplyVO;
 
 public interface ReplyService {
@@ -14,4 +15,6 @@ public interface ReplyService {
 	public void modifyReply(ReplyVO vo);
 	
 	public void removeReply(Long rno);
+	
+	public List<ReplyVO> getList(Criteria cri, Long bno);
 }

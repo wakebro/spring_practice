@@ -69,4 +69,9 @@ public class HomeController {
 		return "";
 	}
 	
+	@GetMapping("/test")
+	public void ajaxTest() {
+		
+	}
+	
 }

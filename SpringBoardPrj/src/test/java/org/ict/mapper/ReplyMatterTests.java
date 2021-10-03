@@ -1,5 +1,8 @@
 package org.ict.mapper;
 
+import java.util.List;
+
+import org.ict.domain.Criteria;
 import org.ict.domain.ReplyVO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,11 +34,19 @@ public class ReplyMatterTests {
 		mapper.create(vo);
 	}
 	
-	@Test
+//	@Test
 	public void testUpdate() {
 		ReplyVO vo = new ReplyVO();
 		vo.setReply("수정 댓글");
 		vo.setRno(21L);
 		mapper.update(vo);
+	}
+	
+	@Test
+	public void testList() {
+		Criteria cri = new Criteria();
+		List<ReplyVO> replies = mapper.getListWithPaging(cri, 81921L);
+		log.info(replies);
+		
 	}
 }

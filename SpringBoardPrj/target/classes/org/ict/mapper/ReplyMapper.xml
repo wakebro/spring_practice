@@ -6,7 +6,7 @@
 <mapper namespace="org.ict.mapper.ReplyMapper">
 
 	<select id="getList" resultType="org.ict.domain.ReplyVO">
-		SELECT * FROM reply_tbl WHERE bno=#{bno}
+		SELECT * FROM reply_tbl WHERE bno=#{bno} ORDER BY replydate DESC
 	</select>
 	
 	<insert id="create">
@@ -21,4 +21,8 @@
 	<delete id="delete">
 		DELETE reply_tbl WHERE rno=#{rno}
 	</delete>
+	
+	<select id="getListWithPaging" resultType="org.ict.domain.ReplyVO">
+		SELECT rno, bno, reply, replyer, replyDate, updatedate FROM reply_tbl WHERE bno=#{bno} ORDER BY rno asc
+	</select>
 </mapper>
