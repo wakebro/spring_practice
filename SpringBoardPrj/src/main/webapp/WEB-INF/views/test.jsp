@@ -37,8 +37,6 @@
 	
 	<h2>Ajax 테스트</h2>
 	
-	<ul id="replies">
-	</ul>
 	
 	<div>
 		<div>
@@ -50,15 +48,29 @@
 		<button id="replyAddBtn">ADD REPLY</button>
 	</div>
 	
+	<ul id="replies">
+	</ul>
+	
 	<!-- jquery -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<script type="text/javascript">
-		var bno = 81921;
+		var bno = 31768;
 		function getAllList() {
 			$.getJSON("/replies/all/" + bno, function(data){
-				var str = "";
-				console.log(data.length);
+				// data 변수가 바로 얻어온 JSON데이터의 집합
+				console.log(data);
 				
+				// str 변수 내부에 문자 형태로 html 코드를 작성
+				var str = "";
+				// str = "<li>123</li>" + 
+				// "<li>456</li>"+"<button>123</button>"+"<a>a</a>";
+				
+				// #replies인 ul태그 내부에 str을 끼워넣어
+				// ul 내부에 <li>123</li>를 추가하는 구문
+				// $("#replies").html(str); */
+				
+				
+				// .each : 향상된 foreach문
 				$(data).each(
 					function() {
 						str += "<li data-rno='" + this.rno + "' class='replyLi'>" 
@@ -69,11 +81,10 @@
 				$("#replies").html(str);
 			});
 		}
-		
-		
+		getAllList()
 		
 		$("#replyAddBtn").on("click", function() {
-			var bno = 81921;
+			var bno = 31768;
 			var replyer = $("#newReplyWriter").val();
 			var replytext = $("#newReplyText").val();
 			
@@ -103,7 +114,7 @@
 		
 		
 	</script>
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 	$("#replies").on("click", ".replyLi button", function() {
 		var reply = $(this).parent();
 		document.write(reply);
@@ -115,7 +126,7 @@
 		${"#replytext"}.val(replytext);
 		$("#modiDiv").show("slow");
 	});
-	</script>
+	</script> -->
 		
 	
 </body>
