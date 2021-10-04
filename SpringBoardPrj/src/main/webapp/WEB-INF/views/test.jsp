@@ -34,16 +34,14 @@
 		</div>
 	</div>
 	
-	
 	<h2>Ajax 테스트</h2>
-	
 	
 	<div>
 		<div>
 			REPLYER <input type="text" name="replyer" id="newReplyWriter">
 		</div>
 		<div>
-			REPLY TEXT <input type="text" name="replytext" id="newReplyText">
+			REPLY TEXT <input type="text" name="reply" id="newReplyText">
 		</div>
 		<button id="replyAddBtn">ADD REPLY</button>
 	</div>
@@ -54,11 +52,12 @@
 	<!-- jquery -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<script type="text/javascript">
-		var bno = 31768;
+		var bno = 1111;
+		
 		function getAllList() {
 			$.getJSON("/replies/all/" + bno, function(data){
 				// data 변수가 바로 얻어온 JSON데이터의 집합
-				console.log(data);
+		//		console.log(data);
 				
 				// str 변수 내부에 문자 형태로 html 코드를 작성
 				var str = "";
@@ -71,11 +70,15 @@
 				
 				
 				// .each : 향상된 foreach문
+				// data를 하나씩 떼어내어 진행
+				// 내부 this는 댓글 하나하나를 뜻함
 				$(data).each(
+		//			console.log(this.rno);
+		//			console.log("------------------");
 					function() {
 						str += "<li data-rno='" + this.rno + "' class='replyLi'>" 
-						+ this.rno + ":" + this.reply 
-						+ "<button>수정/삭제</button></li>";
+						+ this.rno + " : " + this.replyer + " - " + this.reply 
+						+ " <button>수정/삭제</button></li>";
 					}		
 				);
 				$("#replies").html(str);
@@ -84,9 +87,10 @@
 		getAllList()
 		
 		$("#replyAddBtn").on("click", function() {
-			var bno = 31768;
+			
+			// 각 input태그에 들어있던 rmfTmsdl, 본문의 value값을 변수에 저장
 			var replyer = $("#newReplyWriter").val();
-			var replytext = $("#newReplyText").val();
+			var reply = $("#newReplyText").val();
 			
 			
 			$.ajax({
@@ -100,34 +104,31 @@
 				data : JSON.stringify({
 					bno : bno,
 					replyer : replyer,
-					reply : replytext
+					reply : reply
 				}),
 				success : function(result) {
 					if(result == 'SUCCESS'){
 						alert("등록 되었습니다.");
+						// 댓글을 쓰고 나서 다시 새롭게 갱신된 목록을
+						// 넣어주도록 전체 댓글 다시 조회
 						getAllList();
 					}
 				}
 			});
 		});
 		
-		
+		/* $("#replies").on("click", ".replyLi button", function() {
+			var reply = $(this).parent();
+			document.write(reply);
+			
+			var rno = reply.attr("data-rno");
+			var replytext = reply.text();
+			
+			$(".modal-title").html(rno);
+			${"#replytext"}.val(replytext);
+			$("#modiDiv").show("slow");
+		}); */
 		
 	</script>
-	<!-- <script type="text/javascript">
-	$("#replies").on("click", ".replyLi button", function() {
-		var reply = $(this).parent();
-		document.write(reply);
-		
-		var rno = reply.attr("data-rno");
-		var replytext = reply.text();
-		
-		$(".modal-title").html(rno);
-		${"#replytext"}.val(replytext);
-		$("#modiDiv").show("slow");
-	});
-	</script> -->
-		
-	
 </body>
 </html>
