@@ -117,7 +117,7 @@
 			});
 		});
 		
-		/* $("#replies").on("click", ".replyLi button", function() {
+		$("#replies").on("click", ".replyLi button", function() {
 			var reply = $(this).parent();
 			document.write(reply);
 			
@@ -125,9 +125,9 @@
 			var replytext = reply.text();
 			
 			$(".modal-title").html(rno);
-			${"#replytext"}.val(replytext);
+			$("#replytext").val(replytext);
 			$("#modiDiv").show("slow");
-		}); */
+		});
 		
 	</script>
 </body>
