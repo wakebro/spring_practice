@@ -133,9 +133,9 @@
 			// .attr("속성명")을 하면 해당 속성의 값을 얻는다.
 			var rno = replyLi.attr("data-rno");
 			var reply= replyLi.text();	// li태그 내부 글씨 얻기
-			console.log(replyLi);
-			console.log(rno);
-			console.log(reply);
+			//console.log(replyLi);
+			//console.log(rno);
+			//console.log(reply);
 			
 			// 클락한 버튼에 해당하는 댓글번호 + 본문이 얻어지는지 디버깅
 			//alert(rno + " : " + replytext);
@@ -146,6 +146,57 @@
 			$("#modiDiv").show("slow");		// 창에 애니메이션 효과 넣기
 		});
 		
+		
+		// 삭제버튼 작동
+		$("#replyDelBtn").on("click", function() {
+			var rno = $(".modal-title").html();
+			var reply = $("#replytext").val();
+			console.log("삭제버튼 클릭");
+			$.ajax({
+				type : 'delete',
+				url : '/replies/' + rno,
+				headers : {
+					"Content-Type" : "application/json",
+					"X-HTTP-Method-Override" : "DELETE"
+				},
+				dataType : 'text',
+				success : function(result) {
+					console.log("result : " + result);
+					if (result == 'SUCCESS') {
+						alert("삭제 되었습니다.");
+						$("#modiDiv").hide("slow");
+						getAllList();
+					}
+				}
+			});
+		});
+		
+		// 수정버튼 작동
+		$("#replyModBtn").on("click", function(){
+			var rno = $(".modal-title").html();
+			var reply = $("#replytext").val();
+			console.log("수정버튼 클릭");
+
+			$.ajax({
+				type : 'patch',
+				url : '/replies/' + rno,
+				headers : {
+					"Content-Type" : "application/json",
+					"X-HTTP-Method-Override" : "PATCH"
+				},
+				contentType : 'application/jason',
+				data : JSON.stringify({reply : reply}),
+				dataType : 'text',
+				success : function(result){
+					console.log("result : " + result);
+					if(result == 'SUCCESS'){
+						alert("수정 되었습니다.");
+						$("#modiDiv").hide("slow");
+						getAllList();
+					}
+				}
+			});
+		});
 	</script>
 </body>
 </html>
