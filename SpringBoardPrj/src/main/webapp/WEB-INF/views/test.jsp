@@ -13,27 +13,14 @@
 		position:	absolute;
 		top:	50%;
 		left:	50%;
-		margin-top: -50%;
-		margin-left: -150%;
-		padding: 10px;
-		z-index: 1000;
+		margin-top: -50px;
+		margin-right: -150px;
+		z-index: 1;
 	}
 </style>
 </head>
 
 <body>
-	<div id="modiDiv" style="display:none;">
-		<div class="modal-title"></div>
-		<div>
-			<input type="text" id="replytext">
-		</div>
-		<div>
-			<button type="button" id="replyModBtn">Modify</button>
-			<button type="button" id="replyDelBtn">Delete</button>
-			<button type="button" id="closeBtn">close</button>
-		</div>
-	</div>
-	
 	<h2>Ajax 테스트</h2>
 	
 	<div>
@@ -48,6 +35,20 @@
 	
 	<ul id="replies">
 	</ul>
+	
+	<!-- 모달 요소는 안 보이기 때문에 어디에 넣어도 되지만 보통 html요소들 끼리 놨을 때,
+	제일 아래쪽에 작성하는 경우가 많다.-->
+	<div id="modiDiv" style="display:none;">
+		<div class="modal-title"></div>
+		<div>
+			<input type="text" id="replytext">
+		</div>
+		<div>
+			<button type="button" id="replyModBtn">Modify</button>
+			<button type="button" id="replyDelBtn">Delete</button>
+			<button type="button" id="closeBtn">close</button>
+		</div>
+	</div>
 	
 	<!-- jquery -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -117,16 +118,32 @@
 			});
 		});
 		
+		getAllList()
+		
+		
+		// 이벤트 위임
+		// 현재 이벤트를 걸려는 집단(button)을 포함하면서 범위가 제일 좁은
+		// #replies로 시작조건 설정
+		// .on("click", "목적지 태그까지의 요소들", function(){실행문})
+		// 과 같이 위임시에는 파라미터가 3개 들어간다.
 		$("#replies").on("click", ".replyLi button", function() {
-			var reply = $(this).parent();
-			document.write(reply);
+			// this는 최하위 태그인 button이며, button의 부모는 결국 .replyLi다.
+			var replyLi = $(this).parent();
 			
-			var rno = reply.attr("data-rno");
-			var replytext = reply.text();
+			// .attr("속성명")을 하면 해당 속성의 값을 얻는다.
+			var rno = replyLi.attr("data-rno");
+			var reply= replyLi.text();	// li태그 내부 글씨 얻기
+			console.log(replyLi);
+			console.log(rno);
+			console.log(reply);
 			
-			$(".modal-title").html(rno);
-			$("#replytext").val(replytext);
-			$("#modiDiv").show("slow");
+			// 클락한 버튼에 해당하는 댓글번호 + 본문이 얻어지는지 디버깅
+			//alert(rno + " : " + replytext);
+			
+			// 모달 열리도록 수정
+			$(".modal-title").html(rno);	// 모달 상단에 rno 넣기
+			$("#replytext").val(reply);		// 모달 수정창에 reply 넣기
+			$("#modiDiv").show("slow");		// 창에 애니메이션 효과 넣기
 		});
 		
 	</script>
