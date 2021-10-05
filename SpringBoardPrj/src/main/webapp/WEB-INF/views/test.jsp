@@ -179,24 +179,27 @@
 		
 		// 수정버튼 작동
 		$("#replyModBtn").on("click", function(){
+			// rno(수정에 필요한 댓글번호 모달 타이틀에서 얻기)
 			var rno = $(".modal-title").html();
+			// 수정에 필요한 본문내역을 #replytext의 value값으로 얻기
 			var reply = $("#replytext").val();
 			console.log("수정버튼 클릭");
 
 			$.ajax({
-				type : 'patch',
+				type : 'put',
 				url : '/replies/' + rno,
 				headers : {
 					"Content-Type" : "application/json",
-					"X-HTTP-Method-Override" : "PATCH"
+					"X-HTTP-Method-Override" : "PUT"
 				},
-				contentType : 'application/jason',
+				/* contentType : 'application/jason', */
 				data : JSON.stringify({reply : reply}),
 				dataType : 'text',
 				success : function(result){
 					console.log("result : " + result);
 					if(result == 'SUCCESS'){
-						alert("수정 되었습니다.");
+						alert(rno + "수정 되었습니다.");
+						// 댓글 수정 후 모달창 닫고 새 댓글 목록 갱신
 						$("#modiDiv").hide("slow");
 						getAllList();
 					}
