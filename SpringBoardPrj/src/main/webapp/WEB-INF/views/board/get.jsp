@@ -101,18 +101,30 @@ function getAllList()를 test.jsp에서 복붙하여 게시물별 페이지에�
 		var bno = ${vo.bno};
 		function getAllList() {
 			$.getJSON("/replies/all/" + bno, function(data){
+				// data 변수가 바로 얻어온 JSON데이터의 집합
 				// console.log(data);
+				
+				// str 변수 내부에 문자 형태로 html코드를 작성
 				var str = "";
+				
 				$(data).each(function() {
+					// $(data).each()는 향상된 for문처럼 내부 데이터를 하나하나 반복
+					// 내부 this는 댓글 하나하나
+					
+					// 시간 처리
 					var timestamp = this.updatedate;
 					var date = new Date(timestamp);
-					var formattedTime = "게시일 : " + date.getFullYear()
-					+ "/" + (date.getMonth() +1)
-					+ "/" + date.getDate()
+					// date만으로 보기 힘든 형식을 알아보기 쉬운 형태로 수정
+					var formattedTime = "게시일 : " + date.getFullYear() // 년도 추출
+					+ "/" + (date.getMonth() +1)	// 월 추출(0월부터 시작)
+					+ "/" + date.getDate()			// 날짜 추출
+					+ "/" + date.getHours()			// 시간 추출
+					+ ":" + date.getMinutes()		// 분 추출
+					+ ":" + date.getSeconds()		// 초 추출
 					
 					str += "<div class='replyLi' data-rno='" + this.rno + "'> <strong> @" 
 					+ this.replyer + "</strong> - " + formattedTime + "<br>"
-					+ "<div class='replytext'>" + this.reply + "</div>"
+					+ "<div class='reply'>" + this.reply + "</div>"
 					+ " <button type='button' class='btn btn-info'>수정/삭제</button></div><br>";
 					/* str += "<li data-rno='" + this.rno + "' class='replyLi'>" 
 					+ this.reply + " - <span>" + this.replyer + "</span>"
@@ -128,7 +140,8 @@ function getAllList()를 test.jsp에서 복붙하여 게시물별 페이지에�
 		var replyLi = $(this).parent();
 		
 		var rno = replyLi.attr("data-rno");
-		var reply= replyLi.text();	// li태그 내부 글씨 얻기
+		var reply= replyLi.children(".reply").text();	// li태그 내부 글씨 얻기
+		
 		console.log(replyLi);
 		console.log(rno);
 		console.log(reply);
@@ -142,6 +155,85 @@ function getAllList()를 test.jsp에서 복붙하여 게시물별 페이지에�
 	$("#closeBtn").on("click", function() {
 		$("#modiDiv").hide("slow");
 	})
+	
+			$("#replyAddBtn").on("click", function() {
+			
+			// 각 input태그에 들어있던 rmfTmsdl, 본문의 value값을 변수에 저장
+			var replyer = $("#newReplyWriter").val();
+			var reply = $("#newReplyText").val();
+			
+			
+			$.ajax({
+				type : 'post',
+				url : '/replies',
+				headers: {
+					"Content-Type" : "application/json",
+					"X-HTTP-Method-Override" : "POST"
+				},
+				dataType : 'text',
+				data : JSON.stringify({
+					bno : bno,
+					replyer : replyer,
+					reply : reply
+				}),
+				success : function(result) {
+					if(result == 'SUCCESS'){
+						alert("등록 되었습니다.");
+						// 댓글을 쓰고 나서 다시 새롭게 갱신된 목록을
+						// 넣어주도록 전체 댓글 다시 조회
+						getAllList();
+					}
+				}
+			});
+		});
+		
+		getAllList()
+		
+	
+	// 삭제버튼 작동
+	$("#replyDelBtn").on("click", function() {
+		var rno = $(".modal-title").html();
+		console.log("삭제버튼 클릭");
+		$.ajax({
+			type : 'delete',
+			url : '/replies/' + rno,
+			success : function(result) {
+				console.log("result : " + result);
+				if (result === 'SUCCESS') {
+					alert(rno + "번 댓글이 삭제 되었습니다.");
+					$("#modiDiv").hide("slow");
+					getAllList();
+				}
+			}
+		});
+	});
+	
+	// 수정버튼 작동
+	$("#replyModBtn").on("click", function(){
+		var rno = $(".modal-title").html();
+		var reply = $("#replytext").val();
+		console.log("수정버튼 클릭");
+
+		$.ajax({
+			type : 'put',
+			url : '/replies/' + rno,
+			headers : {
+				"Content-Type" : "application/json",
+				"X-HTTP-Method-Override" : "PUT"
+			},
+			data : JSON.stringify({reply : reply}),
+			dataType : 'text',
+			success : function(result){
+				console.log("result : " + result);
+				if(result == 'SUCCESS'){
+					alert(rno + "수정 되었습니다.");
+					// 댓글 수정 후 모달창 닫고 새 댓글 목록 갱신
+					$("#modiDiv").hide("slow");
+					getAllList();
+				}
+			}
+		});
+	});
 	</script>
 </body>
 </html>
