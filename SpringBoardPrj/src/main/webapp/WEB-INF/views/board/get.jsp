@@ -99,6 +99,8 @@
 function getAllList()를 test.jsp에서 복붙하여 게시물별 페이지에서 작동하도록 확인 -->	
 	<script type="text/javascript">
 		var bno = ${vo.bno};
+		
+		// 댓글 출력
 		function getAllList() {
 			$.getJSON("/replies/all/" + bno, function(data){
 				// data 변수가 바로 얻어온 JSON데이터의 집합
@@ -151,45 +153,48 @@ function getAllList()를 test.jsp에서 복붙하여 게시물별 페이지에�
 	});
 	
 	
-	// 모달창 닫기
+	// 모달창 닫기_closeBtn 버튼을 눌렀을 때 #modDiv가 hide되도록 설정
 	$("#closeBtn").on("click", function() {
 		$("#modiDiv").hide("slow");
 	})
 	
-			$("#replyAddBtn").on("click", function() {
-			
-			// 각 input태그에 들어있던 rmfTmsdl, 본문의 value값을 변수에 저장
-			var replyer = $("#newReplyWriter").val();
-			var reply = $("#newReplyText").val();
-			
-			
-			$.ajax({
-				type : 'post',
-				url : '/replies',
-				headers: {
-					"Content-Type" : "application/json",
-					"X-HTTP-Method-Override" : "POST"
-				},
-				dataType : 'text',
-				data : JSON.stringify({
-					bno : bno,
-					replyer : replyer,
-					reply : reply
-				}),
-				success : function(result) {
-					if(result == 'SUCCESS'){
-						alert("등록 되었습니다.");
-						// 댓글을 쓰고 나서 다시 새롭게 갱신된 목록을
-						// 넣어주도록 전체 댓글 다시 조회
-						getAllList();
-					}
-				}
-			});
-		});
-		
-		getAllList()
-		
 	
+	
+	// 댓글 생성
+	$("#replyAddBtn").on("click", function() {
+
+		// 각 input태그에 들어있던 rmfTmsdl, 본문의 value값을 변수에 저장
+		var replyer = $("#newReplyWriter").val();
+		var reply = $("#newReplyText").val();
+
+		$.ajax({
+			type : 'post',
+			url : '/replies',
+			headers : {
+				"Content-Type" : "application/json",
+				"X-HTTP-Method-Override" : "POST"
+			},
+			dataType : 'text',
+			data : JSON.stringify({
+				bno : bno,
+				replyer : replyer,
+				reply : reply
+			}),
+			success : function(result) {
+				if (result == 'SUCCESS') {
+					alert("등록 되었습니다.");
+					// 댓글 생성 후 input창 비우기
+					$("#newReplyWriter").val("");
+					$("#newReplyText").val("");
+					getAllList();
+				}
+			}
+		});
+	});
+	
+
+	getAllList()
+
 	// 삭제버튼 작동
 	$("#replyDelBtn").on("click", function() {
 		var rno = $(".modal-title").html();
@@ -207,9 +212,9 @@ function getAllList()를 test.jsp에서 복붙하여 게시물별 페이지에�
 			}
 		});
 	});
-	
+
 	// 수정버튼 작동
-	$("#replyModBtn").on("click", function(){
+	$("#replyModBtn").on("click", function() {
 		var rno = $(".modal-title").html();
 		var reply = $("#replytext").val();
 		console.log("수정버튼 클릭");
@@ -221,11 +226,13 @@ function getAllList()를 test.jsp에서 복붙하여 게시물별 페이지에�
 				"Content-Type" : "application/json",
 				"X-HTTP-Method-Override" : "PUT"
 			},
-			data : JSON.stringify({reply : reply}),
+			data : JSON.stringify({
+				reply : reply
+			}),
 			dataType : 'text',
-			success : function(result){
+			success : function(result) {
 				console.log("result : " + result);
-				if(result == 'SUCCESS'){
+				if (result == 'SUCCESS') {
 					alert(rno + "수정 되었습니다.");
 					// 댓글 수정 후 모달창 닫고 새 댓글 목록 갱신
 					$("#modiDiv").hide("slow");
