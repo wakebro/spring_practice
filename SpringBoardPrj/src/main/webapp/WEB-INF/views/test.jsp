@@ -149,21 +149,27 @@
 		
 		// 삭제버튼 작동
 		$("#replyDelBtn").on("click", function() {
+			// 삭제에 필요한 댓글번호를 모달 타이틀에서 얻기
 			var rno = $(".modal-title").html();
-			var reply = $("#replytext").val();
 			console.log("삭제버튼 클릭");
 			$.ajax({
 				type : 'delete',
 				url : '/replies/' + rno,
-				headers : {
+				// 삭제로직은 rno만 전달
+				// 호출타입 DELETE, URL 정보 이외엔 처리할게 없음
+				
+				// JSON데이터를 이용하여 움직이는 로직이 아니기 때문에 필요 없다
+				/* headers : {
 					"Content-Type" : "application/json",
 					"X-HTTP-Method-Override" : "DELETE"
 				},
-				dataType : 'text',
+				dataType : 'text', */
+				
 				success : function(result) {
 					console.log("result : " + result);
-					if (result == 'SUCCESS') {
-						alert("삭제 되었습니다.");
+					if (result === 'SUCCESS') {
+						alert(rno + "번 댓글이 삭제 되었습니다.");
+						// 댓글 삭제 후 모달창 닫고 새 댓글목록을 갱신
 						$("#modiDiv").hide("slow");
 						getAllList();
 					}

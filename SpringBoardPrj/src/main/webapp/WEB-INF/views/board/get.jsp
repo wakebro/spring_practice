@@ -6,21 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script type="text/javascript" src="../resources/js/reply.js"></script>
-<script type="text/javascript">
 
-	console.log("============");
-	console.log("JS TEST");
-	
-	var bnoValue = '<c:out value="${vo.bno}"/>';
-	
-	replyService.add(
-		{reply:"JS Test", replyter:"tester", bno:bnoValue},
-		function(result) {
-			alert("RESULT: " + result);
-		}
-	);
-</script>
 </head>
 <body>
 	
@@ -64,5 +50,33 @@
 		<div id="replies">
 		</div>
 	</div>
+	
+	<ul id="replies">
+	</ul>
+	
+	
+	<script type="text/javascript">
+
+	var bno = ${vo.bno};
+	
+	function getAllList() {
+		$.getJSON("/replies/all/" + bno, function(data){
+			console.log(data);
+			var str = "";
+			$(data).each(
+				function() {
+					str += "<li data-rno='" + this.rno + "' class='replyLi'>" 
+					+ this.reply + " - <span>" + this.replyer + "</span>"
+					+ " <button>수정/삭제</button></li>";
+				}		
+			);
+			$("#replies").html(str);
+		});
+	}
+	getAllList();
+		
+	
+
+	</script>
 </body>
 </html>
