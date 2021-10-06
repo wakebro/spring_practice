@@ -4,6 +4,7 @@ package org.ict.aop;
 import java.util.Arrays;
 
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -40,14 +41,16 @@ public class LogAdvice {
 		log.info("exception : " + exception);
 	}
 	
-	// 4번 메서드 실행되는 시간동안 진행
+	// 4번 advice - 메서드 실행되는 시간동안 진행
 	@Around("execution(* org.ict.service.SampleService*.*(..))")
 	public Object logTime(ProceedingJoinPoint pjp) {
 		
 		// 시작 시간 기록
 		long start = System.currentTimeMillis();
 		
+		// 어떤 메서드인지
 		log.info("Target : " + pjp.getTarget());
+		// 어떤 파라미터를 받았는지
 		log.info("Param : " + Arrays.toString(pjp.getArgs()));
 		
 		Object result = null;
@@ -66,6 +69,13 @@ public class LogAdvice {
 		log.info("Time : " + (end - start));
 		
 		return result;
+	}
+	
+	
+	// 5번 advice - @After를 사용해서 "메서드 끝" 이라고 출력하는 로깅 기능
+	@After("execution(* org.ict.service.SampleService*.*(..))")
+	public void endLoggin() {
+		log.info("메서드 끝");
 	}
 	
 }

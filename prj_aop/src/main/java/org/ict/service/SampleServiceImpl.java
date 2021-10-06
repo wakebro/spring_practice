@@ -9,5 +9,10 @@ public class SampleServiceImpl implements SampleService {
 	public Integer doAdd(String str1, String str2) throws Exception {
 		return Integer.parseInt(str1) + Integer.parseInt(str2);
 	}
+	
+	@Override
+	public void introduce() {
+		System.out.println("형기상입니다. 반갑습니다.");
+	}
 
 }

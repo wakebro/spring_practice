@@ -11,20 +11,16 @@ import lombok.extern.log4j.Log4j;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 @Log4j
-public class SampleServiceTests {
+public class SampleTxServiceTests {
 	
 	@Autowired
-	private SampleService service;
+	private SampleTxService service;
 	
-//	@Test
-	public void testclass() {
-		log.info(service);
-		log.info(service.getClass().getName());
+	@Test
+	public void testInsert() {
+		String str = "abcdefghijklmnopqrstuvwxyz";
+		
+		service.addData(str);
 	}
 	
-//	@Test
-	public void testAdd() throws Exception{
-		log.info(service.doAdd("123", "456"));
-		service.introduce();
-	}
 }
