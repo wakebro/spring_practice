@@ -1,4 +1,4 @@
-package org.ict.aop;
+package org.ict.service;
 
 public interface SampleService {
 	
