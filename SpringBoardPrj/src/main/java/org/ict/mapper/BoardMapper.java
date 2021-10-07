@@ -2,6 +2,7 @@ package org.ict.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.ict.domain.*;
 
 public interface BoardMapper {
@@ -51,8 +52,10 @@ public interface BoardMapper {
 	// Board 총 개수
 	public int getTotalBoardCnt(SearchCriteria cri);
 	
-	
-	
+	// 게시판에 댓글 증감할때마다 replycnt 변경
+	public void updateReplyCnt(@Param("bno") Long bno,
+							@Param("amount") Long amount);
+
 	
 	
 	

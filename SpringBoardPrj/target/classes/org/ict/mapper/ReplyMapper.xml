@@ -25,4 +25,8 @@
 	<select id="getListWithPaging" resultType="org.ict.domain.ReplyVO">
 		SELECT rno, bno, reply, replyer, replyDate, updatedate FROM reply_tbl WHERE bno=#{bno} ORDER BY rno asc
 	</select>
+	
+	<select id="getBno" resultType="long">
+		SELECT bno FROM reply_tbl WHERE rno=#{rno}
+	</select>
 </mapper>

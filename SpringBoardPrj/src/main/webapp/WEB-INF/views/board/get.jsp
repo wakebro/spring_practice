@@ -166,6 +166,11 @@ function getAllList()를 test.jsp에서 복붙하여 게시물별 페이지에�
 		// 각 input태그에 들어있던 rmfTmsdl, 본문의 value값을 변수에 저장
 		var replyer = $("#newReplyWriter").val();
 		var reply = $("#newReplyText").val();
+		
+		console.log(bno)
+		console.log(replyer)
+		console.log(reply)
+		
 
 		$.ajax({
 			type : 'post',
