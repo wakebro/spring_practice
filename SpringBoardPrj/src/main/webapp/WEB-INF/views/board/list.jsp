@@ -55,7 +55,11 @@
 			<c:forEach var="n" items="${list }">
 				<tr>
 					<td>${n.bno }</td>
-					<td><a href="/board/get?bno=${n.bno }&pageNum=${btnMaker.cri.pageNum}&searchType=${btnMaker.cri.searchType }&keyword=${btnMaker.cri.keyword}">${n.title } [${n.replyCnt }]</a></td>
+					<td><a href="/board/get?bno=${n.bno }&pageNum=${btnMaker.cri.pageNum}&searchType=${btnMaker.cri.searchType }&keyword=${btnMaker.cri.keyword}">${n.title } 
+						<c:if test="${n.replyCnt > 0 }">
+							<span class="badge rounded-pill bg-primary">${n.replyCnt }</span>
+						</c:if></a>
+					</td>
 					<td>${n.writer }</td>
 					<td>${n.regdate }</td>
 					<td>${n.updatedate }</td>
@@ -66,7 +70,6 @@
 		</tfoot>
 	</table>
 	${btnMaker }<br>
-	${btnMaker.cri.pageNum }
 	<nav aria-label="Page navigation example">
 	  <ul class="pagination justify-content-center">
 	  	<!-- prev버튼 -->
