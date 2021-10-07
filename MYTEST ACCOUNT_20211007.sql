@@ -7,4 +7,6 @@ UPDATE board_tbl SET replycnt =
     WHERE reply_tbl.bno = board_tbl.bno);
 
 SELECT * FROM board_tbl ORDER BY replycnt DESC;
+
+SELECT * FROM reply_tbl WHERE bno=31767;
 COMMIT;
