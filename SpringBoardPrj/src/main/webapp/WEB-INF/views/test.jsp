@@ -53,10 +53,12 @@
 	<!-- jquery -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<script type="text/javascript">
-		var bno = 1111;
+		var bno = 81921;
 		
 		function getAllList() {
 			$.getJSON("/replies/all/" + bno, function(data){
+				console.log(data.length);
+				console.log(data);
 				// data 변수가 바로 얻어온 JSON데이터의 집합
 		//		console.log(data);
 				
