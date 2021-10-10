@@ -7,7 +7,6 @@ import org.ict.domain.ReplyVO;
 
 public interface ReplyService {
 	
-	
 	public List<ReplyVO> listReply(Long bno);
 	
 	public void addReply(ReplyVO vo);

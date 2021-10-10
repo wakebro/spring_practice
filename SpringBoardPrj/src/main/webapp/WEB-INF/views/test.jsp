@@ -56,7 +56,7 @@
 		var bno = 81921;
 		
 		function getAllList() {
-			$.getJSON("/replies/all/" + bno, function(data){
+			$.getJSON("/c/replies/all/" + bno, function(data){
 				console.log(data.length);
 				console.log(data);
 				// data 변수가 바로 얻어온 JSON데이터의 집합
@@ -146,6 +146,12 @@
 			$(".modal-title").html(rno);	// 모달 상단에 rno 넣기
 			$("#replytext").val(reply);		// 모달 수정창에 reply 넣기
 			$("#modiDiv").show("slow");		// 창에 애니메이션 효과 넣기
+		});
+		
+		// 모달창 닫기
+		$("#closeBtn").on("click", function(){
+			// console.log("닫기 버튼 클릭");
+			$("#modiDiv").hide("slow");
 		});
 		
 		
