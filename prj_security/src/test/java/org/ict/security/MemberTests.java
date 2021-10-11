@@ -74,7 +74,7 @@ public class MemberTests {
 		}
 	}
 	
-	@Test
+//	@Test
 	public void testInsertAuth() {
 		try {
 			Connection con = ds.getConnection();
@@ -83,7 +83,6 @@ public class MemberTests {
 		for (int i = 0; i < 30; i++) {
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			
-			// userpw에 암호화 비본 입력
 			if(i<10) {
 				pstmt.setString(1, "user" + i);
 				pstmt.setString(2, "ROLE_USER");
@@ -94,12 +93,13 @@ public class MemberTests {
 				pstmt.setString(1, "user" + i);
 				pstmt.setString(2, "ROLE_ADMIN");
 			}
-			pstmt.executeUpdate();
+			pstmt.execute();
 		}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+	
 }
 
 
