@@ -14,7 +14,7 @@
 	
 	<form action="/login" method="post">
 		아이디 : <input type="text" name="username" value="admin"><br>
-		비밀번호 : <input type="password" name="password" value="admin"><br>
+		비밀번호 : <input type="test" name="password" value="admin"><br>
 		<input type="submit" value="로그인">
 		<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 	</form>

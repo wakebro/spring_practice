@@ -25,7 +25,7 @@ public class CustomLoginSuccessHander implements AuthenticationSuccessHandler {
 		// ROLE_ADMIN의 경우는 ROLE_MEMBER가 함께 부여되기 때문에 경우에 따라
 		// 권한은 여럿이 될 수도 있음
 		log.warn("로그인 성공");
-		List<String> roleList = new ArrayList<String>();
+		List<String> roleList = new ArrayList<>();
 		
 		for(GrantedAuthority role : authentication.getAuthorities()) {
 			roleList.add(role.getAuthority());
