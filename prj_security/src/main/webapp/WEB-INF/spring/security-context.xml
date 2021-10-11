@@ -10,6 +10,7 @@
 	<!-- 빈 저장  -->
 	<bean id="customAccessDenied" class="org.ict.security.CustomAccessDenieHandler"/>
 	<bean id="customLoginSuccess" class="org.ict.security.CustomLoginSuccessHander"/>
+	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 
 	<security:http>
 		<!-- /secu/all 접속시 모든 유저에게 접근 허용 -->
@@ -30,10 +31,14 @@
 	
 	<security:authentication-manager>
 		<security:authentication-provider>
-			<security:user-service>
+			<!-- <security:user-service>
 				<security:user name="member" password="{noop}member" authorities="ROLE_MEMBER"/>
 				<security:user name="admin" password="{noop}admin" authorities="ROLE_MEMBER, ROLE_ADMIN"/>
-			</security:user-service>
+			</security:user-service> -->
+			<security:jdbc-user-service data-source-ref="dataSource"/>
+			
+			<security:password-encoder ref="bcryptPasswordEncoder"/>
+			
 		</security:authentication-provider>
 	
 	</security:authentication-manager>
