@@ -39,4 +39,12 @@
 		ON member_tbl.userid = member_auth.userid
 		WHERE member_tbl.userid=#{userid}
 	</select>
+	
+	<insert id="insert">
+		INSERT INTO member_tbl(userid, userpw, username)
+		VALUES (#{vo.userid}, #{vo.userpw}, #{vo.username})
+		
+		INSERT INTO member_auth(userid, auth)
+		VALUES (#{vo.userid}, #{auth})		
+	</insert>
 </mapper>

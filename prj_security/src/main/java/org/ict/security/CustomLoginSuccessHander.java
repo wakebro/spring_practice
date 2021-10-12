@@ -42,7 +42,7 @@ public class CustomLoginSuccessHander implements AuthenticationSuccessHandler {
 			return;
 		}
 		
-		response.sendRedirect("/");
+		response.sendRedirect("/secu/all");
 			
 		
 	}
