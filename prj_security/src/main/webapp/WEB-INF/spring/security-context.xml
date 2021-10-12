@@ -12,6 +12,7 @@
 	<bean id="customLoginSuccess" class="org.ict.security.CustomLoginSuccessHander"/>
 	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 	<bean id="customUserDetailsService" class="org.ict.security.CustomUserDetailsService"/>
+	<bean id="customUserJoin" class="org.ict.security.CustomUserJoinService"/>
 
 	<!-- <security:http auto-config="true" use-expressions="true"> -->
 	<security:http>
@@ -21,7 +22,8 @@
 		<!-- <security:intercept-url pattern="/secu/member" access="hasRole('ROLE_MEMBER')" /> -->
 		<!-- /secu/admin는 admin에게만 접근 허용 -->
 		<!-- <security:intercept-url pattern="/secu/admin" access="hasRole('ROLE_ADMIN')" /> -->
-		<security:intercept-url pattern="/secu/join" access="permitAll"/>
+		
+		
 		
 		<security:form-login login-page="/customLogin" authentication-success-handler-ref="customLoginSuccess"/>
 		
