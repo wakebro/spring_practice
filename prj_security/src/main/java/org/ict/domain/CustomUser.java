@@ -28,6 +28,8 @@ public class CustomUser extends User {
 				vo.getAuthList().stream().map(author ->
 				new SimpleGrantedAuthority(author.getAuth()))
 				.collect(Collectors.toList()));
+		
+		// 내부변수 member에 vo를 대입
 		this.member = vo;
 	}
 }
