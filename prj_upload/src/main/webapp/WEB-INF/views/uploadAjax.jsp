@@ -91,7 +91,7 @@
 					success : function(result){
 						alert("Uploaded");
 
-						showUploadedFile.(result);
+						showUploadedFile(result);
 
 						$(".uploadDiv").html(clonObj.html());
 					}

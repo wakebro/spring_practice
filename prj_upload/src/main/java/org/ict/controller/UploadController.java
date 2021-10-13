@@ -1,4 +1,3 @@
-/*
 package org.ict.controller;
 
 
@@ -99,11 +98,14 @@ public class UploadController {
 		
 		String uploadFolderPath = getFolder();
 		
-		// 폴더 생성
+		// 폴더 생성_ new File("디렉토리의 경로", "파일명")
 		File uploadPath = new File(uploadFolder, uploadFolderPath);
 		log.info("upload Path : " + uploadPath);
 		
+		// exists - File 객체가 참조하는 파일이나 디렉토리경로가 실존하면 true 리턴
 		if(uploadPath.exists() == false)
+			// mkdirs - 디렉토리를 생성하며 부모디렉토리까지 같이 생성한다.
+			// mkdir - 디렉토리를 생성하되, 반드시 부모 디렉토리가 있어야 한다.
 			uploadPath.mkdirs();
 		
 		
@@ -179,4 +181,3 @@ public class UploadController {
 		return result;
 	}
 }
-*/

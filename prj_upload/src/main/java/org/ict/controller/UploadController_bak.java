@@ -1,3 +1,4 @@
+/*
 package org.ict.controller;
 
 
@@ -129,3 +130,4 @@ public class UploadController_bak {
 		}
 	}
 }
+*/
