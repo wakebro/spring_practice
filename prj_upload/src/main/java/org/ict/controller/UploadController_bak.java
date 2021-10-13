@@ -1,4 +1,3 @@
-/*
 package org.ict.controller;
 
 
@@ -6,19 +5,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
-import org.ict.domain.AttachFileDTO;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,7 +20,7 @@ import net.coobird.thumbnailator.Thumbnailator;
 
 @Controller
 @Log4j
-public class UploadController {
+public class UploadController_bak {
 	
 	// 이미지 여부를 판단해 썸네일 제작 여부를 판단해주는 메서드
 	private boolean checkImageType(File file) {
@@ -57,7 +48,7 @@ public class UploadController {
 		log.info("upload form");
 	}
 	
-	@ResponseBody
+	@PostMapping("/uploadFormAction")
 	public void uploadFormPost(MultipartFile[] uploadFile, Model model) {
 		
 		// 저장 경로
@@ -88,41 +79,33 @@ public class UploadController {
 	
 	// 일반 컨트롤러에서 rest요청을 처리시키는 경우에 @ResponseBody를 붙인다
 	@ResponseBody
-	@PostMapping(value = "/uploadFormAction", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<AttachFileDTO>> uploadAjaxPost(MultipartFile[] uploadFile) {
-		
+	@PostMapping("/uploadAjaxAction")
+	public void uploadAjaxPost(MultipartFile[] uploadFile) {
 		log.info("ajax post update!");
-		
-		List<AttachFileDTO> list = new ArrayList();
 		
 		String uploadFolder = "C:\\upload_data\\temp";
 		
-		String uploadFolderPath = getFolder();
-		
 		// 폴더 생성
-		File uploadPath = new File(uploadFolder, uploadFolderPath);
+		File uploadPath = new File(uploadFolder, getFolder());
 		log.info("upload Path : " + uploadPath);
 		
 		if(uploadPath.exists() == false)
 			uploadPath.mkdirs();
 		
 		
-		for (MultipartFile multipartFile : uploadFile) {
+		for (MultipartFile file : uploadFile) {
 			log.info("------------------------------");
-			log.info("파일 이름 : " + multipartFile.getOriginalFilename());
-			log.info("파일 크기 : " + multipartFile.getSize());
+			log.info("파일 이름 : " + file.getOriginalFilename());
+			log.info("파일 크기 : " + file.getSize());
 			
-			AttachFileDTO attachDTO = new AttachFileDTO();
 			
-			String uploadFileName = multipartFile.getOriginalFilename();
+			String uploadFileName = file.getOriginalFilename();
 			
 			log.info("자르기 전 파일 이름 : "+uploadFileName);
 			
 			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\") + 1);
 			
 			log.info("최종 파일 이름 : " + uploadFileName);
-			
-			attachDTO.setFileName(uploadFileName);
 			
 			// UUID 발급 부분
 			UUID uuid = UUID.randomUUID();
@@ -133,50 +116,16 @@ public class UploadController {
 				// File saveFile = new File(uploadFolder, uploadFileName); 
 				// 경로를 고정폴더인 uploadFolder에서 날짜별 가변폴더인 uploadPath로 변경
 				File saveFile = new File(uploadPath, uploadFileName);
-				multipartFile.transferTo(saveFile);
-				
-				attachDTO.setUuid(uuid.toString());
-				attachDTO.setUploadPath(uploadFolderPath);
-				
+				file.transferTo(saveFile);
 				// 이 아래부터 썸네일 생성로직
 				if(checkImageType(saveFile)) {
-					attachDTO.setImage(true);
-					
 					FileOutputStream thumbnail = new FileOutputStream(new File(uploadPath, "s_" + uploadFileName));
-					Thumbnailator.createThumbnail(multipartFile.getInputStream(), thumbnail, 100, 100);
+					Thumbnailator.createThumbnail(file.getInputStream(), thumbnail, 100, 100);
 					thumbnail.close();
 				}
-				list.add(attachDTO);
 			} catch (Exception e) {
 				log.error(e.getMessage());
 			}
 		}
-		return new ResponseEntity<>(list, HttpStatus.OK);
-	}
-	
-	@GetMapping("/display")
-	@ResponseBody
-	public ResponseEntity<byte[]> getFile(String fileName){
-		log.info("fileName : " + fileName);
-		
-		File file = new File("C:\\upload_data\\temp\\" + fileName);
-		
-		log.info("file : " + file);
-		
-		ResponseEntity<byte[]> result = null;
-		
-		try {
-			HttpHeaders header = new HttpHeaders();
-			
-			header.add("Content-Type", Files.probeContentType(file.toPath()));
-			
-			result = new ResponseEntity<>(FileCopyUtils.copyToByteArray(file), 
-											header,
-											HttpStatus.OK);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return result;
 	}
 }
-*/

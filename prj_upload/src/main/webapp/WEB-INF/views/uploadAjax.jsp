@@ -6,15 +6,59 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<style>
+	.uploadResult{
+		width:100%;
+		background-color: gray;
+	}
+	.uploadResult ul{
+		display: flex;
+		flex-flow: row;
+		justify-content: center;
+		align-items: center;
+	}
+	.uploadResult ul li{
+		list-style: none;
+		padding: 10px;
+	}
+	.uploadResult ul li img{
+		width: 20px;
+	}
+</style>
 </head>
 <body>
 	<h1>Upload with Ajax</h1>
 	<div class="uploadDiv">
 		<input type="file" name="uploadFile" multiple>
 	</div>
+	<div class="uploadResult">
+		<ul>
+			<!-- 업로드된 파일이 들어갈 자리 -->
+		</ul>
+	</div>
 	<button id="uploadBtn">Upload</button>
 	<script>
 		$(document).ready(function(){
+
+			// 정규표현식으로 파일 확장자, 용량 거르기
+			let regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
+			let maxSize = 5242880; // 5MB
+			function checkExtension(fileName, fileSize){
+				if(fileSize > maxSize){
+					console.log(fileSize);
+					alert("파일 사이즈 초과!");
+					return false;
+				}
+
+				// 위에 만든 형식에 파일 이름이 해당하는지 검사
+				if(regex.test(fileName)){
+					alert("해당 종류의 파일은 업로드할 수 없습니다.");
+					return false;
+				}
+				return true;
+			}
+			let clonObj = $(".uploadDiv").clone();
+
 			$("#uploadBtn").on("click",function(e){
 				
 				// ajax는 제출 버튼을 눌렀을 때 목적지가 없기 때문에
@@ -23,9 +67,58 @@
 				let inputFile = $("input[name='uploadFile']");
 				console.log(inputFile);
 				let files = inputFile[0].files;
+				console.log("파일 : ");
 				console.log(files);
 				
+				// 파일 데이터를 폼에 집어넣기
+				for (var i = 0; i < files.length; i++) {
+					// 폼에 넣기 전에 검사
+					if(!checkExtension(files[i].name, files[i].size)){
+						return false;
+					}
+					formData.append("uploadFile", files[i])
+				}
+				console.log("폼데이터 확인");
+				console.log(formData[0]);
+
+				$.ajax({
+					url : '/uploadAjaxAction',
+					processData : false,
+					contentType : false,
+					data : formData,
+					type : 'POST',
+					dataType: 'json',
+					success : function(result){
+						alert("Uploaded");
+
+						showUploadedFile.(result);
+
+						$(".uploadDiv").html(clonObj.html());
+					}
+				});
+				
 			});
+
+			let uploadResult = $(".uploadResult ul");
+
+			function showUploadedFile(uploadResultArr) {
+				let str = "";
+
+				$(uploadResultArr).each(function(i, obj) {
+					if(!obj.image){
+						str += "<li><img src='/resources/attachment.png'>"
+							 + obj.fileName + "</li>";
+					}else {
+						// str += "<li>" + obj.fileName + "</li>";
+
+						let fileCallPath = encodeURIComponent(obj.uploadPath + "/s_" 
+														+ obj.uuid + "_" + obj.fileName);
+
+						str += "<li><img src='/display?fileName=" + fileCallPath + "'></li>";
+					}
+				});
+				uploadResult.append(str);
+			}
 		});
 	</script>
 </body>
