@@ -37,6 +37,7 @@
 		</ul>
 	</div>
 	<button id="uploadBtn">Upload</button>
+
 	<script>
 		$(document).ready(function(){
 
@@ -49,7 +50,7 @@
 					alert("파일 사이즈 초과!");
 					return false;
 				}
-
+				
 				// 위에 만든 형식에 파일 이름이 해당하는지 검사
 				if(regex.test(fileName)){
 					alert("해당 종류의 파일은 업로드할 수 없습니다.");
@@ -57,6 +58,7 @@
 				}
 				return true;
 			}
+
 			let clonObj = $(".uploadDiv").clone();
 
 			$("#uploadBtn").on("click",function(e){
@@ -69,18 +71,16 @@
 				let files = inputFile[0].files;
 				console.log("파일 : ");
 				console.log(files);
-				
-				// 파일 데이터를 폼에 집어넣기
 				for (var i = 0; i < files.length; i++) {
-					// 폼에 넣기 전에 검사
+					// formData에 넣기 전에 확장사, 용량 검사
 					if(!checkExtension(files[i].name, files[i].size)){
 						return false;
 					}
+					
+					// 검사가 끝난 파일 데이터를 formData에 집어넣기
 					formData.append("uploadFile", files[i])
 				}
-				console.log("폼데이터 확인");
-				console.log(formData[0]);
-
+				
 				$.ajax({
 					url : '/uploadAjaxAction',
 					processData : false,
@@ -89,27 +89,26 @@
 					type : 'POST',
 					dataType: 'json',
 					success : function(result){
-						alert("Uploaded");
-
+						//alert("Uploaded");
+						console.log(result);
+						
 						showUploadedFile(result);
-
 						$(".uploadDiv").html(clonObj.html());
 					}
-				});
-				
-			});
+				}); // ajax
+			}); // #uploadBtn
 
 			let uploadResult = $(".uploadResult ul");
-
+			
 			function showUploadedFile(uploadResultArr) {
 				let str = "";
-
+				
 				$(uploadResultArr).each(function(i, obj) {
 					if(!obj.image){
-						str += "<li><img src='/resources/attachment.png'>"
+						str += "<li><img src='/resources/image/attachment.png'>"
 							 + obj.fileName + "</li>";
 					}else {
-						// str += "<li>" + obj.fileName + "</li>";
+						str += "<li>" + obj.fileName + "</li>";
 
 						let fileCallPath = encodeURIComponent(obj.uploadPath + "/s_" 
 														+ obj.uuid + "_" + obj.fileName);
