@@ -24,6 +24,9 @@
 	.uploadResult ul li img{
 		width: 20px;
 	}
+	.uploadResult span:hover{
+		cursor: pointer;
+	}
 </style>
 </head>
 <body>
@@ -117,24 +120,56 @@
 					// console.log(i);
 					// console.log(obj);
 
-					if(!obj.image){
+					if (!obj.image) {
+						let fileCallPath = encodeURIComponent(obj.uploadPath + "/"
+							+ obj.uuid + "_" + obj.fileName);
 						// 그림이 아니면 썸네일 대신 resources폴더 내 이미지를 대체로 설정
-						str += "<li><img src='/resources/image/attachment.png'>"
-							 + obj.fileName + "</li>";
-					}else {
+						str += "<li><a href='/download?fileName=" + fileCallPath + "'>" +
+							"<img src='/resources/image/attachment.png'>" + obj.fileName + "</a>"
+							+ "<span data-file=\'" + fileCallPath + "\' data-type='file'> X </span></li>";
+					} else {
 						// str += "<li>" + obj.fileName + "</li>";
 
 						// 파일 이름 + 썸네일을 보여주기 위해 썸네일 주소 요청하게 만들기
 						let fileCallPath = encodeURIComponent(obj.uploadPath + "/s_"
-														+ obj.uuid + "_" + obj.fileName);
+							+ obj.uuid + "_" + obj.fileName);
+
+						let fileCallPath2 = encodeURIComponent(obj.uploadPath + "/"
+							+ obj.uuid + "_" + obj.fileName);
 
 						// fileCallPath를 조립
-						str += "<li><img src='/display?fileName=" + fileCallPath + "'>'"
-							+ obj.fileName +"</li>";
+						str += "<li><a href='/download?fileName=" + fileCallPath2
+							+ "'><img src='/display?fileName=" + fileCallPath + "'>'" + obj.fileName + "</a>"
+							+ "<span data-file=\'" + fileCallPath + "\'data-type='image'> X </span>" + "</li>";
 					}
 				});
 				uploadResult.append(str);
 			}// End showUploadedFile
+
+			$(".uploadResult").on("click", "span", function(e){
+				console.log(e);
+				let targetFile = $(this).data("file");
+				let type = $(this).data("type");
+				console.log("타켓파일");
+				console.log(targetFile);
+				console.log("타입");
+				console.log(type);
+
+				let targetLi = $(this).closest("li");
+				console.log(targetLi);
+
+				$.ajax({
+					url : '/deleteFile',
+					data : {fileName: targetFile, type:type},
+					dataType : 'text',
+					type : 'POST',
+					success : function(result){
+						alert(result);
+						targetLi.remove();						
+					}
+				});
+				
+			})
 		});
 	</script>
 </body>
