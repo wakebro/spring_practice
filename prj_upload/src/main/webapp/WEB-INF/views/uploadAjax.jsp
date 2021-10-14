@@ -59,7 +59,9 @@
 				return true;
 			}
 
+			// 업로드시 파일 선택을 초기화시키기
 			let clonObj = $(".uploadDiv").clone();
+			
 
 			$("#uploadBtn").on("click",function(e){
 				
@@ -90,9 +92,13 @@
 					dataType: 'json',
 					success : function(result){
 						//alert("Uploaded");
+						
+						// 내가 업로드한 파일 디버깅
 						console.log(result);
 						
 						showUploadedFile(result);
+						
+						// 세팅되어있던 파일이 업로드되면서 목록에서 사라지게 처리
 						$(".uploadDiv").html(clonObj.html());
 					}
 				}); // ajax
@@ -108,7 +114,7 @@
 						str += "<li><img src='/resources/image/attachment.png'>"
 							 + obj.fileName + "</li>";
 					}else {
-						str += "<li>" + obj.fileName + "</li>";
+						// str += "<li>" + obj.fileName + "</li>";
 
 						let fileCallPath = encodeURIComponent(obj.uploadPath + "/s_" 
 														+ obj.uuid + "_" + obj.fileName);

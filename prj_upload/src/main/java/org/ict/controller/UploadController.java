@@ -109,8 +109,8 @@ public class UploadController {
 	/*public void uploadAjaxPost(MultipartFile[] uploadFile) {*/
 		
 		log.info("ajax post update!");
-		// 그림파일의 정보 AttachFileDTO를 업로드된 파일 개수만큼 중첩해 저장하는 list 선언
-		List<AttachFileDTO> list = new ArrayList();
+		// 그림파일 여러개의 정보 AttachFileDTO를 중첩해 저장하는 list 선언
+		List<AttachFileDTO> list = new ArrayList<>();
 		
 		// 저장 경로_고정
 		String uploadFolder = "C:\\upload_data\\temp";
@@ -134,6 +134,8 @@ public class UploadController {
 //			log.info("올린 파일 이름 : " + multipartFile.getOriginalFilename());
 //			log.info("올린 파일 크기 : " + multipartFile.getSize());
 			
+			// 파일 이름, 폴더 경로(업로드 날짜), UUID, 그림 파일 여부를 모두
+			// 이 반복문에서 처리하므로 제일 상단에 먼저 그림정보를 받는 AttacfhFileDTO를 생성한다.
 			AttachFileDTO attachDTO = new AttachFileDTO();
 			
 			// 올린 파일의 이름 추출
@@ -145,8 +147,6 @@ public class UploadController {
 			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\") + 1);
 			log.info("최종 파일 이름 : " + uploadFileName);
 			
-			// attachDTO에 파일의 이름 저장
-			attachDTO.setFileName(uploadFileName);
 			
 			
 			// 중복되는 파일 업로드를 막기 위해 UUID 생성
@@ -157,7 +157,7 @@ public class UploadController {
 			
 			
 			// 폴더 생성_ new File("디렉토리의 경로", "파일명")
-			// File saveFile = new File(uploadFolder, uploadFileName);
+//			File saveFile = new File(uploadFolder, uploadFileName);
 			
 			// 가변적으로 변하는 날짜에 맞춘 파일 경로와 저장할 파일의 이름을 넣은 객체 생성 
 //			File saveFile = new File(uploadPath, uploadFileName);
@@ -169,6 +169,8 @@ public class UploadController {
 				multipartFile.transferTo(saveFile);
 				
 				
+				// attachDTO에 파일의 이름 저장
+				attachDTO.setFileName(uploadFileName);
 				// attachDTO에 파일의 UUID 저장
 				attachDTO.setUuid(uuid.toString());
 				// attachDTO에 파일의 경로 저장
@@ -177,6 +179,8 @@ public class UploadController {
 				
 				// 저장한 파일 타입에 따라 썸네일 생성
 				if(checkImageType(saveFile)) {
+					// 클래스 생성 후 boolean타입은 자료입력을하지 않으면
+					// 자동으로 false로 간주됨
 					// attachDTO에 파일 썸네일 true/false 저장
 					attachDTO.setImage(true);
 					
