@@ -108,22 +108,31 @@
 			
 			function showUploadedFile(uploadResultArr) {
 				let str = "";
-				
+
+				console.log(uploadResultArr)
+
+				// i는 인덱스 번호(0, 1, 2, ...) obj 그림파일 정보가 담긴 json
 				$(uploadResultArr).each(function(i, obj) {
+					// console.log("------------------------------");
+					// console.log(i);
+					// console.log(obj);
+
 					if(!obj.image){
+						// 그림이 아니면 썸네일 대신 resources폴더 내 이미지를 대체로 보여줌
 						str += "<li><img src='/resources/image/attachment.png'>"
 							 + obj.fileName + "</li>";
 					}else {
 						// str += "<li>" + obj.fileName + "</li>";
 
 						let fileCallPath = encodeURIComponent(obj.uploadPath + "/s_" 
-														+ obj.uuid + "_" + obj.fileName);
+														+ obj.fileName);
 
-						str += "<li><img src='/display?fileName=" + fileCallPath + "'></li>";
+						str += "<li><img src='/display?fileName=" + fileCallPath + "'>'"
+							+ obj.fileName +"</li>";
 					}
 				});
 				uploadResult.append(str);
-			}
+			}// End showUploadedFile
 		});
 	</script>
 </body>
