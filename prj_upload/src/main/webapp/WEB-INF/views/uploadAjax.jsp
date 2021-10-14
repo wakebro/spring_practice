@@ -118,15 +118,17 @@
 					// console.log(obj);
 
 					if(!obj.image){
-						// 그림이 아니면 썸네일 대신 resources폴더 내 이미지를 대체로 보여줌
+						// 그림이 아니면 썸네일 대신 resources폴더 내 이미지를 대체로 설정
 						str += "<li><img src='/resources/image/attachment.png'>"
 							 + obj.fileName + "</li>";
 					}else {
 						// str += "<li>" + obj.fileName + "</li>";
 
-						let fileCallPath = encodeURIComponent(obj.uploadPath + "/s_" 
-														+ obj.fileName);
+						// 파일 이름 + 썸네일을 보여주기 위해 썸네일 주소 요청하게 만들기
+						let fileCallPath = encodeURIComponent(obj.uploadPath + "/s_"
+														+ obj.uuid + "_" + obj.fileName);
 
+						// fileCallPath를 조립
 						str += "<li><img src='/display?fileName=" + fileCallPath + "'>'"
 							+ obj.fileName +"</li>";
 					}

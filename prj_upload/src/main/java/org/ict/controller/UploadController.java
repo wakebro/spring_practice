@@ -3,6 +3,7 @@ package org.ict.controller;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,6 +12,8 @@ import java.util.List;
 import java.util.UUID;
 
 import org.ict.domain.AttachFileDTO;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -104,6 +107,7 @@ public class UploadController {
 	
 	@PostMapping("/uploadAjaxAction")
 	// 일반 컨트롤러가 .jsp대신 json데이터를 리턴하도록 사용
+	// 일반 컨트롤러에서 rest요청을 처리시키는 경우에 @ResponseBody를 붙인다
 	@ResponseBody
 	public ResponseEntity<List<AttachFileDTO>> uploadFormPost(MultipartFile[] uploadFile){
 	/*public void uploadAjaxPost(MultipartFile[] uploadFile) {*/
@@ -120,12 +124,15 @@ public class UploadController {
 		
 		// 날짜(년도, 월, 일)별 폴더 생성
 		// 고정된 디렉토리 경로와 가변적으로 변하는(날짜)를 넣은 File 객체 생성
+		// 폴더 생성_ new File("디렉토리의 경로", "파일명")
 		File uploadPath = new File(uploadFolder, uploadFolderPath);
 		log.info(uploadPath);
 		
 		// File객체인 uploadPath의 경로가 없을 경우
+		// exists - File 객체가 참조하는 파일이나 디렉토리경로가 실존하면 true 리턴
 		if(uploadPath.exists() == false)
-			// 해당 경로가 완성되도록 디렉토리 생성
+			// mkdirs - 디렉토리를 생성하며 부모디렉토리까지 같이 생성한다.
+			// mkdir - 디렉토리를 생성하되, 반드시 부모 디렉토리가 있어야 한다.
 			uploadPath.mkdirs();
 		
 		
@@ -148,6 +155,8 @@ public class UploadController {
 			log.info("최종 파일 이름 : " + uploadFileName);
 			
 			
+			// attachDTO에 파일의 이름 저장
+			attachDTO.setFileName(uploadFileName);
 			
 			// 중복되는 파일 업로드를 막기 위해 UUID 생성
 			UUID uuid = UUID.randomUUID();
@@ -163,14 +172,13 @@ public class UploadController {
 //			File saveFile = new File(uploadPath, uploadFileName);
 			
 			try {
+				// 경로를 고정폴더인 uploadFolder에서 날짜별 가변폴더인 uploadPath로 변경
 				File saveFile = new File(uploadPath, uploadFileName);
 				
 				// transferTo - 업로드한 파일 중 하나(경로와 최종 이름을 결정 한 것)를 설정한 위치에 저장 
 				multipartFile.transferTo(saveFile);
 				
 				
-				// attachDTO에 파일의 이름 저장
-				attachDTO.setFileName(uploadFileName);
 				// attachDTO에 파일의 UUID 저장
 				attachDTO.setUuid(uuid.toString());
 				// attachDTO에 파일의 경로 저장
@@ -236,102 +244,25 @@ public class UploadController {
 		return result;
 	}
 	
-	/* 원본
-	// 일반 컨트롤러에서 rest요청을 처리시키는 경우에 @ResponseBody를 붙인다	
+	// produces에서 다운로드를 시킬 수 있는 application/octet-stream인 MIME 타입이 설정됨
+	// 그렇기때문에 heaaders에서 따로 지정해줄 필요가 없다.
+	@GetMapping(value = "/download", produces = {MediaType.APPLICATION_OCTET_STREAM_VALUE})
 	@ResponseBody
-	@PostMapping(value = "/uploadAjaxAction", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<AttachFileDTO>> uploadAjaxPost(MultipartFile[] uploadFile) {
+	public ResponseEntity<Resource> downloadFile(String fileName){
+		log.info("다운로드 파일 : " + fileName);
+		Resource resource = new FileSystemResource("C:\\upload_data\\temp\\" + fileName);
+		log.info("리소스 : " + resource);
 		
-		log.info("ajax post update!");
+		String resourceName = resource.getFilename();
 		
-		List<AttachFileDTO> list = new ArrayList();
-		
-		String uploadFolder = "C:\\upload_data\\temp";
-		
-		String uploadFolderPath = getFolder();
-		
-		File uploadPath = new File(uploadFolder, uploadFolderPath);
-		// 폴더 생성_ new File("디렉토리의 경로", "파일명")
-		log.info("upload Path : " + uploadPath);
-		
-		// exists - File 객체가 참조하는 파일이나 디렉토리경로가 실존하면 true 리턴
-		if(uploadPath.exists() == false)
-			// mkdirs - 디렉토리를 생성하며 부모디렉토리까지 같이 생성한다.
-			// mkdir - 디렉토리를 생성하되, 반드시 부모 디렉토리가 있어야 한다.
-			uploadPath.mkdirs();
-		
-		
-		for (MultipartFile multipartFile : uploadFile) {
-			log.info("------------------------------");
-			log.info("파일 이름 : " + multipartFile.getOriginalFilename());
-			log.info("파일 크기 : " + multipartFile.getSize());
-			
-			AttachFileDTO attachDTO = new AttachFileDTO();
-			
-			String uploadFileName = multipartFile.getOriginalFilename();
-			
-			log.info("자르기 전 파일 이름 : "+uploadFileName);
-			
-			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\") + 1);
-			
-			log.info("최종 파일 이름 : " + uploadFileName);
-			
-			attachDTO.setFileName(uploadFileName);
-			
-			// UUID 발급 부분
-			UUID uuid = UUID.randomUUID();
-			uploadFileName = uuid.toString() + "_" + uploadFileName;
-			
-			
-			try{
-				// File saveFile = new File(uploadFolder, uploadFileName); 
-				// 경로를 고정폴더인 uploadFolder에서 날짜별 가변폴더인 uploadPath로 변경
-				File saveFile = new File(uploadPath, uploadFileName);
-				multipartFile.transferTo(saveFile);
-				
-				attachDTO.setUuid(uuid.toString());
-				attachDTO.setUploadPath(uploadFolderPath);
-				
-				// 이 아래부터 썸네일 생성로직
-				if(checkImageType(saveFile)) {
-					attachDTO.setImage(true);
-					
-					FileOutputStream thumbnail = new FileOutputStream(new File(uploadPath, "s_" + uploadFileName));
-					Thumbnailator.createThumbnail(multipartFile.getInputStream(), thumbnail, 100, 100);
-					thumbnail.close();
-				}
-				list.add(attachDTO);
-			} catch (Exception e) {
-				log.error(e.getMessage());
-			}
-		}
-		return new ResponseEntity<>(list, HttpStatus.OK);
-	}
-	*/
-	/*
-	@GetMapping("/display")
-	@ResponseBody
-	public ResponseEntity<byte[]> getFile(String fileName){
-		log.info("fileName : " + fileName);
-		
-		File file = new File("C:\\upload_data\\temp\\" + fileName);
-		
-		log.info("file : " + file);
-		
-		ResponseEntity<byte[]> result = null;
+		HttpHeaders headers = new HttpHeaders();
 		
 		try {
-			HttpHeaders header = new HttpHeaders();
-			
-			header.add("Content-Type", Files.probeContentType(file.toPath()));
-			
-			result = new ResponseEntity<>(FileCopyUtils.copyToByteArray(file), 
-											header,
-											HttpStatus.OK);
-		} catch (Exception e) {
+			headers.add("Content-Disposition", "attachment; filename=" + new String(resourceName.getBytes("UTF-8"), "ISO-8859-1"));
+		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-		return result;
+		
+		return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
 	}
-	*/
 }
