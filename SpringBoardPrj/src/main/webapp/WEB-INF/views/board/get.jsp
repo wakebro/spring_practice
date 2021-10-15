@@ -1,52 +1,64 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
 
-<!-- 1. JQuery 입력받을 수 있도록 처리 -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<style>
-	#modiDiv {
-		width:	300px;
-		height: 100px;
-		background-color: green;
-		position:	absolute;
-		top:	50%;
-		left:	50%;
-		margin-top: -50px;
-		margin-right: -150px;
-		z-index: 1;
-	}
-	.uploadResult{
-		width:100%;
-		background-color: gray;
-	}
-	.uploadResult ul{
-		display: flex;
-		flex-flow: row;
-		justify-content: center;
-		align-items: center;
-	}
-	.uploadResult ul li{
-		list-style: none;
-		padding: 10px;
-	}
-	.uploadResult ul li img{
-		width: 20px;
-	}
-	.uploadResult span:hover{
-		cursor: pointer;
-	}
-</style>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+		crossorigin="anonymous"></script>
+
+	<!-- 1. JQuery 입력받을 수 있도록 처리 -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<style>
+		#modiDiv {
+			width: 300px;
+			height: 100px;
+			background-color: green;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-top: -50px;
+			margin-right: -150px;
+			z-index: 1;
+		}
+
+		/* uploadResult 결과물 css*/
+		#uploadResult {
+			width: 100%;
+			background-color: gray;
+		}
+
+		#uploadResult ul {
+			display: flex;
+			flex-flow: row;
+			justify-content: center;
+			align-items: center;
+		}
+
+		#uploadResult ul li {
+			list-style: none;
+			padding: 10px;
+			align-items: center;
+			text-align: center;
+		}
+		
+		#uploadResult ul li img:hover{
+			cursor: pointer;
+		}
+
+		#uploadResult ul li img {
+			width: 100px;
+		}
+	</style>
 
 </head>
+
 <body>
-	
+
 	<h1>상세 페이지</h1>
 	번호 : ${vo.bno}<br>
 	제목 : ${vo.title}<br>
@@ -54,80 +66,80 @@
 	본문 : ${vo.content}<br>
 	날짜 : ${vo.regdate}<br>
 	수정날짜 : ${vo.updatedate}<br>
-	
-	<%--pageNum, searchType, keyword 여부 디버깅
-	EL의 ${param.파라미터명}을 이용해 확인 가능
-	get 파라미터에 SearchCriteria를 선언해 처리해도 되지만
-	pageNum, searchType, keyword가 DB와 연계된 작업을 하지 않으므로
-	아래와 같이 활용하는게 효율적이다.
-	--%>
-	
-	페이지번호 : ${param.pageNum}<br>
-	검색조건: ${param.searchType }<br>
-	키워드 : ${param.keyword}<br>
-	
-	<a href="/board/list?pageNum=${param.pageNum}&searchType=${param.searchType}&keyword=${param.keyword}"><button class="btn btn-primary">목록</button></a><br>
-	<!-- 글 삭제 버튼으로 삭제되면, list 페이지로 넘어간다.
-		삭제로 넘어가는 경우 alert()창을 띄워서 "글이 삭제되었습니다"가
-		출력되도록 작성 -->
-	<form action="/board/remove" method="post">
-		<input type="hidden" name="bno" value="${vo.bno }">
-		<input type="submit" class="btn btn-danger" value="삭제">
-	</form>
-	
-	<form action="/board/boardmodify" method="post">
-		<input type="hidden" name="bno" value="${vo.bno }">
-		<input type="hidden" name="pageNum" value="${param.pageNum}">
-		<input type="hidden" name="searchType" value="${param.searchType}">
-		<input type="hidden" name="keyword" value="${param.keyword}">
-		<input type="submit" class= "btn btn-warning" value="수정">
-	</form>
-	
-	<!-- 파일 업로드 -->
-	<div class="uploadDiv">
-		<input type="file" name="uploadFile" multiple>
-	</div>
-	<div class="uploadResult">
-		<ul>
-			<!-- 업로드된 파일이 들어갈 자리 -->
-		</ul>
-	</div>
-	<button id="uploadBtn">Upload</button>
-	<hr>
-	<h2>댓글 영역</h2>
-	<!-- 댓글 창 -->
-	<div>
+
+	<%--pageNum, searchType, keyword 여부 디버깅 EL의 ${param.파라미터명}을 이용해 확인 가능 get 파라미터에 SearchCriteria를 선언해 처리해도 되지만
+		pageNum, searchType, keyword가 DB와 연계된 작업을 하지 않으므로 아래와 같이 활용하는게 효율적이다. --%>
+
+		페이지번호 : ${param.pageNum}<br>
+		검색조건: ${param.searchType }<br>
+		키워드 : ${param.keyword}<br>
+
+		<a href="/board/list?pageNum=${param.pageNum}&searchType=${param.searchType}&keyword=${param.keyword}"><button
+				class="btn btn-primary">목록</button></a><br>
+		<!-- 글 삭제 버튼으로 삭제되면, list 페이지로 넘어간다.
+	삭제로 넘어가는 경우 alert()창을 띄워서 "글이 삭제되었습니다"가
+	출력되도록 작성 -->
+		<form action="/board/remove" method="post">
+			<input type="hidden" name="bno" value="${vo.bno }">
+			<input type="submit" class="btn btn-danger" value="삭제">
+		</form>
+
+		<form action="/board/boardmodify" method="post">
+			<input type="hidden" name="bno" value="${vo.bno }">
+			<input type="hidden" name="pageNum" value="${param.pageNum}">
+			<input type="hidden" name="searchType" value="${param.searchType}">
+			<input type="hidden" name="keyword" value="${param.keyword}">
+			<input type="submit" class="btn btn-warning" value="수정">
+		</form>
+
+		<!-- 파일 업로드 -->
+		<div class="uploadDiv">
+			<input type="file" name="uploadFile" multiple>
+		</div>
+		<div class="row">
+			<h3 class="text-primary"></h3>
+			<div id="uploadResult">
+				<ul>
+					<!-- 첨부파일 들어갈 위치 -->
+				</ul>
+			</div>
+		</div>
+		<button id="uploadBtn">Upload</button>
+		<hr>
+		<h2>댓글 영역</h2>
+		<!-- 댓글 창 -->
 		<div>
-			REPLYER <input type="text" name="replyer" id="newReplyWriter">
+			<div>
+				REPLYER <input type="text" name="replyer" id="newReplyWriter">
+			</div>
+			<div>
+				REPLY TEXT <input type="text" name="reply" id="newReplyText">
+			</div>
+			<button id="replyAddBtn">ADD REPLY</button>
 		</div>
-		<div>
-			REPLY TEXT <input type="text" name="reply" id="newReplyText">
+		<hr>
+		<div class="row">
+			<h3 class="text-primary">댓글</h3>
+			<div id="replies">
+			</div>
 		</div>
-		<button id="replyAddBtn">ADD REPLY</button>
-	</div>
-	<hr>
-	<div class="row">
-		<h3 class="text-primary">댓글</h3>
-		<div id="replies">
+
+		<!-- 3. 모달창, 기타 ajax 호출 로직을 가져와 작동 -->
+		<div id="modiDiv" style="display:none;">
+			<div class="modal-title"></div>
+			<div>
+				<input type="text" id="replytext">
+			</div>
+			<div>
+				<button type="button" id="replyModBtn">Modify</button>
+				<button type="button" id="replyDelBtn">Delete</button>
+				<button type="button" id="closeBtn">close</button>
+			</div>
 		</div>
-	</div>
-	
-<!-- 3. 모달창, 기타 ajax 호출 로직을 가져와 작동 -->
-	<div id="modiDiv" style="display:none;">
-		<div class="modal-title"></div>
-		<div>
-			<input type="text" id="replytext">
-		</div>
-		<div>
-			<button type="button" id="replyModBtn">Modify</button>
-			<button type="button" id="replyDelBtn">Delete</button>
-			<button type="button" id="closeBtn">close</button>
-		</div>
-	</div>
-	
-<!-- 2. body태그 하단에 <script>태그 작성 후 var bno = ${vo.bno}로 글번호를 받은 다음
-function getAllList()를 test.jsp에서 복붙하여 게시물별 페이지에서 작동하도록 확인 -->	
-	<script type="text/javascript">
+
+		<!-- 2. body태그 하단에 <script>태그 작성 후 var bno = ${vo.bno}로 글번호를 받은 다음
+function getAllList()를 test.jsp에서 복붙하여 게시물별 페이지에서 작동하도록 확인 -->
+		<script type="text/javascript">
 		var bno = ${vo.bno};
 		
 		// 댓글 출력
@@ -191,7 +203,6 @@ function getAllList()를 test.jsp에서 복붙하여 게시물별 페이지에�
 	
 	// 댓글 생성
 	$("#replyAddBtn").on("click", function() {
-
 		// 각 input태그에 들어있던 rmfTmsdl, 본문의 value값을 변수에 저장
 		var replyer = $("#newReplyWriter").val();
 		var reply = $("#newReplyText").val();
@@ -200,7 +211,6 @@ function getAllList()를 test.jsp에서 복붙하여 게시물별 페이지에�
 		console.log(replyer)
 		console.log(reply)
 		
-
 		$.ajax({
 			type : 'post',
 			url : '/replies',
@@ -226,9 +236,7 @@ function getAllList()를 test.jsp에서 복붙하여 게시물별 페이지에�
 		});
 	});
 	
-
 	getAllList()
-
 	// 삭제버튼 작동
 	$("#replyDelBtn").on("click", function() {
 		var rno = $(".modal-title").html();
@@ -246,13 +254,11 @@ function getAllList()를 test.jsp에서 복붙하여 게시물별 페이지에�
 			}
 		});
 	});
-
 	// 수정버튼 작동
 	$("#replyModBtn").on("click", function() {
 		var rno = $(".modal-title").html();
 		var reply = $("#replytext").val();
 		console.log("수정버튼 클릭");
-
 		$.ajax({
 			type : 'put',
 			url : '/replies/' + rno,
@@ -275,171 +281,46 @@ function getAllList()를 test.jsp에서 복붙하여 게시물별 페이지에�
 			}
 		});
 	});
-	</script>
 
+	(function () {
+		$.getJSON("/board/getAttachList", {bno:bno}, function(arr) {
+			console.log(arr);
 
-<!-- 파일 업로드 -->
-	<script>
-		$(document).ready(function(){
+			let str = "";
 
-			// 정규표현식으로 파일 확장자, 용량 거르기
-			let regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
-			let maxSize = 5242880; // 5MB
-			function checkExtension(fileName, fileSize){
-				if(fileSize > maxSize){
-					console.log(fileSize);
-					alert("파일 사이즈 초과!");
-					return false;
-				}
-				
-				// 위에 만든 형식에 파일 이름이 해당하는지 검사
-				if(regex.test(fileName)){
-					alert("해당 종류의 파일은 업로드할 수 없습니다.");
-					return false;
-				}
-				return true;
-			}
-
-			// 업로드시 파일 선택을 초기화시키기
-			let clonObj = $(".uploadDiv").clone();
-			
-
-			$("#uploadBtn").on("click",function(e){
-				
-				// ajax는 제출 버튼을 눌렀을 때 목적지가 없기 때문에
-				// 빈 폼을 만들고 거기에 정보를 채워 나간다.
-				let formData = new FormData();
-				let inputFile = $("input[name='uploadFile']");
-				console.log(inputFile);
-				let files = inputFile[0].files;
-				console.log("파일 : ");
-				console.log(files);
-				for (var i = 0; i < files.length; i++) {
-					// formData에 넣기 전에 확장사, 용량 검사
-					if(!checkExtension(files[i].name, files[i].size)){
-						return false;
-					}
+			$(arr).each(function (i, attach) {
+				if(attach.image){
+					let fileCallPath = encodeURIComponent(attach.uploadpath + "/s_" +
+								attach.uuid + "_" + attach.fileName);
 					
-					// 검사가 끝난 파일 데이터를 formData에 집어넣기
-					formData.append("uploadFile", files[i])
+					str += "<li data-path='" + attach.uploadpath + "' data-uuid='"
+						+ attach.uuid + "' data-filename='" + attach.fileName
+						+ "' data-type='" + attach.image + "'><div>"
+						+ "<img src='/display?fileName=" + fileCallPath + "'>"
+						+ "</div></li>";
+				} else {
+					str += "<li data-path='" + attach.uploadpath + "' data-uuid='"
+						+ attach.uuid + "' data-filename='" + attach.fileName
+						+ "' data-type='" + attach.image + "'><div>"
+						+ "<span> " + attach.fileName + "</span><br>"
+						+ "<img src='/resources/image/attachment.png' width='100px' height='100px'>"
+						+ "</div></li>";
 				}
-				
-				$.ajax({
-					url : '/uploadAjaxAction',
-					processData : false,
-					contentType : false,
-					data : formData,
-					type : 'POST',
-					dataType: 'json',
-					success : function(result){
-						//alert("Uploaded");
-						
-						// 내가 업로드한 파일 디버깅
-						console.log(result);
-						
-						showUploadedFile(result);
-						
-						// 세팅되어있던 파일이 업로드되면서 목록에서 사라지게 처리
-						$(".uploadDiv").html(clonObj.html());
-					}
-				}); // ajax
-			}); // #uploadBtn
-
-			let uploadResult = $(".uploadResult ul");
-			
-			function showUploadedFile(uploadResultArr) {
-				let str = "";
-
-				console.log(uploadResultArr)
-
-				// i는 인덱스 번호(0, 1, 2, ...) obj 그림파일 정보가 담긴 json
-				$(uploadResultArr).each(function(i, obj) {
-					// console.log("------------------------------");
-					// console.log(i);
-					// console.log(obj);
-
-					if (!obj.image) {
-						let fileCallPath = encodeURIComponent(obj.uploadpath + "/"
-							+ obj.uuid + "_" + obj.fileName);
-						// 그림이 아니면 썸네일 대신 resources폴더 내 이미지를 대체로 설정
-						str += "<li><a href='/download?fileName=" + fileCallPath + "'>" +
-							"<img src='/resources/image/attachment.png'>" + obj.fileName + "</a>"
-							+ "<span data-file=\'" + fileCallPath + "\' data-type='file'> X </span></li>";
-					} else {
-						// str += "<li>" + obj.fileName + "</li>";
-
-						// 파일 이름 + 썸네일을 보여주기 위해 썸네일 주소 요청하게 만들기
-						let fileCallPath = encodeURIComponent(obj.uploadpath + "/s_"
-							+ obj.uuid + "_" + obj.fileName);
-
-						let fileCallPath2 = encodeURIComponent(obj.uploadpath + "/"
-							+ obj.uuid + "_" + obj.fileName);
-
-						// fileCallPath를 조립
-						str += "<li><a href='/download?fileName=" + fileCallPath2
-							+ "'><img src='/display?fileName=" + fileCallPath + "'>'" + obj.fileName + "</a>"
-							+ "<span data-file=\'" + fileCallPath + "\'data-type='image'> X </span>" + "</li>";
-					}
-				});
-				uploadResult.append(str);
-			}// End showUploadedFile
-
-			$(".uploadResult").on("click", "span", function(e){
-				console.log(e);
-				let targetFile = $(this).data("file");
-				let type = $(this).data("type");
-				console.log("타켓파일");
-				console.log(targetFile);
-				console.log("타입");
-				console.log(type);
-
-				let targetLi = $(this).closest("li");
-				console.log(targetLi);
-
-				$.ajax({
-					url : '/deleteFile',
-					data : {fileName: targetFile, type:type},
-					dataType : 'text',
-					type : 'POST',
-					success : function(result){
-						alert(result);
-						targetLi.remove();						
-					}
-				});
 			});
-		(function() {
-			// getJSON의 두번째 파라미터로 ?bno=bno값을 대체
-			$.getJSON("/board/getAttachList", {bno: bno}, function (arr) {
-				console.log(arr);
+			$("#uploadResult ul").html(str);
+		}); // End getJSON
+	})(); // End Anonymus
 
-				// ul태그 내부에 태그를 추가해야 하기 때문에 문자열 이용
-				let str = "";
-				// i, obj랑 같은데 변수명만 i, attach로 바꿈
-				$(arr).each(function(i, attach) {
-					// image type
-					if(attach.image){
-						let fileCallPath = encodeURIComponent(attach.uploadpath
-							+ "/s_" + attach.uuid + "_" + attach.fileName);
+	$("#uploadResult").on("click", "li", function (e) {
+		let liObj = $(this);
 
-						str += "<li data-path='" + attach.uploadpath + "'data-uuid='"
-							+ attach.uuid + "' data-filename='" + attach.fileName
-							+ "' data-type='" + attach.image + "'>"
-							+ "<div>"
-							+ "<img src='/display?fileName=" + fileCallPath + "'>"
-							+ "</div></li>";
-					} else{
-						str += "<li data-path='" + attach.uploadpath + "'data-uuid='"
-							+ attach.uuid + "' data-filename='" + attach.fileName
-							+ "' data-type'" + attach.image + "'>"
-							+ "<div> <span>" + attach.fileName + "</span><br>"
-							+ "<img src='resources/image/attachment.png' width='100px' height='100px'>"
-							+ "</div></li>";
-					}
-				})
-			});
-		});
-		
-		});
+		let path = encodeURIComponent(liObj.data("path") + "/" + liObj.data("uuid") + "_"
+										+ liObj.data("filename"));
+
+		// download
+		self.location = "/download?fileName=" + path;
+	})
 	</script>
 </body>
+
 </html>

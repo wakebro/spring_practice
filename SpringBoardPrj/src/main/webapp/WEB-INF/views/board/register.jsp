@@ -221,7 +221,7 @@
 						let imgInfo = $(obj);
 						// BoardVO 내부의 List<BoardAttachVO>를 처리하기 위해 변수명 attachList로 전달
 						str += "<input type='hidden' name='attachList[" + i + "].fileName'"
-							+ " value='" + imgInfo.data("fileName") + "'>"
+							+ " value='" + imgInfo.data("filename") + "'>"
 							+ "<input type='hidden' name='attachList[" + i + "].uuid'"
 							+ " value='" + imgInfo.data("uuid") + "'>"
 							+ "<input type='hidden' name='attachList[" + i + "].uploadpath'"

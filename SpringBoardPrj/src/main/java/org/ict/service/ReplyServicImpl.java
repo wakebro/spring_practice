@@ -32,7 +32,7 @@ public class ReplyServicImpl implements ReplyService {
 		return list;
 	}
 	
-	@Transactional
+//	@Transactional
 	@Override
 	public void addReply(ReplyVO vo) {
 		log.info("Reply : " + vo.getBno());
@@ -46,7 +46,7 @@ public class ReplyServicImpl implements ReplyService {
 		mapper.update(vo);
 	}
 
-	@Transactional
+//	@Transactional
 	@Override
 	public void removeReply(Long rno) {
 		// mapper.delete가 실해오디는 순간, bno를 포함한 모든 rno번 row가 날아감
