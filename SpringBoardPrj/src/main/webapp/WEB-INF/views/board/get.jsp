@@ -189,7 +189,6 @@ function getAllList()를 test.jsp에서 복붙하여 게시물별 페이지에�
 	})
 	
 	
-	
 	// 댓글 생성
 	$("#replyAddBtn").on("click", function() {
 
@@ -360,7 +359,7 @@ function getAllList()를 test.jsp에서 복붙하여 게시물별 페이지에�
 					// console.log(obj);
 
 					if (!obj.image) {
-						let fileCallPath = encodeURIComponent(obj.uploadPath + "/"
+						let fileCallPath = encodeURIComponent(obj.uploadpath + "/"
 							+ obj.uuid + "_" + obj.fileName);
 						// 그림이 아니면 썸네일 대신 resources폴더 내 이미지를 대체로 설정
 						str += "<li><a href='/download?fileName=" + fileCallPath + "'>" +
@@ -370,10 +369,10 @@ function getAllList()를 test.jsp에서 복붙하여 게시물별 페이지에�
 						// str += "<li>" + obj.fileName + "</li>";
 
 						// 파일 이름 + 썸네일을 보여주기 위해 썸네일 주소 요청하게 만들기
-						let fileCallPath = encodeURIComponent(obj.uploadPath + "/s_"
+						let fileCallPath = encodeURIComponent(obj.uploadpath + "/s_"
 							+ obj.uuid + "_" + obj.fileName);
 
-						let fileCallPath2 = encodeURIComponent(obj.uploadPath + "/"
+						let fileCallPath2 = encodeURIComponent(obj.uploadpath + "/"
 							+ obj.uuid + "_" + obj.fileName);
 
 						// fileCallPath를 조립
@@ -407,8 +406,39 @@ function getAllList()를 test.jsp에서 복붙하여 게시물별 페이지에�
 						targetLi.remove();						
 					}
 				});
-				
-			})
+			});
+		(function() {
+			// getJSON의 두번째 파라미터로 ?bno=bno값을 대체
+			$.getJSON("/board/getAttachList", {bno: bno}, function (arr) {
+				console.log(arr);
+
+				// ul태그 내부에 태그를 추가해야 하기 때문에 문자열 이용
+				let str = "";
+				// i, obj랑 같은데 변수명만 i, attach로 바꿈
+				$(arr).each(function(i, attach) {
+					// image type
+					if(attach.image){
+						let fileCallPath = encodeURIComponent(attach.uploadpath
+							+ "/s_" + attach.uuid + "_" + attach.fileName);
+
+						str += "<li data-path='" + attach.uploadpath + "'data-uuid='"
+							+ attach.uuid + "' data-filename='" + attach.fileName
+							+ "' data-type='" + attach.image + "'>"
+							+ "<div>"
+							+ "<img src='/display?fileName=" + fileCallPath + "'>"
+							+ "</div></li>";
+					} else{
+						str += "<li data-path='" + attach.uploadpath + "'data-uuid='"
+							+ attach.uuid + "' data-filename='" + attach.fileName
+							+ "' data-type'" + attach.image + "'>"
+							+ "<div> <span>" + attach.fileName + "</span><br>"
+							+ "<img src='resources/image/attachment.png' width='100px' height='100px'>"
+							+ "</div></li>";
+					}
+				})
+			});
+		});
+		
 		});
 	</script>
 </body>

@@ -2,8 +2,10 @@ package org.ict.service;
 
 import java.util.List;
 
+import org.ict.domain.BoardAttachVO;
 import org.ict.domain.BoardVO;
 import org.ict.domain.SearchCriteria;
+import org.ict.mapper.BoardAttachMapper;
 import org.ict.mapper.BoardMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,9 @@ public class BoardServiceImpl implements BoardService{
 	@Autowired
 	private BoardMapper mapper;
 	
+	@Autowired
+	private BoardAttachMapper attachmapper;
+	
 	
 	// 등록작업시 BoardVO를 매개로 실행하기 때문에
 	// 아래와 같이 BoardVO를 파라미터에 설정
@@ -32,6 +37,14 @@ public class BoardServiceImpl implements BoardService{
 		// mapper.isnert(vo); 에서 bno를 얻기위해 변경
 		mapper.insertSelectKey(vo);
 		
+		if(vo.getAttachList() == null || vo.getAttachList().size() <= 0) {
+			return;
+		}
+		vo.getAttachList().forEach(attach ->{
+			attach.setBno(vo.getBno());
+			log.info(attach);
+			attachmapper.insert(attach);
+		});
 	}
 
 	
@@ -83,6 +96,11 @@ public class BoardServiceImpl implements BoardService{
 	public int getTotalBoardCnt(SearchCriteria cri) {
 		
 		return mapper.getTotalBoardCnt(cri);
+	}
+	
+	@Override
+	public List<BoardAttachVO> getAttachList(Long bno) {
+		return attachmapper.findByBno(bno);
 	}
 	
 	

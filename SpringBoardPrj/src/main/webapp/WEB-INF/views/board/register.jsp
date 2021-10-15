@@ -141,11 +141,11 @@
 
 						if (!obj.image) {
 							let fileCallPath = encodeURIComponent(
-								obj.uploadPath + "/"
+								obj.uploadpath + "/"
 								+ obj.uuid + "_" + obj.fileName);
 							// 그림이 아니면 썸네일 대신 resources폴더 내 이미지를 대체로 설정
-							str += "<li"
-								+ "data-path='" + obj.uploadPath + "' data-uuid='" + obj.uuid
+							str += "<li "
+								+ " data-path='" + obj.uploadpath + "' data-uuid='" + obj.uuid
 								+ "' data-filename='" + obj.fileName + "' data-type='" + obj.image
 								+ "'><a href='/download?fileName=" + fileCallPath 
 								+ "'>" + "<img src='/resources/image/attachment.png'>"
@@ -155,19 +155,19 @@
 							// str += "<li>" + obj.fileName + "</li>";
 
 							// 파일 이름 + 썸네일을 보여주기 위해 썸네일 주소 요청하게 만들기
-							let fileCallPath = encodeURIComponent(obj.uploadPath + "/s_"
+							let fileCallPath = encodeURIComponent(obj.uploadpath + "/s_"
 								+ obj.uuid + "_" + obj.fileName);
 
-							let fileCallPath2 = encodeURIComponent(obj.uploadPath + "/"
+							let fileCallPath2 = encodeURIComponent(obj.uploadpath + "/"
 								+ obj.uuid + "_" + obj.fileName);
 
 							// fileCallPath를 조립
-							str += "<li"+
-								+ "data-path='" + obj.uploadPath + "' data-uuid='" + obj.uuid
+							str += "<li "
+								+ " data-path='" + obj.uploadpath + "' data-uuid='" + obj.uuid
 								+ "' data-filename='" + obj.fileName + "' data-type='" + obj.image
 								+ "'><a href='/download?fileName=" + fileCallPath2
 								+ "'><img src='/display?fileName=" + fileCallPath + "'>'" + obj.fileName + "</a>"
-								+ "<span data-file=\'" + fileCallPath + "\'data-type='image'> X </span>" + "</li>";
+								+ "<span data-file=\'" + fileCallPath + "\' data-type='file'> X </span></li>";
 						}
 					});
 					uploadResult.append(str);
@@ -202,6 +202,7 @@
 					// 글쓰기를 했을 때, 그림이 몇 장 추가될지는 글을 써봐야 알 수 있는 상태
 					// 제출을 바로 하지 못하도록 막음
 					e.preventDefault();
+					console.log("전송버튼클릭")
 
 					// 위의 form에 업로드된 그림요소들에 대한 정보를 추가
 					// 1. form 태그 정보 얻어오기
@@ -223,18 +224,21 @@
 							+ " value='" + imgInfo.data("fileName") + "'>"
 							+ "<input type='hidden' name='attachList[" + i + "].uuid'"
 							+ " value='" + imgInfo.data("uuid") + "'>"
-							+ "<input type='hidden' name='attachList[" + i + "].uploadPath'"
+							+ "<input type='hidden' name='attachList[" + i + "].uploadpath'"
 							+ " value='" + imgInfo.data("path") + "'>"
 							+ "<input type='hidden' name='attachList[" + i + "].image'"
 							+ " value='" + imgInfo.data("type") + "'>"
 							
-					});
+						});
 					// 반복이 끝나면, formObj에 위 태그를 추가한 후 제출한다.
-					formObj.append(str);
 					// 그림 정보가 잘 추가되는지 디버깅
+					formObj.append(str);
+					console.log("formObj");
 					console.log($(formObj));
-					// formObj.submit();
+					formObj.submit();
 				})
+
+
 			});
 		</script>
 	</body>

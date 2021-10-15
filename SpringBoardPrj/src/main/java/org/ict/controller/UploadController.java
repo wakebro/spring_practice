@@ -174,7 +174,7 @@ public class UploadController {
 				// attachDTO에 파일의 UUID 저장
 				attachDTO.setUuid(uuid.toString());
 				// attachDTO에 파일의 경로 저장
-				attachDTO.setUploadPath(uploadFolderPath);
+				attachDTO.setUploadpath(uploadFolderPath);
 				
 				
 				// 저장한 파일 타입에 따라 썸네일 생성

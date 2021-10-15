@@ -25,7 +25,7 @@
 				focus);
 		// 이게 코드가 위에 있어서 코드 실행 이전에 myModal을 찾으려면 에러가 발생
 		// 이걸 방지하기 위해 window.onload를 사용
-		console.log(myModal);
+		//console.log(myModal);
 
 		if (result === "remove") {
 			alert(bno + "번 글이 삭제되었습니다.");
