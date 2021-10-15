@@ -182,7 +182,7 @@ public class UploadController {
 					// 클래스 생성 후 boolean타입은 자료입력을하지 않으면
 					// 자동으로 false로 간주됨
 					// attachDTO에 파일 썸네일 true/false 저장
-					attachDTO.setFileType(true);
+					attachDTO.setImage(true);
 					
 					// 가변적으로 변하는 날짜 경로에 썸네일용(s_) File 객체를 새로 생성
 					// 생성한 File 객체를 썸네일용으로 새로 생성하기 위해 바이트 스트림으로 저장
