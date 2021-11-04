@@ -48,6 +48,7 @@
 		
 		#uploadResult ul li img:hover{
 			cursor: pointer;
+
 		}
 
 		#uploadResult ul li img {
