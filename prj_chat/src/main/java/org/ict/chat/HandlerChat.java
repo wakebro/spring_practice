@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -15,6 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
+@Component
 public class HandlerChat extends TextWebSocketHandler{
 
 	/*
@@ -67,6 +69,7 @@ public class HandlerChat extends TextWebSocketHandler{
 	// {"room_id" : 방ID, "session" : 세션}을 연달아서 저장하는 형태
 	private List<Map<String, Object>> sessionList = new ArrayList<Map<String, Object>>();
 	
+	// 메세지를 맞는 방에만 뿌려주는 메서드
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 	
