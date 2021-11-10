@@ -8,4 +8,8 @@ public interface MemberMapper {
 	public MemberVO read(String userid);
 	
 	public void insert(@Param("vo")MemberVO vo, @Param("auth")String auth);	
+	
+	public void insertMember(MemberVO vo);
+	
+	public void insertMemberAuth(MemberVO vo);
 }

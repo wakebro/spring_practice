@@ -47,4 +47,14 @@
 		INSERT INTO member_auth(userid, auth)
 		VALUES (#{vo.userid}, #{auth})		
 	</insert>
+	
+	<insert id="insertMember">
+		INSERT INTO MEMBER_TBL(userid, userpw, username)VALUES(#{userid}, #{userpw}, #{userName})
+	</insert>
+	
+	<update id="insertMemberAuth">
+		INSERT ALL 
+			<foreach separator=" " item="item" collection="authList">INTO MEMBER_AUTH(userid, auth)VALUES(#{item.userid}, #{item.auth}) </foreach>
+		SELECT *FROM DUAL 
+	</update>
 </mapper>
